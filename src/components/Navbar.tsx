@@ -10,7 +10,7 @@ const Navbar = () => {
           href="/"
           className="logo w-[33%] h-[4rem] border-r border-slate-200 flex justify-center items-center cursor-pointer "
         >
-          <img src="../../public/blinkit-logo.svg" className="h-6" />
+          <img src="../../public/blinkit-logo.svg" className="h-6" alt="logo" />
         </a>
         <div className="w-[67%] h-[4rem] flex justify-center items-center gap-2 ">
           <div>
