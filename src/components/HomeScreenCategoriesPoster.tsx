@@ -24,8 +24,8 @@ const categoryImages = [
 const HomeScreenCategoriesPoster = () => {
   return (
     <div className="flex gap-1 flex-wrap">
-      {categoryImages.map((item) => (
-        <img src={item} alt="category" className="w-[6rem]" />
+      {categoryImages.map((item, index) => (
+        <img src={item} key={index} alt="category" className="w-[6rem]" />
       ))}
     </div>
   );
