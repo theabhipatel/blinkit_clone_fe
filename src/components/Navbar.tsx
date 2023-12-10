@@ -4,7 +4,7 @@ import { FiSearch } from "react-icons/fi";
 
 const Navbar = () => {
   return (
-    <nav className="w-full flex border-b border-slate-200 ">
+    <nav className="w-full fixed top-0 flex border-b border-slate-200 bg-white ">
       <div className="flex w-[35%]">
         <a
           href="/"

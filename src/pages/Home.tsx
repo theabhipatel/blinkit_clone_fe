@@ -4,7 +4,7 @@ import ProductCard from "../components/ProductCard";
 
 const Home = () => {
   return (
-    <main className="w-full px-20">
+    <main className="w-full px-20 pt-16">
       <HomeScreenPoster />
       <HomeScreenCategoriesPoster />
       <div className="flex flex-wrap p-5 gap-5">
