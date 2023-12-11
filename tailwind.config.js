@@ -9,6 +9,9 @@ export default {
       fontSize: {
         xxs: "10px",
       },
+      boxShadow: {
+        normal: "0px 5px 10px 0px rgba(0, 0, 0, 0.2)",
+      },
     },
   },
   plugins: [],
