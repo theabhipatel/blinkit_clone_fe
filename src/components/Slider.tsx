@@ -22,13 +22,13 @@ const Slider = ({ children }: { children: React.ReactNode }) => {
   return (
     <div className="relative ">
       <button
-        className={`absolute top-32 -left-5 p-2 bg-white hover:bg-zinc-50 rounded-full shadow-normal `}
+        className={`absolute top-32 -left-5 p-2 bg-white hover:bg-zinc-100 rounded-full shadow-normal duration-300 `}
         onClick={handlePrev}
       >
         <FaChevronLeft />
       </button>
       <button
-        className="absolute top-32 -right-5 p-2 bg-zinc-50 rounded-full  shadow-normal"
+        className="absolute top-32 -right-5 p-2 bg-white hover:bg-zinc-100  rounded-full  shadow-normal duration-300"
         onClick={handleNext}
       >
         <FaChevronRight />
