@@ -1,15 +1,27 @@
 import { FC } from "react";
 import AddButton from "./molecules/AddButton";
+import { useNavigate } from "react-router-dom";
 
 interface IProps {
   width?: string;
 }
 
-const ProductCard: FC<IProps> = ({ width = "9rem" }) => {
+const ProductCard: FC<IProps> = ({ width }) => {
+  const navigate = useNavigate();
+  const prn = "balaji-ratlami-sev";
+  const prid = "112620";
+
+  const handleClick = () => {
+    navigate(`/prn/${prn}/prid/${prid}`);
+  };
+
   return (
     <>
       <div
-        className={`min-w-[${width}]  h-[14.2rem] border border-gray-300 rounded-md p-3 text-zinc-700 cursor-pointer`}
+        onClick={handleClick}
+        className={` ${
+          width ? `min-w-[8rem]` : "min-w-[9rem]"
+        }  h-[14.2rem] border border-gray-300 rounded-md p-3 text-zinc-700 cursor-pointer`}
       >
         <div className="h-[50%] flex justify-center items-center">
           <img
