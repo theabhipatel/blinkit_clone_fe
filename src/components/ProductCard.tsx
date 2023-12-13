@@ -1,6 +1,7 @@
 import { FC } from "react";
 import AddButton from "./molecules/AddButton";
 import { useNavigate } from "react-router-dom";
+import DeliveryTime from "./molecules/DeliveryTime";
 
 interface IProps {
   width?: string;
@@ -31,10 +32,7 @@ const ProductCard: FC<IProps> = ({ width }) => {
           />
         </div>
 
-        <div className="w-12 px-[2px] py-[1px]  flex  items-center bg-gray-100 rounded-sm">
-          <img src="../../public/timer.avif" alt="timer" className="h-3" />
-          <span className="text-[8px] font-bold ">9 MINS</span>
-        </div>
+        <DeliveryTime size="M" />
         <div className="mt-2 h-[3.2rem] flex flex-col justify-between">
           <h3 className="text-[11px] font-semibold">
             Amul Fresh Malai Paneer and this is...
