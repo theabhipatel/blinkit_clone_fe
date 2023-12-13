@@ -1,24 +1,16 @@
-import { useState } from "react";
-import { FaPlus, FaMinus } from "react-icons/fa6";
+import { FC } from "react";
 import AddButton from "./molecules/AddButton";
 
-const ProductCard = () => {
-  const [quantity, setQuantity] = useState(0);
+interface IProps {
+  width?: string;
+}
 
-  const handleIncQty = () => {
-    setQuantity((prev) => ++prev);
-  };
-  const handleDecQty = () => {
-    if (quantity === 0) {
-      setQuantity(0);
-    } else {
-      setQuantity((prev) => --prev);
-    }
-  };
-
+const ProductCard: FC<IProps> = ({ width = "9rem" }) => {
   return (
     <>
-      <div className="min-w-[9rem] h-[14.2rem] border border-gray-300 rounded-md p-3 text-zinc-700 cursor-pointer">
+      <div
+        className={`min-w-[${width}]  h-[14.2rem] border border-gray-300 rounded-md p-3 text-zinc-700 cursor-pointer`}
+      >
         <div className="h-[50%] flex justify-center items-center">
           <img
             src="https://cdn.grofers.com/cdn-cgi/image/f=auto,fit=scale-down,q=70,metadata=none,w=270/app/images/products/sliding_image/329500a.jpg?ts=1687949315"
@@ -44,7 +36,6 @@ const ProductCard = () => {
               ₹98
             </h6>
           </div>
-
           <AddButton />
         </div>
       </div>
