@@ -4,7 +4,7 @@ import { FiSearch } from "react-icons/fi";
 import { useNavigate, useLocation, useSearchParams } from "react-router-dom";
 import { MdClose } from "react-icons/md";
 import { useEffect, useState } from "react";
-import Modal from "./Modal";
+import Cart from "./Cart";
 
 const Navbar = () => {
   const navigate = useNavigate();
@@ -121,7 +121,7 @@ const Navbar = () => {
           <h4 className="text-xxs font-bold">My Cart</h4>
         </div>
       </div>
-      {isCartOpen && <Modal setIsCartOpen={setIsCartOpen} />}
+      {isCartOpen && <Cart setIsCartOpen={setIsCartOpen} />}
     </nav>
   );
 };
