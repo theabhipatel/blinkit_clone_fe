@@ -5,11 +5,13 @@ import Search from "./pages/Search";
 import Product from "./pages/Product";
 import PageNotFound from "./pages/PageNotFound";
 import Footer from "./components/Footer";
+import ScrollToTop from "./components/molecules/ScrollToTop";
 
 const App = () => {
   return (
     <div className="max-w-[1250px] mx-auto ">
       <BrowserRouter>
+        <ScrollToTop />
         <Navbar />
         <Routes>
           <Route path="/" element={<Home />} />
