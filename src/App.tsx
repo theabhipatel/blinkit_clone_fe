@@ -2,6 +2,7 @@ import { BrowserRouter, Routes, Route } from "react-router-dom";
 import Home from "./pages/Home";
 import Navbar from "./components/Navbar";
 import Search from "./pages/Search";
+import Product from "./pages/Product";
 import PageNotFound from "./pages/PageNotFound";
 import Footer from "./components/Footer";
 
@@ -13,6 +14,7 @@ const App = () => {
         <Routes>
           <Route path="/" element={<Home />} />
           <Route path="/s" element={<Search />} />
+          <Route path="/prn/:name/prid/:id" element={<Product />} />
           <Route path="*" element={<PageNotFound />} />
         </Routes>
         <Footer />
