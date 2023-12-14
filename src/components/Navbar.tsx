@@ -37,7 +37,7 @@ const Navbar = () => {
   };
 
   return (
-    <nav className="w-full fixed top-0 flex border-b border-slate-200 bg-white z-50">
+    <nav className="w-full max-w-[1250px] fixed top-0 flex border-b border-slate-200 bg-white z-50">
       {/* ---> logo <--- */}
       <div className={`flex w-[18%] `}>
         <a
