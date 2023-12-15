@@ -24,6 +24,7 @@ const ImageShowcase = () => {
       <div className="w-[80%] mx-auto flex gap-3 mt-5 overflow-x-auto pb-3">
         {images.map((item, index) => (
           <div
+            key={index}
             onClick={() => setActiveImage(index)}
             className={`min-w-[5rem] h-20 border  rounded-md overflow-hidden ${
               activeImage === index ? "border-primary" : "border-zinc-200"
