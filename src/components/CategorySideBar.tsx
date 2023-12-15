@@ -4,6 +4,7 @@ const CategorySideBar = () => {
       {[...new Array(12)].map((_, index) => {
         return (
           <div
+            key={index}
             className={`w-full h-14 flex items-center pl-3 gap-3 border-l-4 ${
               index == 1
                 ? "border-l-primary bg-green-100"
