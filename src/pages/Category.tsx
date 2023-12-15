@@ -30,8 +30,8 @@ const Category = () => {
             </div>
             {/* ---> Mapping cards <--- */}
             <div className="w-full grid grid-cols-5 gap-2 gap-y-3 p-2 border-r border-b">
-              {[...new Array(32)].map(() => {
-                return <ProductCard width="8rem" />;
+              {[...new Array(32)].map((_, index) => {
+                return <ProductCard key={index} width="8rem" />;
               })}
             </div>
           </div>
