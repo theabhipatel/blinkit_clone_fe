@@ -1,3 +1,5 @@
+import { NavLink } from "react-router-dom";
+
 const categoryImages = [
   "https://cdn.grofers.com/cdn-cgi/image/f=auto,fit=scale-down,q=70,metadata=none,w=270/layout-engine/2022-12/paan-corner_web.png",
   "https://cdn.grofers.com/cdn-cgi/image/f=auto,fit=scale-down,q=70,metadata=none,w=270/layout-engine/2022-11/Slice-2_10.png",
@@ -22,10 +24,15 @@ const categoryImages = [
 ];
 
 const HomeScreenCategoriesPoster = () => {
+  const cn = "fresh-vegetables";
+  const cid = "1487";
+  const subcid = "1489";
   return (
     <div className="flex gap-1 flex-wrap">
       {categoryImages.map((item, index) => (
-        <img src={item} key={index} alt="category" className="w-[6rem]" />
+        <NavLink to={`/cn/${cn}/cid/${cid}/${subcid}`}>
+          <img src={item} key={index} alt="category" className="w-[6rem]" />
+        </NavLink>
       ))}
     </div>
   );
