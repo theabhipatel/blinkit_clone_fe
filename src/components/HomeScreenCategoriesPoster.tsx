@@ -30,8 +30,8 @@ const HomeScreenCategoriesPoster = () => {
   return (
     <div className="flex gap-1 flex-wrap">
       {categoryImages.map((item, index) => (
-        <NavLink to={`/cn/${cn}/cid/${cid}/${subcid}`}>
-          <img src={item} key={index} alt="category" className="w-[6rem]" />
+        <NavLink key={index} to={`/cn/${cn}/cid/${cid}/${subcid}`}>
+          <img src={item} alt="category" className="w-[6rem]" />
         </NavLink>
       ))}
     </div>
