@@ -38,9 +38,12 @@ const CategoryTopBar = () => {
   return (
     <div className="max-w-[1250px] z-40 fixed top-16  w-full h-10 shadow-md bg-white ">
       <div className="h-full px-24  flex  ">
-        {categories.map(({ title }) => {
+        {categories.map(({ title }, index) => {
           return (
-            <div className="h-full px-3 flex justify-center items-center hover:bg-zinc-100 cursor-pointer duration-200">
+            <div
+              key={index}
+              className="h-full px-3 flex justify-center items-center hover:bg-zinc-100 cursor-pointer duration-200"
+            >
               <h3 className="text-[11.5px]  text-zinc-600">{title}</h3>
             </div>
           );
@@ -58,9 +61,10 @@ const CategoryTopBar = () => {
           {/* --->other list<--- */}
           {toggleMore && (
             <div className="absolute top-10 right-0  w-36 max-h-[60vh] overflow-y-auto shadow-normal bg-white">
-              {categories.map(({ title }) => {
+              {categories.map(({ title }, index) => {
                 return (
                   <div
+                    key={index}
                     onClick={() => setToggleMore(false)}
                     className="h-10 px-3  hover:bg-zinc-100 cursor-pointer duration-200 border-b border-zinc-100 flex items-center"
                   >
