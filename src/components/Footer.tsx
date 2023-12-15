@@ -9,37 +9,47 @@ import { categories, usefullLinks } from "../constant";
 
 const Footer = () => {
   return (
-    <footer className="px-16">
+    <footer className="px-6 md:px-16">
       {/* ---> links <--- */}
-      <div className="flex justify-between">
+      <div className="flex justify-between gap-3 flex-col lg:flex-row">
         {/* ---> Useful Links <--- */}
-        <div className="w-[25%] ">
+        <div className="w-[100%] lg:w-[25%] ">
           <h5 className="font-semibold">Useful Links</h5>
-          <div className=" mt-4 grid grid-cols-3 gap-y-2 gap-x-8">
-            {usefullLinks.map(({ title }) => (
-              <span className="text-xs text-zinc-500">{title}</span>
+          <div className=" mt-4 grid grid-cols-2 md:grid-cols-3 gap-y-2 gap-x-8">
+            {usefullLinks.map(({ title }, index) => (
+              <span
+                key={index}
+                className="text-xs text-zinc-500 cursor-pointer"
+              >
+                {title}
+              </span>
             ))}
           </div>
         </div>
         {/* ---> Categories <--- */}
-        <div className="w-[65%]">
+        <div className="w-[100%] lg:w-[65%]">
           <h5 className="font-semibold">
             Categories{" "}
             <span className="text-primary ml-2 font-[400] cursor-pointer">
               see all
             </span>
           </h5>
-          <div className=" mt-4 grid grid-cols-3 gap-y-2">
-            {categories.map(({ title }) => (
-              <span className="text-xs text-zinc-500">{title}</span>
+          <div className=" mt-4 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-y-2">
+            {categories.map(({ title }, index) => (
+              <span
+                key={index}
+                className="text-xs text-zinc-500 cursor-pointer"
+              >
+                {title}
+              </span>
             ))}
           </div>
         </div>
       </div>
       {/* ---> Social links <--- */}
-      <div className="mt-16 flex justify-between items-center">
-        <div className="w-[65%] flex justify-between items-center ">
-          <div className="w-[50%]">
+      <div className="mt-16 flex justify-between items-center gap-3 flex-wrap">
+        <div className="w-[100%] md:w-[65%] flex justify-between items-center gap-3 flex-wrap">
+          <div className="w-[100%] md:w-[50%]">
             <h5 className="text-[11px] text-zinc-500">
               © Blink Commerce Private Limited (formerly known as Grofers India
               Private Limited), 2016-2023
