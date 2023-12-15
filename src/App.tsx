@@ -6,6 +6,7 @@ import Product from "./pages/Product";
 import PageNotFound from "./pages/PageNotFound";
 import Footer from "./components/Footer";
 import ScrollToTop from "./components/molecules/ScrollToTop";
+import Category from "./pages/Category";
 
 const App = () => {
   return (
@@ -17,6 +18,7 @@ const App = () => {
           <Route path="/" element={<Home />} />
           <Route path="/s" element={<Search />} />
           <Route path="/prn/:name/prid/:id" element={<Product />} />
+          <Route path="/cn/:name/cid/:id/:subcid" element={<Category />} />
           <Route path="*" element={<PageNotFound />} />
         </Routes>
         <Footer />
