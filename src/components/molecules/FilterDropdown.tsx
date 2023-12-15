@@ -54,6 +54,7 @@ const FilterDropdown = () => {
           {filterList.map(({ title, id }) => {
             return (
               <div
+                key={id}
                 onClick={() => handleSelectFilter(title, id)}
                 className={`flex gap-2 p-1 py-2 text-[11px] items-center border-b hover:bg-gray-100 cursor-pointer duration-300 font-[500] ${
                   activeFilter.id === id ? "text-primary" : ""
