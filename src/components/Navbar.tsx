@@ -5,6 +5,7 @@ import { useNavigate, useLocation, useSearchParams } from "react-router-dom";
 import { MdClose } from "react-icons/md";
 import { useEffect, useState } from "react";
 import Cart from "./Cart";
+import LoginModal from "./LoginModal";
 
 const Navbar = () => {
   const navigate = useNavigate();
@@ -12,6 +13,7 @@ const Navbar = () => {
   const [searchText, setSearchText] = useState("");
   const [searchParams, setSearchParams] = useSearchParams();
   const [isCartOpen, setIsCartOpen] = useState(false);
+  const [isLoginModalOpen, setIsLoginModalOpen] = useState(false);
 
   useEffect(() => {
     const searchText = searchParams.get("q");
@@ -104,7 +106,10 @@ const Navbar = () => {
         {/* ---> Login <--- */}
         {pathname !== "/s" && (
           <div className="w-[20%] flex justify-center items-center ">
-            <div className="cursor-pointer">
+            <div
+              onClick={() => setIsLoginModalOpen(true)}
+              className="cursor-pointer"
+            >
               <h4 className="text-sm text-zinc-700">Login</h4>
             </div>
           </div>
@@ -122,6 +127,9 @@ const Navbar = () => {
         </div>
       </div>
       {isCartOpen && <Cart setIsCartOpen={setIsCartOpen} />}
+      {isLoginModalOpen && (
+        <LoginModal setIsLoginModalOpen={setIsLoginModalOpen} />
+      )}
     </nav>
   );
 };
