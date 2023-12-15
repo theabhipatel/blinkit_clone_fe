@@ -16,7 +16,7 @@ const ProductCard: FC<IProps> = ({ width }) => {
       <div
         className={` ${
           width ? `min-w-[8rem]` : "min-w-[9rem]"
-        }  h-[14.2rem] border border-gray-300 rounded-md p-3 text-zinc-700 `}
+        } max-w-[9rem]  h-[14.2rem] border border-gray-300 rounded-md p-3 text-zinc-700 bg-white`}
       >
         <div className="h-[50%] flex justify-center items-center ">
           <NavLink to={`/prn/${prn}/prid/${prid}`} className={"h-full"}>
