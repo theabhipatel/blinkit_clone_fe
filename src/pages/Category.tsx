@@ -2,6 +2,7 @@ import CategoryDetails from "../components/CategoryDetails";
 import CategorySideBar from "../components/CategorySideBar";
 import CategoryTopBar from "../components/CategoryTopBar";
 import ProductCard from "../components/ProductCard";
+import FilterDropdown from "../components/molecules/FilterDropdown";
 
 const Category = () => {
   return (
@@ -22,8 +23,9 @@ const Category = () => {
                 Buy Fresh Vegetables Online
               </h3>
               <div className="flex gap-5 items-center">
-                <h6 className="text-xs">Sort By</h6>
-                <div className="w-24 h-5 border rounded-md"></div>
+                <h6 className="text-xs text-zinc-400">Sort By</h6>
+                {/* ---> Filter Dropdown <--- */}
+                <FilterDropdown />
               </div>
             </div>
             {/* ---> Mapping cards <--- */}
