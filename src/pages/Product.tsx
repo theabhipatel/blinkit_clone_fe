@@ -3,6 +3,7 @@ import AddButton from "../components/molecules/AddButton";
 import { whyShopFromBlinkit } from "../constant";
 import DeliveryTime from "../components/molecules/DeliveryTime";
 import ImageShowcase from "../components/ImageShowcase";
+import React from "react";
 
 const details = [
   {
@@ -54,11 +55,11 @@ const Product = () => {
           {/* --->Product Details <--- */}
           <div className="mt-5 pt-5 border-t border-zinc-300">
             <h3 className="text-xl font-semibold my-3 ">Product Details</h3>
-            {details.map(({ title, desc }) => (
-              <>
+            {details.map(({ title, desc }, index) => (
+              <React.Fragment key={index}>
                 <h4 className="text-xs font-[500] my-2">{title}</h4>
                 <p className="text-xs text-zinc-500 my-2">{desc}</p>
-              </>
+              </React.Fragment>
             ))}
           </div>
         </div>
