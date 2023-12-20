@@ -1,9 +1,10 @@
+import React from "react";
 import { MdArrowRight } from "react-icons/md";
 import AddButton from "../components/molecules/AddButton";
 import { whyShopFromBlinkit } from "../constant";
 import DeliveryTime from "../components/molecules/DeliveryTime";
 import ImageShowcase from "../components/ImageShowcase";
-import React from "react";
+import { Helmet } from "react-helmet";
 
 const details = [
   {
@@ -47,6 +48,9 @@ const details = [
 const Product = () => {
   return (
     <>
+      <Helmet>
+        <title>Balaji Ratlami Sev Price - Buy Online at ₹40 in India</title>
+      </Helmet>
       <div className="w-full flex   mt-16  mb-10 border-b border-zinc-300 ">
         {/* ---> Left Section <--- */}
         <div className="w-[55%]  p-16 pt-0 border-r border-zinc-300">
