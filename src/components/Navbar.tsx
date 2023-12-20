@@ -6,6 +6,19 @@ import { MdClose } from "react-icons/md";
 import { useEffect, useState } from "react";
 import Cart from "./Cart";
 import LoginModal from "./LoginModal";
+import TextTransition, { presets } from "react-text-transition";
+
+const TEXTS = [
+  'Search "milk"',
+  'Search "bread"',
+  'Search "sugar"',
+  'Search "butter"',
+  'Search "paneer"',
+  'Search "chocholate"',
+  'Search "curd"',
+  'Search "rice"',
+  'Search "chips"',
+];
 
 const Navbar = () => {
   const navigate = useNavigate();
@@ -14,6 +27,13 @@ const Navbar = () => {
   const [searchParams, setSearchParams] = useSearchParams();
   const [isCartOpen, setIsCartOpen] = useState(false);
   const [isLoginModalOpen, setIsLoginModalOpen] = useState(false);
+
+  /** ---> for creating transitional text on navbar search */
+  const [index, setIndex] = useState(0);
+  useEffect(() => {
+    const intervalId = setInterval(() => setIndex((index) => index + 1), 1500);
+    return () => clearTimeout(intervalId);
+  }, []);
 
   useEffect(() => {
     const searchText = searchParams.get("q");
@@ -75,8 +95,10 @@ const Navbar = () => {
               className={`w-[90%] bg-zinc-50 border border-slate-100 flex items-center gap-3 py-[0.6rem] px-2 rounded-md cursor-text`}
             >
               <FiSearch className="text-sm" />
-              <span className="text-xxs font-semibold text-zinc-400 ">
-                Search "rice"
+              <span className="text-[11px] font- text-zinc-400 ">
+                <TextTransition springConfig={presets.slow}>
+                  {TEXTS[index % TEXTS.length]}
+                </TextTransition>
               </span>
             </div>
           ) : (
