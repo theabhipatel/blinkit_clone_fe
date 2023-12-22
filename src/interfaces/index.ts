@@ -12,3 +12,10 @@ export interface IProduct {
   images: string[];
   details: { title: string; description: string }[];
 }
+
+export interface ISubCategory {
+  _id: string;
+  title: string;
+  categoryId: string;
+  thumbnail: string;
+}

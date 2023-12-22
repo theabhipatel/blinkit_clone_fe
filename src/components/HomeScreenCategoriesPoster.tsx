@@ -24,9 +24,9 @@ const categoryImages = [
 ];
 
 const HomeScreenCategoriesPoster = () => {
-  const cn = "fresh-vegetables";
-  const cid = "1487";
-  const subcid = "1489";
+  const cn = "Dairy & Bread";
+  const cid = "6582c1964460ca5037b2304e";
+  const subcid = "6585611a0cc788a65bead89c";
   return (
     <div className="flex gap-1 flex-wrap">
       {categoryImages.map((item, index) => (
