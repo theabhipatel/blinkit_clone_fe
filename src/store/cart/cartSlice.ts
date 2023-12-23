@@ -19,6 +19,9 @@ export const cartSlice = createSlice({
   name: "cart",
   initialState,
   reducers: {
+    toggleCartOpenAndClose: (state, action: PayloadAction<boolean>) => {
+      state.isCartOpen = action.payload;
+    },
     addCartItem: (state, action: PayloadAction<IProduct>) => {
       const product = action.payload;
       const itemIndex = state.cartItems.findIndex(
@@ -45,6 +48,7 @@ export const cartSlice = createSlice({
   },
 });
 
-export const { addCartItem, removeOneCartItem } = cartSlice.actions;
+export const { toggleCartOpenAndClose, addCartItem, removeOneCartItem } =
+  cartSlice.actions;
 
 export default cartSlice.reducer;

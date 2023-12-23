@@ -8,16 +8,21 @@ import Slider from "./Slider";
 import ProductCard from "./ProductCard";
 import CartItem from "./molecules/CartItem";
 import EmptyCart from "./molecules/EmptyCart";
+import { useAppDispatch } from "../store/hooks";
+import { toggleCartOpenAndClose } from "../store/cart/cartSlice";
 
-interface IProps {
-  setIsCartOpen: React.Dispatch<React.SetStateAction<boolean>>;
-}
+interface IProps {}
 
-const Cart: FC<IProps> = ({ setIsCartOpen }) => {
+const Cart: FC<IProps> = () => {
+  const dispatch = useAppDispatch();
+
+  const handleCartClose = () => {
+    dispatch(toggleCartOpenAndClose(false));
+  };
   return (
     <div className="fixed  inset-0   flex justify-end z-50">
       <div
-        onClick={() => setIsCartOpen(false)}
+        onClick={handleCartClose}
         className="w-[75%] h-full bg-black opacity-75 duration-300 ease-in"
       />
       {/* ---> Whole Cart  <--- */}
@@ -25,7 +30,7 @@ const Cart: FC<IProps> = ({ setIsCartOpen }) => {
         {/* ---> Cart Header <--- */}
         <div className="w-full h-12  px-4 bg-white flex justify-between items-center ">
           <h4 className="text-xs font-bold">My Cart</h4>
-          <button onClick={() => setIsCartOpen(false)}>
+          <button onClick={handleCartClose}>
             <MdClose />
           </button>
         </div>
@@ -33,7 +38,7 @@ const Cart: FC<IProps> = ({ setIsCartOpen }) => {
         {/* ---> Cart Body <--- */}
         <div className="mt-3">
           {/* ---> Empty Cart <--- */}
-          <EmptyCart setIsCartOpen={setIsCartOpen} />
+          <EmptyCart />
           {/* ---> Filled Cart <--- */}
           <div className="w-[94%] mx-auto rounded-md flex justify-between items-center mb-2 p-2 bg-blue-100 text-blue-500 text-xs font-[500]">
             <h3> Your total savings </h3>
@@ -63,11 +68,11 @@ const Cart: FC<IProps> = ({ setIsCartOpen }) => {
           <div className="w-[94%] my-3 p-3 pb-5 mx-auto rounded-md bg-white flex flex-col ">
             <h4 className="text-xs font-bold "> Before you checkout</h4>
 
-            <Slider>
+            {/* <Slider>
               {[...new Array(10)].map((_, idx) => (
                 <ProductCard key={idx} width="8rem" />
               ))}
-            </Slider>
+            </Slider> */}
           </div>
           {/* ---> Bill details <--- */}
           <div className="w-[94%] my-3 p-3  mx-auto rounded-md bg-white flex flex-col ">

@@ -4,9 +4,10 @@ import { FiSearch } from "react-icons/fi";
 import { useNavigate, useLocation, useSearchParams } from "react-router-dom";
 import { MdClose } from "react-icons/md";
 import { useEffect, useState } from "react";
-import Cart from "./Cart";
 import LoginModal from "./LoginModal";
 import TextTransition, { presets } from "react-text-transition";
+import { useAppDispatch } from "../store/hooks";
+import { toggleCartOpenAndClose } from "../store/cart/cartSlice";
 
 const TEXTS = [
   'Search "milk"',
@@ -22,10 +23,10 @@ const TEXTS = [
 
 const Navbar = () => {
   const navigate = useNavigate();
+  const dispatch = useAppDispatch();
   const { pathname } = useLocation();
   const [searchText, setSearchText] = useState("");
   const [searchParams, setSearchParams] = useSearchParams();
-  const [isCartOpen, setIsCartOpen] = useState(false);
   const [isLoginModalOpen, setIsLoginModalOpen] = useState(false);
 
   /** ---> for creating transitional text on navbar search */
@@ -56,6 +57,10 @@ const Navbar = () => {
 
   const handleClearState = () => {
     setSearchText("");
+  };
+
+  const handleCartOpen = () => {
+    dispatch(toggleCartOpenAndClose(true));
   };
 
   return (
@@ -141,14 +146,13 @@ const Navbar = () => {
       {/* --->  cart button <--- */}
       <div className="w-[20%]  flex justify-center items-center ">
         <div
-          onClick={() => setIsCartOpen(true)}
+          onClick={handleCartOpen}
           className="bg-primary text-white flex justify-center items-center px-3 py-3 rounded-md gap-2 cursor-pointer"
         >
           <HiOutlineShoppingCart />
           <h4 className="text-xxs font-bold">My Cart</h4>
         </div>
       </div>
-      {isCartOpen && <Cart setIsCartOpen={setIsCartOpen} />}
       {isLoginModalOpen && (
         <LoginModal setIsLoginModalOpen={setIsLoginModalOpen} />
       )}

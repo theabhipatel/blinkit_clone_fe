@@ -1,10 +1,15 @@
 import { FC } from "react";
+import { useAppDispatch } from "../../store/hooks";
+import { toggleCartOpenAndClose } from "../../store/cart/cartSlice";
 
-interface IProps {
-  setIsCartOpen: React.Dispatch<React.SetStateAction<boolean>>;
-}
+interface IProps {}
 
-const EmptyCart: FC<IProps> = ({ setIsCartOpen }) => {
+const EmptyCart: FC<IProps> = () => {
+  const dispatch = useAppDispatch();
+
+  const handleCartClose = () => {
+    dispatch(toggleCartOpenAndClose(false));
+  };
   return (
     <div className="w-[94%] p-3 pb-5 mb-3 mx-auto rounded-md bg-white flex flex-col items-center">
       <img src="/empty_cart.webp" alt="" className="h-28" />
@@ -16,7 +21,7 @@ const EmptyCart: FC<IProps> = ({ setIsCartOpen }) => {
       </p>
       <div className="my-3" />
       <button
-        onClick={() => setIsCartOpen(false)}
+        onClick={handleCartClose}
         className="px-4 py-[0.4rem] text-xxs text-white bg-primary rounded-md"
       >
         Start Shopping
