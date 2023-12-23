@@ -51,7 +51,7 @@ const ProductCard: FC<IProps> = ({ width, product }) => {
               <h6 className="text-xxs font-semibold">₹88</h6>
             )}
           </div>
-          <AddButton />
+          <AddButton product={product} />
         </div>
       </div>
     </>

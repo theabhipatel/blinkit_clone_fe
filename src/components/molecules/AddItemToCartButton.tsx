@@ -1,24 +1,29 @@
-import { useState } from "react";
+import { useState, FC } from "react";
 import { FaPlus, FaMinus } from "react-icons/fa6";
+import { IProduct } from "../../interfaces";
+import { useAppDispatch, useAppSelector } from "../../store/hooks";
+import { addCartItem, removeOneCartItem } from "../../store/cart/cartSlice";
 
-const AddItemToCartButton = () => {
-  const [quantity, setQuantity] = useState(0);
+interface IProps {
+  product: IProduct;
+}
+
+const AddItemToCartButton: FC<IProps> = ({ product }) => {
+  const cartItems = useAppSelector((state) => state.cart.cartItems);
+  const dispatch = useAppDispatch();
+  const cartProduct = cartItems.find((item) => item._id === product._id);
 
   const handleIncQty = () => {
-    setQuantity((prev) => ++prev);
+    dispatch(addCartItem(product));
   };
 
   const handleDecQty = () => {
-    if (quantity === 0) {
-      setQuantity(0);
-    } else {
-      setQuantity((prev) => --prev);
-    }
+    dispatch(removeOneCartItem(product._id));
   };
 
   return (
     <>
-      {quantity === 0 ? (
+      {cartProduct === undefined ? (
         <button
           onClick={handleIncQty}
           className="w-14 px-4 py-1 border border-primary rounded-md text-xs text-primary font-semibold bg-green-50 cursor-pointer"
@@ -30,7 +35,7 @@ const AddItemToCartButton = () => {
           <button onClick={handleDecQty} className=" px-[0.35rem] py-2 ">
             <FaMinus className="text-xxs h-full " />
           </button>
-          <span className="text-xxs font-semibold">{quantity}</span>
+          <span className="text-xxs font-semibold">{cartProduct.quantity}</span>
           <button onClick={handleIncQty} className=" px-[0.35rem] py-2 ">
             <FaPlus className="text-xxs" />
           </button>
