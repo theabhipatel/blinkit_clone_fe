@@ -18,7 +18,7 @@ const App = () => {
           <Route path="/" element={<Home />} />
           <Route path="/s" element={<Search />} />
           <Route path="/prn/:name/prid/:id" element={<Product />} />
-          <Route path="/cn/:name/cid/:id/:subcid" element={<Category />} />
+          <Route path="/cn/:subcname/cid/:cid/:subcid" element={<Category />} />
           <Route path="*" element={<PageNotFound />} />
         </Routes>
         <Footer />

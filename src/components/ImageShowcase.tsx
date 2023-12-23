@@ -1,20 +1,14 @@
-import { useState } from "react";
+import { useState, FC } from "react";
 
-const images = [
-  "https://cdn.grofers.com/cdn-cgi/image/f=auto,fit=scale-down,q=85,metadata=none,w=500,h=500/app/images/products/full_screen/pro_112620.jpg?ts=1685979222",
-  "https://cdn.grofers.com/cdn-cgi/image/f=auto,fit=scale-down,q=85,metadata=none,w=500,h=500/app/images/products/sliding_image/112620a.jpg?ts=1687265034",
-  "https://cdn.grofers.com/cdn-cgi/image/f=auto,fit=scale-down,q=85,metadata=none,w=500,h=500/app/images/products/sliding_image/112620b.jpg?ts=1625805730",
-  "https://cdn.grofers.com/cdn-cgi/image/f=auto,fit=scale-down,q=85,metadata=none,w=500,h=500/app/images/products/sliding_image/112620c.jpg?ts=1625805730",
-  "https://cdn.grofers.com/cdn-cgi/image/f=auto,fit=scale-down,q=85,metadata=none,w=500,h=500/app/images/products/sliding_image/112620d.jpg?ts=1625805730",
-  "https://cdn.grofers.com/cdn-cgi/image/f=auto,fit=scale-down,q=85,metadata=none,w=500,h=500/app/images/products/sliding_image/112620e.jpg",
-  "https://cdn.grofers.com/cdn-cgi/image/f=auto,fit=scale-down,q=85,metadata=none,w=500,h=500/app/images/products/common/customer_care.jpg",
-];
+interface IProps {
+  images: string[];
+}
 
-const ImageShowcase = () => {
+const ImageShowcase: FC<IProps> = ({ images }) => {
   const [activeImage, setActiveImage] = useState(0);
   return (
     <div>
-      <div className="w-[60%] mx-auto bg-red-500 h-[20rem]">
+      <div className="w-[60%] mx-auto  h-[20rem]">
         <img
           src={images[activeImage]}
           alt="balaji sev"
@@ -26,7 +20,7 @@ const ImageShowcase = () => {
           <div
             key={index}
             onClick={() => setActiveImage(index)}
-            className={`min-w-[5rem] h-20 border  rounded-md overflow-hidden ${
+            className={`min-w-[5rem] h-20 border cursor-pointer rounded-md overflow-hidden ${
               activeImage === index ? "border-primary" : "border-zinc-200"
             }`}
           >

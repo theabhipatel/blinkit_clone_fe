@@ -1,68 +1,56 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
 import { MdArrowRight } from "react-icons/md";
 import AddButton from "../components/molecules/AddButton";
 import { whyShopFromBlinkit } from "../constant";
 import DeliveryTime from "../components/molecules/DeliveryTime";
 import ImageShowcase from "../components/ImageShowcase";
 import { Helmet } from "react-helmet";
+import { axiosInstance } from "../utils/axiosInstance";
+import { IProduct as GenericIProduct } from "../interfaces";
+import { NavLink, useParams } from "react-router-dom";
 
-const details = [
-  {
-    title: "Key Features",
-    desc: "Made from choicest ingredients blended in traditional spices Spicy and scrumptious tea-time accompaniment Perfect snack to savour crunchiness in every bite and satiate hunger pangs in a jiffy",
-  },
-  {
-    title: "Unit",
-    desc: "200 g",
-  },
-  {
-    title: "Shelf Life",
-    desc: "4 months",
-  },
-  {
-    title: "Country Of Origin",
-    desc: "India",
-  },
-  {
-    title: "Customer Care Details",
-    desc: "Email: info@blinkit.com",
-  },
-  {
-    title: "Return Policy",
-    desc: "This Item is non-returnable. For a damaged, defective, incorrect or expired item, you can request a replacement within 72 hours of delivery. In case of an incorrect item, you may raise a replacement or return request only if the item is sealed/ unopened/ unused and in original condition.",
-  },
-  {
-    title: "Seller",
-    desc: "Moonstone Ventures LLP",
-  },
-  {
-    title: "Seller FSSAI",
-    desc: "13323999000008",
-  },
-  {
-    title: "Disclaimer",
-    desc: "Every effort is made to maintain the accuracy of all information. However, actual product packaging and materials may contain more and/or different information. It is recommended not to solely rely on the information presented.",
-  },
-];
+interface IProduct extends GenericIProduct {
+  subCategoryTitle: string;
+}
 
 const Product = () => {
+  const { id } = useParams();
+  const [fetchedProduct, setFetchedProduct] = useState<IProduct>();
+  useEffect(() => {
+    getProduct();
+  }, []);
+
+  const getProduct = async () => {
+    try {
+      const res = await axiosInstance.get(`/products/${id}`);
+      if (res.status === 200) {
+        setFetchedProduct(res.data.product);
+      }
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
   return (
     <>
       <Helmet>
-        <title>Balaji Ratlami Sev Price - Buy Online at ₹40 in India</title>
+        <title>{fetchedProduct?.title}</title>
       </Helmet>
       <div className="w-full flex   mt-16  mb-10 border-b border-zinc-300 ">
         {/* ---> Left Section <--- */}
         <div className="w-[55%]  p-16 pt-0 border-r border-zinc-300">
           {/* ---> Showing Images <--- */}
-          <ImageShowcase />
+          {fetchedProduct?.images && (
+            <ImageShowcase images={fetchedProduct?.images} />
+          )}
+
           {/* --->Product Details <--- */}
           <div className="mt-5 pt-5 border-t border-zinc-300">
             <h3 className="text-xl font-semibold my-3 ">Product Details</h3>
-            {details.map(({ title, desc }, index) => (
+            {fetchedProduct?.details.map(({ title, description }, index) => (
               <React.Fragment key={index}>
                 <h4 className="text-xs font-[500] my-2">{title}</h4>
-                <p className="text-xs text-zinc-500 my-2">{desc}</p>
+                <p className="text-xs text-zinc-500 my-2">{description}</p>
               </React.Fragment>
             ))}
           </div>
@@ -74,29 +62,36 @@ const Product = () => {
             {/* ---> Header Name and Navigation <--- */}
             <div className="border-b border-zinc-300 pb-3">
               <div className="flex gap-1 text-[11px]">
-                <span className="hover:text-primary duration-300">Home</span>
+                <NavLink to="/" className="hover:text-primary duration-300">
+                  Home
+                </NavLink>
                 <span>/</span>
-                <span className="hover:text-primary duration-300">
-                  Bhujia & Mixtures
-                </span>
+                <NavLink to="/" className="hover:text-primary duration-300">
+                  {fetchedProduct?.subCategoryTitle}
+                </NavLink>
                 <span>/</span>
-                <span className="text-zinc-400">Balaji Ratlami Sev</span>
+                <span className="text-zinc-400">{fetchedProduct?.title}</span>
               </div>
-              <h1 className="text-xl font-bold mt-2">Balaji Ratlami Sev</h1>
+              <h1 className="text-xl font-bold mt-2">
+                {fetchedProduct?.title}
+              </h1>
               <div className="mt-2" />
               <DeliveryTime size="L" />
 
               <span className="text-sm font-[500] text-primary flex items-center mt-2">
-                <span>View all by Balaji</span>
+                <span>View all by {fetchedProduct?.brand}</span>
                 <MdArrowRight className="text-xl" />
               </span>
             </div>
             {/* ---> Price section <--- */}
             <div className="flex justify-between items-center mt-2">
               <div>
-                <h4 className="text-[11px] font-[500] text-zinc-500">200 g</h4>
+                <h4 className="text-[11px] font-[500] text-zinc-500">
+                  {fetchedProduct?.unit}
+                </h4>
                 <h4 className="text-xs">
-                  MRP <span className="font-semibold">₹40</span>
+                  MRP{" "}
+                  <span className="font-semibold">{fetchedProduct?.price}</span>
                 </h4>
                 <h5 className="text-xxs text-zinc-400">
                   (Inclusive of all taxes)

@@ -1,4 +1,6 @@
+import { FC } from "react";
 import { NavLink } from "react-router-dom";
+import { ICategory } from "../interfaces";
 
 const categoryImages = [
   "https://cdn.grofers.com/cdn-cgi/image/f=auto,fit=scale-down,q=70,metadata=none,w=270/layout-engine/2022-12/paan-corner_web.png",
@@ -23,15 +25,22 @@ const categoryImages = [
   "https://cdn.grofers.com/cdn-cgi/image/f=auto,fit=scale-down,q=70,metadata=none,w=270/layout-engine/2022-11/Slice-20.png",
 ];
 
-const HomeScreenCategoriesPoster = () => {
-  const cn = "fresh-vegetables";
-  const cid = "1487";
-  const subcid = "1489";
+interface IProps {
+  categories: ICategory[];
+}
+
+const HomeScreenCategoriesPoster: FC<IProps> = ({ categories }) => {
   return (
     <div className="flex gap-1 flex-wrap">
-      {categoryImages.map((item, index) => (
-        <NavLink key={index} to={`/cn/${cn}/cid/${cid}/${subcid}`}>
-          <img src={item} alt="category" className="w-[6rem]" />
+      {categories.map(({ _id, thumbnail, subCategories }) => (
+        <NavLink
+          key={_id}
+          to={`/cn/${subCategories[0]?.title
+            .toLowerCase()
+            .split(" ")
+            .join("-")}/cid/${_id}/${subCategories[0]?._id}`}
+        >
+          <img src={thumbnail} alt="category" className="w-[6rem]" />
         </NavLink>
       ))}
     </div>

@@ -2,8 +2,59 @@ import CategorySlider from "../components/CategorySlider";
 import HomeScreenCategoriesPoster from "../components/HomeScreenCategoriesPoster";
 import HomeScreenPoster from "../components/HomeScreenPoster";
 import { Helmet } from "react-helmet";
+import { axiosInstance } from "../utils/axiosInstance";
+import { useEffect, useState } from "react";
+import { ICategory, IProduct } from "../interfaces";
 
 const Home = () => {
+  const [dairyProducts, setDairyProducts] = useState<IProduct[]>([]);
+  const [vegetablesAndFruitsProducts, setVegetablesAndFruitsProducts] =
+    useState<IProduct[]>([]);
+  const [categories, setCategories] = useState<ICategory[]>([]);
+
+  useEffect(() => {
+    getDairyProducts();
+    getVegetablesAndFruitsProducts();
+    getCategories();
+  }, []);
+
+  const getDairyProducts = async () => {
+    try {
+      const res = await axiosInstance.get(
+        "/products/category/6582c1964460ca5037b2304e"
+      );
+      if (res.status === 200) {
+        setDairyProducts(res.data.products);
+      }
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
+  const getVegetablesAndFruitsProducts = async () => {
+    try {
+      const res = await axiosInstance.get(
+        "/products/category/6582c57beae03687384b458c"
+      );
+      if (res.status === 200) {
+        setVegetablesAndFruitsProducts(res.data.products);
+      }
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
+  const getCategories = async () => {
+    try {
+      const res = await axiosInstance.get("/categories");
+      if (res.status === 200) {
+        setCategories(res.data.categories);
+      }
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
   return (
     <main className="w-full px-20 my-16 ">
       <Helmet>
@@ -30,11 +81,14 @@ const Home = () => {
         />
       </Helmet>
       <HomeScreenPoster />
-      <HomeScreenCategoriesPoster />
-      <CategorySlider />
-      <CategorySlider />
-      <CategorySlider />
-      <CategorySlider />
+      <HomeScreenCategoriesPoster categories={categories} />
+      <CategorySlider categoryTitle="Dairy & Breads" products={dairyProducts} />
+      <CategorySlider
+        categoryTitle="Fruits & Vegetables"
+        products={vegetablesAndFruitsProducts}
+      />
+      {/* <CategorySlider />
+      <CategorySlider /> */}
     </main>
   );
 };
