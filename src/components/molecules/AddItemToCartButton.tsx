@@ -1,7 +1,7 @@
 import { useState } from "react";
 import { FaPlus, FaMinus } from "react-icons/fa6";
 
-const AddButton = () => {
+const AddItemToCartButton = () => {
   const [quantity, setQuantity] = useState(0);
 
   const handleIncQty = () => {
@@ -40,4 +40,4 @@ const AddButton = () => {
   );
 };
 
-export default AddButton;
+export default AddItemToCartButton;

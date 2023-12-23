@@ -1,4 +1,4 @@
-import AddButton from "./AddButton";
+import AddButton from "./AddItemToCartButton";
 
 const CartItem = () => {
   return (
