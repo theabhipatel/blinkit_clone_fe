@@ -4,16 +4,18 @@ import HomeScreenPoster from "../components/HomeScreenPoster";
 import { Helmet } from "react-helmet";
 import { axiosInstance } from "../utils/axiosInstance";
 import { useEffect, useState } from "react";
-import { IProduct } from "../interfaces";
+import { ICategory, IProduct } from "../interfaces";
 
 const Home = () => {
   const [dairyProducts, setDairyProducts] = useState<IProduct[]>([]);
   const [vegetablesAndFruitsProducts, setVegetablesAndFruitsProducts] =
     useState<IProduct[]>([]);
+  const [categories, setCategories] = useState<ICategory[]>([]);
 
   useEffect(() => {
     getDairyProducts();
     getVegetablesAndFruitsProducts();
+    getCategories();
   }, []);
 
   const getDairyProducts = async () => {
@@ -36,6 +38,17 @@ const Home = () => {
       );
       if (res.status === 200) {
         setVegetablesAndFruitsProducts(res.data.products);
+      }
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
+  const getCategories = async () => {
+    try {
+      const res = await axiosInstance.get("/categories");
+      if (res.status === 200) {
+        setCategories(res.data.categories);
       }
     } catch (error) {
       console.log(error);
@@ -68,7 +81,7 @@ const Home = () => {
         />
       </Helmet>
       <HomeScreenPoster />
-      <HomeScreenCategoriesPoster />
+      <HomeScreenCategoriesPoster categories={categories} />
       <CategorySlider categoryTitle="Dairy & Breads" products={dairyProducts} />
       <CategorySlider
         categoryTitle="Fruits & Vegetables"

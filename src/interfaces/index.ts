@@ -19,3 +19,10 @@ export interface ISubCategory {
   categoryId: string;
   thumbnail: string;
 }
+
+export interface ICategory {
+  _id: string;
+  title: string;
+  thumbnail: string;
+  subCategories: ISubCategory[];
+}
