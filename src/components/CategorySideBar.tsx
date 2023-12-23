@@ -28,7 +28,10 @@ const CategorySideBar: FC<IProps> = ({
             key={_id}
             onClick={() =>
               handleClickSubCategory(
-                `/cn/${title}/cid/${categoryId}/${_id}`,
+                `/cn/${title
+                  .toLowerCase()
+                  .split(" ")
+                  .join("-")}/cid/${categoryId}/${_id}`,
                 _id
               )
             }
