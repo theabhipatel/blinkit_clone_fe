@@ -12,6 +12,7 @@ import { useAppDispatch, useAppSelector } from "../store/hooks";
 import { toggleCartOpenAndClose } from "../store/cart/cartSlice";
 import { axiosInstance } from "../utils/axiosInstance";
 import { IProduct } from "../interfaces";
+import { toggleLoginModalOpenAndClose } from "../store/auth/authSlice";
 
 interface IProps {}
 
@@ -53,8 +54,12 @@ const Cart: FC<IProps> = () => {
     }
   };
 
+  const handleLoginModalOpen = () => {
+    dispatch(toggleLoginModalOpenAndClose(true));
+  };
+
   return (
-    <div className="fixed  inset-0   flex justify-end z-50">
+    <div className="fixed inset-0 flex justify-end z-50">
       <div
         onClick={handleCartClose}
         className="w-[75%] h-full bg-black opacity-75 duration-300 ease-in"
@@ -181,7 +186,10 @@ const Cart: FC<IProps> = () => {
               <div className="my-24" />
               {/* ---> Login to Proceed <--- */}
               <div className="fixed bottom-0 w-[20rem]  my-3 p-3  mx-auto rounded-md bg-white flex flex-col ">
-                <button className="px-2 py-[0.4rem] text-xs text-white bg-primary rounded-md flex justify-between items-center">
+                <button
+                  onClick={handleLoginModalOpen}
+                  className="px-2 py-[0.4rem] text-xs text-white bg-primary rounded-md flex justify-between items-center"
+                >
                   <div className="flex flex-col items-center">
                     <span className="font-semibold">₹{grandTotal}</span>
                     <span className="text-[9px] tracking-wide text-gray-300">

@@ -1,31 +1,43 @@
 import { FC, useState } from "react";
 import { BsArrowLeft } from "react-icons/bs";
+import { toggleLoginModalOpenAndClose } from "../store/auth/authSlice";
+import { useAppDispatch } from "../store/hooks";
 
 interface IProps {
-  setIsLoginModalOpen: React.Dispatch<React.SetStateAction<boolean>>;
+  // setIsLoginModalOpen: React.Dispatch<React.SetStateAction<boolean>>;
 }
 
-const LoginModal: FC<IProps> = ({ setIsLoginModalOpen }) => {
+const LoginModal: FC<IProps> = () => {
+  const dispatch = useAppDispatch();
   const [mobNumber, setMobNumber] = useState<string>("");
 
-  const handleModalClose = (e: any) => {
+  // const handleModalClose = (e: any) => {
+  //   if (e.target.id === "container") {
+  //     setIsLoginModalOpen(false);
+  //   }
+  // };
+
+  const handleLoginModalClose = (e: any) => {
     if (e.target.id === "container") {
-      setIsLoginModalOpen(false);
+      dispatch(toggleLoginModalOpenAndClose(false));
     }
+  };
+  const handleLoginModalCloseOnBackButton = () => {
+    dispatch(toggleLoginModalOpenAndClose(false));
   };
 
   // const handleLogin = () => {};
 
   return (
-    <div className="fixed inset-0 ">
+    <div className="fixed inset-0 z-50">
       <div
         id="container"
-        onClick={handleModalClose}
+        onClick={handleLoginModalClose}
         className="w-full h-full bg-black/70 flex justify-center items-center"
       >
         <div className="relative w-[28rem] h-[17rem] bg-white rounded-xl p-3 flex flex-col items-center gap-2">
           <div
-            onClick={() => setIsLoginModalOpen(false)}
+            onClick={handleLoginModalCloseOnBackButton}
             className="absolute left-3 top-2 p-2 cursor-pointer"
           >
             <BsArrowLeft />

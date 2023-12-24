@@ -9,9 +9,13 @@ import ScrollToTop from "./components/molecules/ScrollToTop";
 import Category from "./pages/Category";
 import { useAppSelector } from "./store/hooks";
 import Cart from "./components/Cart";
+import LoginModal from "./components/LoginModal";
 
 const App = () => {
   const isCartOpen = useAppSelector((state) => state.cart.isCartOpen);
+  const isLoginModalOpen = useAppSelector(
+    (state) => state.auth.isLoginModalOpen
+  );
 
   return (
     <div
@@ -23,6 +27,7 @@ const App = () => {
         <ScrollToTop />
         <Navbar />
         {isCartOpen && <Cart />}
+        {isLoginModalOpen && <LoginModal />}
         <Routes>
           <Route path="/" element={<Home />} />
           <Route path="/s" element={<Search />} />

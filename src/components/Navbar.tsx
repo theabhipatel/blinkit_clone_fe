@@ -8,6 +8,7 @@ import LoginModal from "./LoginModal";
 import TextTransition, { presets } from "react-text-transition";
 import { useAppDispatch, useAppSelector } from "../store/hooks";
 import { toggleCartOpenAndClose } from "../store/cart/cartSlice";
+import { toggleLoginModalOpenAndClose } from "../store/auth/authSlice";
 
 const TEXTS = [
   'Search "milk"',
@@ -65,6 +66,10 @@ const Navbar = () => {
 
   const handleCartOpen = () => {
     dispatch(toggleCartOpenAndClose(true));
+  };
+
+  const handleLoginModalOpen = () => {
+    dispatch(toggleLoginModalOpenAndClose(true));
   };
 
   return (
@@ -137,10 +142,7 @@ const Navbar = () => {
         {/* ---> Login <--- */}
         {pathname !== "/s" && (
           <div className="w-[20%] flex justify-center items-center ">
-            <div
-              onClick={() => setIsLoginModalOpen(true)}
-              className="cursor-pointer"
-            >
+            <div onClick={handleLoginModalOpen} className="cursor-pointer">
               <h4 className="text-sm text-zinc-700">Login</h4>
             </div>
           </div>
@@ -167,9 +169,6 @@ const Navbar = () => {
           )}
         </div>
       </div>
-      {isLoginModalOpen && (
-        <LoginModal setIsLoginModalOpen={setIsLoginModalOpen} />
-      )}
     </nav>
   );
 };
