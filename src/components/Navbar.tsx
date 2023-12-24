@@ -4,7 +4,6 @@ import { FiSearch } from "react-icons/fi";
 import { useNavigate, useLocation, useSearchParams } from "react-router-dom";
 import { MdClose } from "react-icons/md";
 import { useEffect, useState } from "react";
-import LoginModal from "./LoginModal";
 import TextTransition, { presets } from "react-text-transition";
 import { useAppDispatch, useAppSelector } from "../store/hooks";
 import { toggleCartOpenAndClose } from "../store/cart/cartSlice";
@@ -28,7 +27,6 @@ const Navbar = () => {
   const { pathname } = useLocation();
   const [searchText, setSearchText] = useState("");
   const [searchParams, setSearchParams] = useSearchParams();
-  const [isLoginModalOpen, setIsLoginModalOpen] = useState(false);
   const totalItems = useAppSelector((state) => state.cart.totalItems);
   const discountedAmount = useAppSelector(
     (state) => state.cart.discountedAmount
