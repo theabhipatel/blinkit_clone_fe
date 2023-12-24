@@ -8,11 +8,17 @@ export interface ICartItem extends IProduct {
 interface IInitialState {
   isCartOpen: boolean;
   cartItems: ICartItem[];
+  totalItems: number;
+  totalAmount: number;
+  discountedAmount: number;
 }
 
 const initialState: IInitialState = {
   isCartOpen: false,
   cartItems: [],
+  totalItems: 0,
+  totalAmount: 0,
+  discountedAmount: 0,
 };
 
 export const cartSlice = createSlice({
@@ -32,6 +38,19 @@ export const cartSlice = createSlice({
       } else {
         state.cartItems[itemIndex].quantity += 1;
       }
+      state.totalItems = state.cartItems.reduce((acc, curItem) => {
+        return (acc += curItem.quantity);
+      }, 0);
+      state.totalAmount = state.cartItems.reduce((acc, curItem) => {
+        return (acc += curItem.price * curItem.quantity);
+      }, 0);
+      state.discountedAmount = state.cartItems.reduce((acc, curItem) => {
+        return (acc += Math.round(
+          curItem.price *
+            (1 - curItem.discountPercentage / 100) *
+            curItem.quantity
+        ));
+      }, 0);
     },
     removeOneCartItem: (state, action: PayloadAction<string>) => {
       const itemIndex = state.cartItems.findIndex(
@@ -43,6 +62,19 @@ export const cartSlice = createSlice({
         } else {
           state.cartItems[itemIndex].quantity -= 1;
         }
+        state.totalItems = state.cartItems.reduce((acc, curItem) => {
+          return (acc += curItem.quantity);
+        }, 0);
+        state.totalAmount = state.cartItems.reduce((acc, curItem) => {
+          return (acc += curItem.price * curItem.quantity);
+        }, 0);
+        state.discountedAmount = state.cartItems.reduce((acc, curItem) => {
+          return (acc += Math.round(
+            curItem.price *
+              (1 - curItem.discountPercentage / 100) *
+              curItem.quantity
+          ));
+        }, 0);
       }
     },
   },
