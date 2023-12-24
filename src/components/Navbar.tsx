@@ -6,7 +6,7 @@ import { MdClose } from "react-icons/md";
 import { useEffect, useState } from "react";
 import LoginModal from "./LoginModal";
 import TextTransition, { presets } from "react-text-transition";
-import { useAppDispatch } from "../store/hooks";
+import { useAppDispatch, useAppSelector } from "../store/hooks";
 import { toggleCartOpenAndClose } from "../store/cart/cartSlice";
 
 const TEXTS = [
@@ -28,6 +28,10 @@ const Navbar = () => {
   const [searchText, setSearchText] = useState("");
   const [searchParams, setSearchParams] = useSearchParams();
   const [isLoginModalOpen, setIsLoginModalOpen] = useState(false);
+  const totalItems = useAppSelector((state) => state.cart.totalItems);
+  const discountedAmount = useAppSelector(
+    (state) => state.cart.discountedAmount
+  );
 
   /** ---> for creating transitional text on navbar search */
   const [index, setIndex] = useState(0);
@@ -147,10 +151,20 @@ const Navbar = () => {
       <div className="w-[20%]  flex justify-center items-center ">
         <div
           onClick={handleCartOpen}
-          className="bg-primary text-white flex justify-center items-center px-3 py-3 rounded-md gap-2 cursor-pointer"
+          className="bg-primary text-white flex justify-center items-center  h-10 w-[5.25rem]  rounded-md gap-2 cursor-pointer"
         >
-          <HiOutlineShoppingCart />
-          <h4 className="text-xxs font-bold">My Cart</h4>
+          <HiOutlineShoppingCart className="text-xl" />
+          {totalItems > 0 ? (
+            <div className="flex flex-col ">
+              <h4 className="text-[11px] font-bold leading-3">
+                {totalItems}
+                {totalItems > 1 ? " items" : " item"}
+              </h4>
+              <h4 className="text-[11px] font-bold">₹{discountedAmount}</h4>
+            </div>
+          ) : (
+            <h4 className="text-[11px] font-bold">My Cart</h4>
+          )}
         </div>
       </div>
       {isLoginModalOpen && (
