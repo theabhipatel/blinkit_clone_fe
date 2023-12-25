@@ -1,31 +1,50 @@
 import { FC, useState } from "react";
 import { BsArrowLeft } from "react-icons/bs";
+import {
+  loginUserAsync,
+  toggleLoginModalOpenAndClose,
+} from "../store/auth/authSlice";
+import { useAppDispatch } from "../store/hooks";
 
-interface IProps {
-  setIsLoginModalOpen: React.Dispatch<React.SetStateAction<boolean>>;
-}
+interface IProps {}
 
-const LoginModal: FC<IProps> = ({ setIsLoginModalOpen }) => {
+const LoginModal: FC<IProps> = () => {
+  const dispatch = useAppDispatch();
   const [mobNumber, setMobNumber] = useState<string>("");
 
-  const handleModalClose = (e: any) => {
+  const handleChange = (value: any) => {
+    if (isNaN(value)) return false;
+    setMobNumber(value);
+  };
+
+  const handleLoginModalClose = (e: any) => {
     if (e.target.id === "container") {
-      setIsLoginModalOpen(false);
+      dispatch(toggleLoginModalOpenAndClose(false));
     }
   };
 
-  // const handleLogin = () => {};
+  const handleLoginModalCloseOnBackButton = () => {
+    dispatch(toggleLoginModalOpenAndClose(false));
+  };
+
+  const handleLogin = () => {
+    if (mobNumber.length === 10) {
+      dispatch(loginUserAsync(mobNumber));
+    } else {
+      // TODO:  have to use formik for form validation
+    }
+  };
 
   return (
-    <div className="fixed inset-0 ">
+    <div className="fixed inset-0 z-50">
       <div
         id="container"
-        onClick={handleModalClose}
+        onClick={handleLoginModalClose}
         className="w-full h-full bg-black/70 flex justify-center items-center"
       >
         <div className="relative w-[28rem] h-[17rem] bg-white rounded-xl p-3 flex flex-col items-center gap-2">
           <div
-            onClick={() => setIsLoginModalOpen(false)}
+            onClick={handleLoginModalCloseOnBackButton}
             className="absolute left-3 top-2 p-2 cursor-pointer"
           >
             <BsArrowLeft />
@@ -50,12 +69,17 @@ const LoginModal: FC<IProps> = ({ setIsLoginModalOpen }) => {
                 autoFocus
                 name="mobNumber"
                 value={mobNumber}
-                onChange={(e) => setMobNumber(e.target.value)}
+                onChange={(e) => handleChange(e.target.value)}
                 placeholder="Enter mobile number"
                 className="outline-none w-full h-full rounded-md  border border-zinc-300 px-10 focus:border-zinc-500"
               />
             </div>
-            <button className="w-full h-9 bg-primary rounded-lg  text-white text-sm ">
+            <button
+              onClick={handleLogin}
+              className={`w-full h-9  rounded-lg  text-white text-sm ${
+                mobNumber.length === 10 ? "bg-primary" : "bg-gray-500"
+              }`}
+            >
               Continue
             </button>
           </div>

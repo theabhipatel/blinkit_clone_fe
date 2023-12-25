@@ -7,13 +7,22 @@ import PageNotFound from "./pages/PageNotFound";
 import Footer from "./components/Footer";
 import ScrollToTop from "./components/molecules/ScrollToTop";
 import Category from "./pages/Category";
+import { useAppSelector } from "./store/hooks";
+import Modals from "./modals/Modals";
 
 const App = () => {
+  const isCartOpen = useAppSelector((state) => state.cart.isCartOpen);
+
   return (
-    <div className="max-w-[1250px] mx-auto ">
+    <div
+      className={`max-w-[1250px] mx-auto ${
+        isCartOpen && "h-screen overflow-y-hidden"
+      }`}
+    >
       <BrowserRouter>
         <ScrollToTop />
         <Navbar />
+        <Modals />
         <Routes>
           <Route path="/" element={<Home />} />
           <Route path="/s" element={<Search />} />

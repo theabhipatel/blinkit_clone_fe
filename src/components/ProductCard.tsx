@@ -1,5 +1,5 @@
 import { FC } from "react";
-import AddButton from "./molecules/AddButton";
+import AddButton from "./molecules/AddItemToCartButton";
 import { NavLink } from "react-router-dom";
 import DeliveryTime from "./molecules/DeliveryTime";
 import { IProduct } from "../interfaces";
@@ -48,10 +48,10 @@ const ProductCard: FC<IProps> = ({ width, product }) => {
                 </h6>
               </>
             ) : (
-              <h6 className="text-xxs font-semibold">₹88</h6>
+              <h6 className="text-xxs font-semibold">₹{price}</h6>
             )}
           </div>
-          <AddButton />
+          <AddButton product={product} />
         </div>
       </div>
     </>

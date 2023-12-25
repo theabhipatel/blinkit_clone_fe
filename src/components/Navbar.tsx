@@ -4,9 +4,10 @@ import { FiSearch } from "react-icons/fi";
 import { useNavigate, useLocation, useSearchParams } from "react-router-dom";
 import { MdClose } from "react-icons/md";
 import { useEffect, useState } from "react";
-import Cart from "./Cart";
-import LoginModal from "./LoginModal";
 import TextTransition, { presets } from "react-text-transition";
+import { useAppDispatch, useAppSelector } from "../store/hooks";
+import { toggleCartOpenAndClose } from "../store/cart/cartSlice";
+import { toggleLoginModalOpenAndClose } from "../store/auth/authSlice";
 
 const TEXTS = [
   'Search "milk"',
@@ -22,11 +23,14 @@ const TEXTS = [
 
 const Navbar = () => {
   const navigate = useNavigate();
+  const dispatch = useAppDispatch();
   const { pathname } = useLocation();
   const [searchText, setSearchText] = useState("");
   const [searchParams, setSearchParams] = useSearchParams();
-  const [isCartOpen, setIsCartOpen] = useState(false);
-  const [isLoginModalOpen, setIsLoginModalOpen] = useState(false);
+  const totalItems = useAppSelector((state) => state.cart.totalItems);
+  const discountedAmount = useAppSelector(
+    (state) => state.cart.discountedAmount
+  );
 
   /** ---> for creating transitional text on navbar search */
   const [index, setIndex] = useState(0);
@@ -56,6 +60,14 @@ const Navbar = () => {
 
   const handleClearState = () => {
     setSearchText("");
+  };
+
+  const handleCartOpen = () => {
+    dispatch(toggleCartOpenAndClose(true));
+  };
+
+  const handleLoginModalOpen = () => {
+    dispatch(toggleLoginModalOpenAndClose(true));
   };
 
   return (
@@ -128,10 +140,7 @@ const Navbar = () => {
         {/* ---> Login <--- */}
         {pathname !== "/s" && (
           <div className="w-[20%] flex justify-center items-center ">
-            <div
-              onClick={() => setIsLoginModalOpen(true)}
-              className="cursor-pointer"
-            >
+            <div onClick={handleLoginModalOpen} className="cursor-pointer">
               <h4 className="text-sm text-zinc-700">Login</h4>
             </div>
           </div>
@@ -141,17 +150,23 @@ const Navbar = () => {
       {/* --->  cart button <--- */}
       <div className="w-[20%]  flex justify-center items-center ">
         <div
-          onClick={() => setIsCartOpen(true)}
-          className="bg-primary text-white flex justify-center items-center px-3 py-3 rounded-md gap-2 cursor-pointer"
+          onClick={handleCartOpen}
+          className="bg-primary text-white flex justify-center items-center  h-10 w-[5.25rem]  rounded-md gap-2 cursor-pointer"
         >
-          <HiOutlineShoppingCart />
-          <h4 className="text-xxs font-bold">My Cart</h4>
+          <HiOutlineShoppingCart className="text-xl" />
+          {totalItems > 0 ? (
+            <div className="flex flex-col ">
+              <h4 className="text-[11px] font-bold leading-3">
+                {totalItems}
+                {totalItems > 1 ? " items" : " item"}
+              </h4>
+              <h4 className="text-[11px] font-bold">₹{discountedAmount}</h4>
+            </div>
+          ) : (
+            <h4 className="text-[11px] font-bold">My Cart</h4>
+          )}
         </div>
       </div>
-      {isCartOpen && <Cart setIsCartOpen={setIsCartOpen} />}
-      {isLoginModalOpen && (
-        <LoginModal setIsLoginModalOpen={setIsLoginModalOpen} />
-      )}
     </nav>
   );
 };
