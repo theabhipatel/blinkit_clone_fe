@@ -56,6 +56,7 @@ const authSlice = createSlice({
       })
       .addCase(verifyOtpAsync.fulfilled, (state, action) => {
         state.status = "idle";
+        state.isUserLoggedIn = true;
         localStorage.setItem("@accessToken", action.payload.token);
         state.isOtpVerificationModalOpen = false;
         state.isSuccessVerificationModalOpen = true;
