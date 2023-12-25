@@ -31,6 +31,7 @@ const Navbar = () => {
   const discountedAmount = useAppSelector(
     (state) => state.cart.discountedAmount
   );
+  const isUserLoggedIn = useAppSelector((state) => state.auth.isUserLoggedIn);
 
   /** ---> for creating transitional text on navbar search */
   const [index, setIndex] = useState(0);
@@ -139,11 +140,24 @@ const Navbar = () => {
 
         {/* ---> Login <--- */}
         {pathname !== "/s" && (
-          <div className="w-[20%] flex justify-center items-center ">
-            <div onClick={handleLoginModalOpen} className="cursor-pointer">
-              <h4 className="text-sm text-zinc-700">Login</h4>
-            </div>
-          </div>
+          <>
+            {isUserLoggedIn ? (
+              <div className="w-[20%] flex justify-center items-center ">
+                <div className=" flex gap-1 p-1 items-center cursor-pointer">
+                  <h4 className="text-sm text-zinc-700 tracking-wider">
+                    Account
+                  </h4>
+                  <IoMdArrowDropdown className="text-xl mt-1" />
+                </div>
+              </div>
+            ) : (
+              <div className="w-[20%] flex justify-center items-center ">
+                <div onClick={handleLoginModalOpen} className="cursor-pointer">
+                  <h4 className="text-sm text-zinc-700">Login</h4>
+                </div>
+              </div>
+            )}
+          </>
         )}
       </div>
 

@@ -6,7 +6,7 @@ interface IInitialState {
   isOtpVerificationModalOpen: boolean;
   isSuccessVerificationModalOpen: boolean;
   status: "loading" | "idle" | "error";
-  token: string;
+  isUserLoggedIn: boolean;
   mobile: string;
 }
 const initialState: IInitialState = {
@@ -14,7 +14,7 @@ const initialState: IInitialState = {
   isOtpVerificationModalOpen: false,
   isSuccessVerificationModalOpen: false,
   status: "idle",
-  token: "",
+  isUserLoggedIn: false,
   mobile: "",
 };
 
@@ -33,6 +33,9 @@ const authSlice = createSlice({
     },
     addMobileNumber: (state, action: PayloadAction<string>) => {
       state.mobile = action.payload;
+    },
+    setIsUserLoggedIn: (state, action: PayloadAction<boolean>) => {
+      state.isUserLoggedIn = action.payload;
     },
   },
   extraReducers(builder) {
@@ -53,7 +56,7 @@ const authSlice = createSlice({
       })
       .addCase(verifyOtpAsync.fulfilled, (state, action) => {
         state.status = "idle";
-        state.token = action.payload.token;
+        localStorage.setItem("@accessToken", action.payload.token);
         state.isOtpVerificationModalOpen = false;
         state.isSuccessVerificationModalOpen = true;
       })
@@ -68,6 +71,7 @@ export const {
   toggleOtpVerificationModal,
   toggleSuccessVerificationModal,
   addMobileNumber,
+  setIsUserLoggedIn,
 } = authSlice.actions;
 
 export default authSlice.reducer;

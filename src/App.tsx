@@ -7,11 +7,20 @@ import PageNotFound from "./pages/PageNotFound";
 import Footer from "./components/Footer";
 import ScrollToTop from "./components/molecules/ScrollToTop";
 import Category from "./pages/Category";
-import { useAppSelector } from "./store/hooks";
+import { useAppDispatch, useAppSelector } from "./store/hooks";
 import Modals from "./modals/Modals";
+import { useEffect } from "react";
+import { setIsUserLoggedIn } from "./store/auth/authSlice";
 
 const App = () => {
+  const dispatch = useAppDispatch();
   const isCartOpen = useAppSelector((state) => state.cart.isCartOpen);
+
+  /** ---> adding accessToken to redux state from localStorage */
+  useEffect(() => {
+    const token = localStorage.getItem("@accessToken");
+    if (token) dispatch(setIsUserLoggedIn(true));
+  }, []);
 
   return (
     <div
