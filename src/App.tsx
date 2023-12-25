@@ -8,22 +8,10 @@ import Footer from "./components/Footer";
 import ScrollToTop from "./components/molecules/ScrollToTop";
 import Category from "./pages/Category";
 import { useAppSelector } from "./store/hooks";
-import Cart from "./components/Cart";
-import LoginModal from "./components/LoginModal";
-import OtpVerificationModal from "./components/OtpVerificationModal";
-import SuccessVerificationModal from "./components/SuccessVerificationModal";
+import Modals from "./modals/Modals";
 
 const App = () => {
   const isCartOpen = useAppSelector((state) => state.cart.isCartOpen);
-  const isLoginModalOpen = useAppSelector(
-    (state) => state.auth.isLoginModalOpen
-  );
-  const isOtpVerificationModalOpen = useAppSelector(
-    (state) => state.auth.isOtpVerificationModalOpen
-  );
-  const isSuccessVerificationModalOpen = useAppSelector(
-    (state) => state.auth.isSuccessVerificationModalOpen
-  );
 
   return (
     <div
@@ -34,10 +22,7 @@ const App = () => {
       <BrowserRouter>
         <ScrollToTop />
         <Navbar />
-        {isCartOpen && <Cart />}
-        {isLoginModalOpen && <LoginModal />}
-        {isOtpVerificationModalOpen && <OtpVerificationModal />}
-        {isSuccessVerificationModalOpen && <SuccessVerificationModal />}
+        <Modals />
         <Routes>
           <Route path="/" element={<Home />} />
           <Route path="/s" element={<Search />} />
