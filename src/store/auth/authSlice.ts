@@ -5,6 +5,7 @@ interface IInitialState {
   isLoginModalOpen: boolean;
   isOtpVerificationModalOpen: boolean;
   isSuccessVerificationModalOpen: boolean;
+  isAccountDropdownOpen: boolean;
   status: "loading" | "idle" | "error";
   isUserLoggedIn: boolean;
   mobile: string;
@@ -13,6 +14,7 @@ const initialState: IInitialState = {
   isLoginModalOpen: false,
   isOtpVerificationModalOpen: false,
   isSuccessVerificationModalOpen: false,
+  isAccountDropdownOpen: false,
   status: "idle",
   isUserLoggedIn: false,
   mobile: "",
@@ -30,6 +32,9 @@ const authSlice = createSlice({
     },
     toggleSuccessVerificationModal: (state, action: PayloadAction<boolean>) => {
       state.isSuccessVerificationModalOpen = action.payload;
+    },
+    toggleAccountDropdown: (state, action: PayloadAction<boolean>) => {
+      state.isAccountDropdownOpen = action.payload;
     },
     addMobileNumber: (state, action: PayloadAction<string>) => {
       state.mobile = action.payload;
@@ -71,6 +76,7 @@ export const {
   toggleLoginModalOpenAndClose,
   toggleOtpVerificationModal,
   toggleSuccessVerificationModal,
+  toggleAccountDropdown,
   addMobileNumber,
   setIsUserLoggedIn,
 } = authSlice.actions;

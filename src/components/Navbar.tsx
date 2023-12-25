@@ -7,7 +7,11 @@ import { useEffect, useState } from "react";
 import TextTransition, { presets } from "react-text-transition";
 import { useAppDispatch, useAppSelector } from "../store/hooks";
 import { toggleCartOpenAndClose } from "../store/cart/cartSlice";
-import { toggleLoginModalOpenAndClose } from "../store/auth/authSlice";
+import {
+  setIsUserLoggedIn,
+  toggleAccountDropdown,
+  toggleLoginModalOpenAndClose,
+} from "../store/auth/authSlice";
 
 const TEXTS = [
   'Search "milk"',
@@ -32,6 +36,10 @@ const Navbar = () => {
     (state) => state.cart.discountedAmount
   );
   const isUserLoggedIn = useAppSelector((state) => state.auth.isUserLoggedIn);
+  const isAccountDropdownOpen = useAppSelector(
+    (state) => state.auth.isAccountDropdownOpen
+  );
+  const mobileNum = useAppSelector((state) => state.auth.mobile);
 
   /** ---> for creating transitional text on navbar search */
   const [index, setIndex] = useState(0);
@@ -69,6 +77,16 @@ const Navbar = () => {
 
   const handleLoginModalOpen = () => {
     dispatch(toggleLoginModalOpenAndClose(true));
+  };
+
+  const handleDoropDownToggle = () => {
+    if (isAccountDropdownOpen) dispatch(toggleAccountDropdown(false));
+    else dispatch(toggleAccountDropdown(true));
+  };
+
+  const handleLogout = () => {
+    localStorage.removeItem("@accessToken");
+    dispatch(setIsUserLoggedIn(false));
   };
 
   return (
@@ -143,12 +161,43 @@ const Navbar = () => {
           <>
             {isUserLoggedIn ? (
               <div className="w-[20%] flex justify-center items-center ">
-                <div className=" flex gap-1 p-1 items-center cursor-pointer">
+                <button
+                  onClick={handleDoropDownToggle}
+                  className="relative flex gap-1 p-1 items-center cursor-pointer"
+                >
                   <h4 className="text-sm text-zinc-700 tracking-wider">
                     Account
                   </h4>
                   <IoMdArrowDropdown className="text-xl mt-1" />
-                </div>
+                  {isAccountDropdownOpen && (
+                    <div className="absolute top-12 -right-10 bg-white rounded-b-xl w-[13rem] h-72 z-50 flex flex-col text-start">
+                      <h4 className="text-sm px-3 mt-3 font-bold text-zinc-600">
+                        My Account
+                      </h4>
+                      <span className="text-xxs px-3 tracking-wider text-zinc-500">
+                        {mobileNum} 7089589563
+                      </span>
+                      <ul className="w-full mt-3 flex flex-col gap-1  text-[11px] text-zinc-500  ">
+                        <li className="px-3 py-1 hover:bg-gray-100 w-">
+                          My Orders
+                        </li>
+                        <li className="px-3 py-1 hover:bg-gray-100 ">
+                          Saved Address
+                        </li>
+                        <li className="px-3 py-1 hover:bg-gray-100 ">
+                          My Wallet
+                        </li>
+                        <li className="px-3 py-1 hover:bg-gray-100 ">FAQ's</li>
+                        <li
+                          onClick={handleLogout}
+                          className="px-3 py-1 hover:bg-gray-100 "
+                        >
+                          Log Out
+                        </li>
+                      </ul>
+                    </div>
+                  )}
+                </button>
               </div>
             ) : (
               <div className="w-[20%] flex justify-center items-center ">
