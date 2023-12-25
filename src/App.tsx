@@ -10,11 +10,15 @@ import Category from "./pages/Category";
 import { useAppSelector } from "./store/hooks";
 import Cart from "./components/Cart";
 import LoginModal from "./components/LoginModal";
+import OtpVerificationModal from "./components/OtpVerificationModal copy";
 
 const App = () => {
   const isCartOpen = useAppSelector((state) => state.cart.isCartOpen);
   const isLoginModalOpen = useAppSelector(
     (state) => state.auth.isLoginModalOpen
+  );
+  const isOtpVerificationModalOpen = useAppSelector(
+    (state) => state.auth.isOtpVerificationModalOpen
   );
 
   return (
@@ -28,6 +32,7 @@ const App = () => {
         <Navbar />
         {isCartOpen && <Cart />}
         {isLoginModalOpen && <LoginModal />}
+        {isOtpVerificationModalOpen && <OtpVerificationModal />}
         <Routes>
           <Route path="/" element={<Home />} />
           <Route path="/s" element={<Search />} />
