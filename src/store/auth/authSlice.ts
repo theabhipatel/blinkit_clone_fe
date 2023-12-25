@@ -27,7 +27,7 @@ const authSlice = createSlice({
       state.isOtpVerificationModalOpen = action.payload;
     },
     toggleSuccessVerificationModal: (state, action: PayloadAction<boolean>) => {
-      state.isOtpVerificationModalOpen = action.payload;
+      state.isSuccessVerificationModalOpen = action.payload;
     },
   },
   extraReducers(builder) {
@@ -56,8 +56,11 @@ const authSlice = createSlice({
   },
 });
 
-export const { toggleLoginModalOpenAndClose, toggleOtpVerificationModal } =
-  authSlice.actions;
+export const {
+  toggleLoginModalOpenAndClose,
+  toggleOtpVerificationModal,
+  toggleSuccessVerificationModal,
+} = authSlice.actions;
 
 export default authSlice.reducer;
 

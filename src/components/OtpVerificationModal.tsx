@@ -3,6 +3,7 @@ import { BsArrowLeft } from "react-icons/bs";
 import {
   toggleLoginModalOpenAndClose,
   toggleOtpVerificationModal,
+  toggleSuccessVerificationModal,
 } from "../store/auth/authSlice";
 import { useAppDispatch } from "../store/hooks";
 
@@ -14,6 +15,15 @@ const OtpVerificationModal: FC<IProps> = () => {
   const inputRef = useRef<HTMLInputElement>(null);
   const [otp, setOtp] = useState(new Array(4).fill(""));
   const [activeIndex, setActiveIndex] = useState(0);
+
+  useEffect(() => {
+    if (otp.join("").length === 4) {
+      setTimeout(() => {
+        dispatch(toggleSuccessVerificationModal(true));
+        dispatch(toggleOtpVerificationModal(false));
+      }, 3000);
+    }
+  }, [otp]);
 
   const handleChange = (
     e: React.ChangeEvent<HTMLInputElement>,
@@ -115,8 +125,17 @@ const OtpVerificationModal: FC<IProps> = () => {
               );
             })}
           </div>
-
-          <p className="mt-3 text-xs text-zinc-400">Resend code (in 30 secs)</p>
+          {otp.join("").length === 4 ? (
+            <div className="flex space-x-2 justify-center items-center bg-white h-screen ">
+              <div className="h-2 w-2 bg-primary rounded-full animate-bounce [animation-delay:-0.3s]"></div>
+              <div className="h-2 w-2 bg-primary rounded-full animate-bounce [animation-delay:-0.15s]"></div>
+              <div className="h-2 w-2 bg-primary rounded-full animate-bounce"></div>
+            </div>
+          ) : (
+            <p className="mt-3 text-xs text-zinc-400">
+              Resend code (in 30 secs)
+            </p>
+          )}
         </div>
       </div>
     </div>

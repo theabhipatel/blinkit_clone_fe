@@ -10,7 +10,8 @@ import Category from "./pages/Category";
 import { useAppSelector } from "./store/hooks";
 import Cart from "./components/Cart";
 import LoginModal from "./components/LoginModal";
-import OtpVerificationModal from "./components/OtpVerificationModal copy";
+import OtpVerificationModal from "./components/OtpVerificationModal";
+import SuccessVerificationModal from "./components/SuccessVerificationModal";
 
 const App = () => {
   const isCartOpen = useAppSelector((state) => state.cart.isCartOpen);
@@ -19,6 +20,9 @@ const App = () => {
   );
   const isOtpVerificationModalOpen = useAppSelector(
     (state) => state.auth.isOtpVerificationModalOpen
+  );
+  const isSuccessVerificationModalOpen = useAppSelector(
+    (state) => state.auth.isSuccessVerificationModalOpen
   );
 
   return (
@@ -33,6 +37,7 @@ const App = () => {
         {isCartOpen && <Cart />}
         {isLoginModalOpen && <LoginModal />}
         {isOtpVerificationModalOpen && <OtpVerificationModal />}
+        {isSuccessVerificationModalOpen && <SuccessVerificationModal />}
         <Routes>
           <Route path="/" element={<Home />} />
           <Route path="/s" element={<Search />} />
