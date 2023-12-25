@@ -1,6 +1,7 @@
 import { FC, useState } from "react";
 import { BsArrowLeft } from "react-icons/bs";
 import {
+  addMobileNumber,
   loginUserAsync,
   toggleLoginModalOpenAndClose,
 } from "../store/auth/authSlice";
@@ -30,6 +31,7 @@ const LoginModal: FC<IProps> = () => {
   const handleLogin = () => {
     if (mobNumber.length === 10) {
       dispatch(loginUserAsync(mobNumber));
+      dispatch(addMobileNumber(mobNumber));
     } else {
       // TODO:  have to use formik for form validation
     }

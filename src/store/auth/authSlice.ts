@@ -7,6 +7,7 @@ interface IInitialState {
   isSuccessVerificationModalOpen: boolean;
   status: "loading" | "idle" | "error";
   token: string;
+  mobile: string;
 }
 const initialState: IInitialState = {
   isLoginModalOpen: false,
@@ -14,6 +15,7 @@ const initialState: IInitialState = {
   isSuccessVerificationModalOpen: false,
   status: "idle",
   token: "",
+  mobile: "",
 };
 
 const authSlice = createSlice({
@@ -28,6 +30,9 @@ const authSlice = createSlice({
     },
     toggleSuccessVerificationModal: (state, action: PayloadAction<boolean>) => {
       state.isSuccessVerificationModalOpen = action.payload;
+    },
+    addMobileNumber: (state, action: PayloadAction<string>) => {
+      state.mobile = action.payload;
     },
   },
   extraReducers(builder) {
@@ -49,6 +54,8 @@ const authSlice = createSlice({
       .addCase(verifyOtpAsync.fulfilled, (state, action) => {
         state.status = "idle";
         state.token = action.payload.token;
+        state.isOtpVerificationModalOpen = false;
+        state.isSuccessVerificationModalOpen = true;
       })
       .addCase(verifyOtpAsync.rejected, (state) => {
         state.status = "error";
@@ -60,6 +67,7 @@ export const {
   toggleLoginModalOpenAndClose,
   toggleOtpVerificationModal,
   toggleSuccessVerificationModal,
+  addMobileNumber,
 } = authSlice.actions;
 
 export default authSlice.reducer;
@@ -80,7 +88,12 @@ interface IVerifyOtpAsyncParams {
 export const verifyOtpAsync = createAsyncThunk(
   "auth/verifyOtp",
   async ({ mobile, otp }: IVerifyOtpAsyncParams) => {
+    // try {
     const res = await verifyOtp(mobile, otp);
+    console.log("res ---->", res);
     return res;
+    // } catch (error) {
+    //   return error;
+    // }
   }
 );

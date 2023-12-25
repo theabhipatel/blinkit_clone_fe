@@ -9,10 +9,12 @@ export const loginUser = async (mobile: string) => {
   }
 };
 export const verifyOtp = async (mobile: string, otp: number) => {
-  try {
-    const res = await axiosInstance.post(`/auth/verify-otp`, { mobile, otp });
-    return res.data;
-  } catch (error) {
-    console.log(error);
-  }
+  // try {
+  const res = await axiosInstance.post(`/auth/verify-otp`, { mobile, otp });
+
+  return res.data;
+  // } catch (error) {
+  // console.log(error);
+  // return error;
+  // }
 };
