@@ -79,14 +79,18 @@ const Navbar = () => {
     dispatch(toggleLoginModalOpenAndClose(true));
   };
 
-  const handleDoropDownToggle = () => {
+  const handleDoropDownToggle = (e: any) => {
+    e.stopPropagation();
+    // if (e.target.id === "account-btn") {
     if (isAccountDropdownOpen) dispatch(toggleAccountDropdown(false));
     else dispatch(toggleAccountDropdown(true));
+    // }
   };
 
   const handleLogout = () => {
     localStorage.removeItem("@accessToken");
     dispatch(setIsUserLoggedIn(false));
+    dispatch(toggleAccountDropdown(false));
   };
 
   return (
@@ -161,31 +165,38 @@ const Navbar = () => {
           <>
             {isUserLoggedIn ? (
               <div className="w-[20%] flex justify-center items-center ">
-                <button
-                  onClick={handleDoropDownToggle}
-                  className="relative flex gap-1 p-1 items-center cursor-pointer"
-                >
-                  <h4 className="text-sm text-zinc-700 tracking-wider">
-                    Account
-                  </h4>
-                  <IoMdArrowDropdown className="text-xl mt-1" />
+                <div className="relative">
+                  <button
+                    onClick={handleDoropDownToggle}
+                    className="flex gap-1  items-center"
+                  >
+                    <h4 className="text-sm text-zinc-700 tracking-wider py-1 ">
+                      Account
+                    </h4>
+                    <IoMdArrowDropdown
+                      onClick={handleDoropDownToggle}
+                      className="text-xl mt-1 "
+                    />
+                  </button>
+
                   {isAccountDropdownOpen && (
-                    <div className="absolute top-12 -right-10 bg-white rounded-b-xl w-[13rem] h-72 z-50 flex flex-col text-start">
+                    <div className="absolute top-12 -right-12 bg-white rounded-b-xl w-[14rem] h-72 z-50 flex flex-col text-start">
                       <h4 className="text-sm px-3 mt-3 font-bold text-zinc-600">
                         My Account
                       </h4>
-                      <span className="text-xxs px-3 tracking-wider text-zinc-500">
+                      <span className="text-xxs px-3 tracking-wider text-zinc-500 leading-3">
                         {mobileNum} 7089589563
                       </span>
-                      <ul className="w-full mt-3 flex flex-col gap-1  text-[11px] text-zinc-500  ">
+                      <ul className="w-full mt-3 flex flex-col gap-1  text-[11px] text-zinc-500 cursor-pointer ">
                         <li className="px-3 py-1 hover:bg-gray-100 w-">
                           My Orders
                         </li>
                         <li className="px-3 py-1 hover:bg-gray-100 ">
                           Saved Address
                         </li>
-                        <li className="px-3 py-1 hover:bg-gray-100 ">
-                          My Wallet
+                        <li className="px-3 py-1 hover:bg-gray-100 flex justify-between">
+                          <span>My Wallet</span>
+                          <span>₹0</span>
                         </li>
                         <li className="px-3 py-1 hover:bg-gray-100 ">FAQ's</li>
                         <li
@@ -195,9 +206,26 @@ const Navbar = () => {
                           Log Out
                         </li>
                       </ul>
+                      <div className="flex gap-2 px-3 items-center mt-2  cursor-default">
+                        <div className="w-16 h-16 bg-red-400">
+                          <img
+                            src="./qr-code.png"
+                            alt="theabhipatel qr code "
+                          />
+                        </div>
+                        <div className="w-[60%] text-zinc-600">
+                          <h1 className="text-[13px] font-bold leading-4">
+                            Simple way to <br /> get groceries <br />{" "}
+                            <span className="text-blue-400"> in minutes</span>
+                          </h1>
+                          <h3 className="text-xxs leading-3 ">
+                            Scan the QR code and download blinkit app
+                          </h3>
+                        </div>
+                      </div>
                     </div>
                   )}
-                </button>
+                </div>
               </div>
             ) : (
               <div className="w-[20%] flex justify-center items-center ">
