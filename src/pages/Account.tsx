@@ -4,6 +4,7 @@ import { MdOutlinePendingActions } from "react-icons/md";
 import { HiOutlineCurrencyRupee } from "react-icons/hi";
 import { BsPerson } from "react-icons/bs";
 import MyOrders from "../components/MyOrders";
+import MyWallet from "../components/MyWallet";
 
 const Account = () => {
   const { pathname } = useLocation();
@@ -54,6 +55,7 @@ const Account = () => {
         </div>
         <div className="w-[75%] ">
           {pathname === "/account/orders" && <MyOrders />}
+          {pathname === "/account/wallet" && <MyWallet />}
         </div>
       </div>
     </div>
