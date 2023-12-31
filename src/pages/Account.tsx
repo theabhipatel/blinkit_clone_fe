@@ -5,6 +5,7 @@ import { HiOutlineCurrencyRupee } from "react-icons/hi";
 import { BsPerson } from "react-icons/bs";
 import MyOrders from "../components/MyOrders";
 import MyWallet from "../components/MyWallet";
+import MyAddresses from "../components/MyAddresses";
 
 const Account = () => {
   const { pathname } = useLocation();
@@ -56,6 +57,7 @@ const Account = () => {
         <div className="w-[75%] ">
           {pathname === "/account/orders" && <MyOrders />}
           {pathname === "/account/wallet" && <MyWallet />}
+          {pathname === "/account/addresses" && <MyAddresses />}
         </div>
       </div>
     </div>
