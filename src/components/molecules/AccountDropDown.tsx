@@ -35,7 +35,7 @@ const AccountDropDown = () => {
           My Orders
         </li>
         <li
-          onClick={() => handleNavigate("/account/adresses")}
+          onClick={() => handleNavigate("/account/addresses")}
           className={`px-3 py-1 hover:bg-gray-100 duration-300 flex `}
         >
           Saved Address
