@@ -5,3 +5,14 @@
 .hide-scrollbar::-webkit-scrollbar {
   display: none;
 }
+
+@font-face {
+  font-family: okra;
+  src: url("fonts/okra-bold.woff2");
+  src: url("fonts/okra-medium.woff2");
+  src: url("fonts/okra-regular.woff2");
+}
+
+/* #root {
+  font-family: okra;
+} */
