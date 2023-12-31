@@ -8,10 +8,10 @@ import TextTransition, { presets } from "react-text-transition";
 import { useAppDispatch, useAppSelector } from "../store/hooks";
 import { toggleCartOpenAndClose } from "../store/cart/cartSlice";
 import {
-  setIsUserLoggedIn,
   toggleAccountDropdown,
   toggleLoginModalOpenAndClose,
 } from "../store/auth/authSlice";
+import AccountDropDown from "./molecules/AccountDropDown";
 
 const TEXTS = [
   'Search "milk"',
@@ -39,7 +39,6 @@ const Navbar = () => {
   const isAccountDropdownOpen = useAppSelector(
     (state) => state.auth.isAccountDropdownOpen
   );
-  const mobileNum = useAppSelector((state) => state.auth.mobile);
 
   /** ---> for creating transitional text on navbar search */
   const [index, setIndex] = useState(0);
@@ -85,12 +84,6 @@ const Navbar = () => {
     if (isAccountDropdownOpen) dispatch(toggleAccountDropdown(false));
     else dispatch(toggleAccountDropdown(true));
     // }
-  };
-
-  const handleLogout = () => {
-    localStorage.removeItem("@accessToken");
-    dispatch(setIsUserLoggedIn(false));
-    dispatch(toggleAccountDropdown(false));
   };
 
   return (
@@ -179,49 +172,7 @@ const Navbar = () => {
                     />
                   </button>
 
-                  {isAccountDropdownOpen && (
-                    <div className="absolute top-12 -right-12 bg-white rounded-b-xl w-[14rem] h-72 z-50 flex flex-col text-start">
-                      <h4 className="text-sm px-3 mt-3 font-bold text-zinc-600">
-                        My Account
-                      </h4>
-                      <span className="text-xxs px-3 tracking-wider text-zinc-500 leading-3">
-                        {mobileNum} 7089589563
-                      </span>
-                      <ul className="w-full mt-3 flex flex-col gap-1  text-[11px] text-zinc-500 cursor-pointer ">
-                        <li className="px-3 py-1 hover:bg-gray-100 w-">
-                          My Orders
-                        </li>
-                        <li className="px-3 py-1 hover:bg-gray-100 ">
-                          Saved Address
-                        </li>
-                        <li className="px-3 py-1 hover:bg-gray-100 flex justify-between">
-                          <span>My Wallet</span>
-                          <span>₹0</span>
-                        </li>
-                        <li className="px-3 py-1 hover:bg-gray-100 ">FAQ's</li>
-                        <li
-                          onClick={handleLogout}
-                          className="px-3 py-1 hover:bg-gray-100 "
-                        >
-                          Log Out
-                        </li>
-                      </ul>
-                      <div className="flex gap-2 px-3 items-center mt-2  cursor-default">
-                        <div className="w-16 h-16 bg-red-400">
-                          <img src="/qr-code.png" alt="theabhipatel qr code " />
-                        </div>
-                        <div className="w-[60%] text-zinc-600">
-                          <h1 className="text-[13px] font-bold leading-4">
-                            Simple way to <br /> get groceries <br />{" "}
-                            <span className="text-blue-400"> in minutes</span>
-                          </h1>
-                          <h3 className="text-xxs leading-3 ">
-                            Scan the QR code and download blinkit app
-                          </h3>
-                        </div>
-                      </div>
-                    </div>
-                  )}
+                  {isAccountDropdownOpen && <AccountDropDown />}
                 </div>
               </div>
             ) : (
