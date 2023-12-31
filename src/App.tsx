@@ -11,6 +11,7 @@ import { useAppDispatch, useAppSelector } from "./store/hooks";
 import Modals from "./modals/Modals";
 import { useEffect } from "react";
 import { setIsUserLoggedIn } from "./store/auth/authSlice";
+import Account from "./pages/Account";
 
 const App = () => {
   const dispatch = useAppDispatch();
@@ -37,6 +38,11 @@ const App = () => {
           <Route path="/s" element={<Search />} />
           <Route path="/prn/:name/prid/:id" element={<Product />} />
           <Route path="/cn/:subcname/cid/:cid/:subcid" element={<Category />} />
+          <Route path="/account" element={<Account />}>
+            <Route path="/account/orders" />
+            <Route path="/account/addresses" />
+            <Route path="/account/wallet" />
+          </Route>
           <Route path="*" element={<PageNotFound />} />
         </Routes>
         <Footer />
