@@ -22,7 +22,7 @@ const LoginModal: FC<IProps> = () => {
     dispatch(toggleLoginModalOpenAndClose(false));
   };
 
-  const handlePreventBubling = (e: React.MouseEvent) => {
+  const handlePreventClick = (e: React.MouseEvent) => {
     e.stopPropagation();
   };
 
@@ -46,7 +46,7 @@ const LoginModal: FC<IProps> = () => {
         className="w-full h-full bg-black/70 flex justify-center items-center"
       >
         <div
-          onClick={handlePreventBubling}
+          onClick={handlePreventClick}
           className="relative w-[28rem] h-[17rem] bg-white rounded-xl p-3 flex flex-col items-center gap-2"
         >
           <div
