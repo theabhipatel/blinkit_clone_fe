@@ -98,7 +98,7 @@ const Product = () => {
                 </h5>
               </div>
               <div>
-                <AddButton />
+                {fetchedProduct && <AddButton product={fetchedProduct} />}
               </div>
             </div>
             {/* ---> Why shop from blinkit? <--- */}
