@@ -1,4 +1,4 @@
-import { FC, useState } from "react";
+import React, { FC, useState } from "react";
 import { BsArrowLeft } from "react-icons/bs";
 import {
   addMobileNumber,
@@ -18,10 +18,12 @@ const LoginModal: FC<IProps> = () => {
     setMobNumber(value);
   };
 
-  const handleLoginModalClose = (e: any) => {
-    if (e.target.id === "container") {
-      dispatch(toggleLoginModalOpenAndClose(false));
-    }
+  const handleLoginModalClose = () => {
+    dispatch(toggleLoginModalOpenAndClose(false));
+  };
+
+  const handlePreventBubling = (e: React.MouseEvent) => {
+    e.stopPropagation();
   };
 
   const handleLoginModalCloseOnBackButton = () => {
@@ -40,11 +42,13 @@ const LoginModal: FC<IProps> = () => {
   return (
     <div className="fixed inset-0 z-50">
       <div
-        id="container"
         onClick={handleLoginModalClose}
         className="w-full h-full bg-black/70 flex justify-center items-center"
       >
-        <div className="relative w-[28rem] h-[17rem] bg-white rounded-xl p-3 flex flex-col items-center gap-2">
+        <div
+          onClick={handlePreventBubling}
+          className="relative w-[28rem] h-[17rem] bg-white rounded-xl p-3 flex flex-col items-center gap-2"
+        >
           <div
             onClick={handleLoginModalCloseOnBackButton}
             className="absolute left-3 top-2 p-2 cursor-pointer"

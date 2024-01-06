@@ -7,15 +7,12 @@ interface IProps {}
 const InsetBackgroundModal: FC<IProps> = () => {
   const dispatch = useAppDispatch();
 
-  const handleDoropDownToggle = (e: any) => {
-    if (e.target.id === "container") {
-      dispatch(toggleAccountDropdown(false));
-    }
+  const handleDoropDownToggle = () => {
+    dispatch(toggleAccountDropdown(false));
   };
   return (
     <div className="fixed inset-0 z-40">
       <div
-        id="container"
         onClick={handleDoropDownToggle}
         className="w-full h-full relative bg-black/50 flex justify-center items-center"
       ></div>
