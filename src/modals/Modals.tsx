@@ -4,6 +4,7 @@ import OtpVerificationModal from "./OtpVerificationModal";
 import SuccessVerificationModal from "./SuccessVerificationModal";
 import { useAppSelector } from "../store/hooks";
 import InsetBackgroundModal from "./InsetBackgroundModal";
+import SaveAdressModal from "./SaveAdressModal";
 
 const Modals = () => {
   const isCartOpen = useAppSelector((state) => state.cart.isCartOpen);
@@ -27,6 +28,7 @@ const Modals = () => {
       {isOtpVerificationModalOpen && <OtpVerificationModal />}
       {isSuccessVerificationModalOpen && <SuccessVerificationModal />}
       {isAccountDropdownOpen && <InsetBackgroundModal />}
+      {/* <SaveAdressModal /> */}
     </>
   );
 };
