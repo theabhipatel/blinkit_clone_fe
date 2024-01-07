@@ -7,7 +7,11 @@ import { useEffect, useState } from "react";
 import TextTransition, { presets } from "react-text-transition";
 import { useAppDispatch, useAppSelector } from "../store/hooks";
 import { toggleCartOpenAndClose } from "../store/cart/cartSlice";
-import { toggleLoginModalOpenAndClose } from "../store/auth/authSlice";
+import {
+  toggleAccountDropdown,
+  toggleLoginModalOpenAndClose,
+} from "../store/auth/authSlice";
+import AccountDropDown from "./molecules/AccountDropDown";
 
 const TEXTS = [
   'Search "milk"',
@@ -30,6 +34,10 @@ const Navbar = () => {
   const totalItems = useAppSelector((state) => state.cart.totalItems);
   const discountedAmount = useAppSelector(
     (state) => state.cart.discountedAmount
+  );
+  const isUserLoggedIn = useAppSelector((state) => state.auth.isUserLoggedIn);
+  const isAccountDropdownOpen = useAppSelector(
+    (state) => state.auth.isAccountDropdownOpen
   );
 
   /** ---> for creating transitional text on navbar search */
@@ -68,6 +76,14 @@ const Navbar = () => {
 
   const handleLoginModalOpen = () => {
     dispatch(toggleLoginModalOpenAndClose(true));
+  };
+
+  const handleDoropDownToggle = (e: any) => {
+    e.stopPropagation();
+    // if (e.target.id === "account-btn") {
+    if (isAccountDropdownOpen) dispatch(toggleAccountDropdown(false));
+    else dispatch(toggleAccountDropdown(true));
+    // }
   };
 
   return (
@@ -139,11 +155,34 @@ const Navbar = () => {
 
         {/* ---> Login <--- */}
         {pathname !== "/s" && (
-          <div className="w-[20%] flex justify-center items-center ">
-            <div onClick={handleLoginModalOpen} className="cursor-pointer">
-              <h4 className="text-sm text-zinc-700">Login</h4>
-            </div>
-          </div>
+          <>
+            {isUserLoggedIn ? (
+              <div className="w-[20%] flex justify-center items-center ">
+                <div className="relative">
+                  <button
+                    onClick={handleDoropDownToggle}
+                    className="flex gap-1  items-center"
+                  >
+                    <h4 className="text-sm text-zinc-700 tracking-wider py-1 ">
+                      Account
+                    </h4>
+                    <IoMdArrowDropdown
+                      onClick={handleDoropDownToggle}
+                      className="text-xl mt-1 "
+                    />
+                  </button>
+
+                  {isAccountDropdownOpen && <AccountDropDown />}
+                </div>
+              </div>
+            ) : (
+              <div className="w-[20%] flex justify-center items-center ">
+                <div onClick={handleLoginModalOpen} className="cursor-pointer">
+                  <h4 className="text-sm text-zinc-700">Login</h4>
+                </div>
+              </div>
+            )}
+          </>
         )}
       </div>
 

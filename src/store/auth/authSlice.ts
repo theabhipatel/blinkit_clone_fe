@@ -5,15 +5,19 @@ interface IInitialState {
   isLoginModalOpen: boolean;
   isOtpVerificationModalOpen: boolean;
   isSuccessVerificationModalOpen: boolean;
+  isAccountDropdownOpen: boolean;
   status: "loading" | "idle" | "error";
-  token: string;
+  isUserLoggedIn: boolean;
+  mobile: string;
 }
 const initialState: IInitialState = {
   isLoginModalOpen: false,
   isOtpVerificationModalOpen: false,
   isSuccessVerificationModalOpen: false,
+  isAccountDropdownOpen: false,
   status: "idle",
-  token: "",
+  isUserLoggedIn: false,
+  mobile: "",
 };
 
 const authSlice = createSlice({
@@ -28,6 +32,15 @@ const authSlice = createSlice({
     },
     toggleSuccessVerificationModal: (state, action: PayloadAction<boolean>) => {
       state.isSuccessVerificationModalOpen = action.payload;
+    },
+    toggleAccountDropdown: (state, action: PayloadAction<boolean>) => {
+      state.isAccountDropdownOpen = action.payload;
+    },
+    addMobileNumber: (state, action: PayloadAction<string>) => {
+      state.mobile = action.payload;
+    },
+    setIsUserLoggedIn: (state, action: PayloadAction<boolean>) => {
+      state.isUserLoggedIn = action.payload;
     },
   },
   extraReducers(builder) {
@@ -48,7 +61,10 @@ const authSlice = createSlice({
       })
       .addCase(verifyOtpAsync.fulfilled, (state, action) => {
         state.status = "idle";
-        state.token = action.payload.token;
+        state.isUserLoggedIn = true;
+        localStorage.setItem("@accessToken", action.payload.token);
+        state.isOtpVerificationModalOpen = false;
+        state.isSuccessVerificationModalOpen = true;
       })
       .addCase(verifyOtpAsync.rejected, (state) => {
         state.status = "error";
@@ -60,6 +76,9 @@ export const {
   toggleLoginModalOpenAndClose,
   toggleOtpVerificationModal,
   toggleSuccessVerificationModal,
+  toggleAccountDropdown,
+  addMobileNumber,
+  setIsUserLoggedIn,
 } = authSlice.actions;
 
 export default authSlice.reducer;
@@ -80,7 +99,12 @@ interface IVerifyOtpAsyncParams {
 export const verifyOtpAsync = createAsyncThunk(
   "auth/verifyOtp",
   async ({ mobile, otp }: IVerifyOtpAsyncParams) => {
+    // try {
     const res = await verifyOtp(mobile, otp);
+    console.log("res ---->", res);
     return res;
+    // } catch (error) {
+    //   return error;
+    // }
   }
 );

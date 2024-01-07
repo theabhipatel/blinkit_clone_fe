@@ -7,11 +7,23 @@ import PageNotFound from "./pages/PageNotFound";
 import Footer from "./components/Footer";
 import ScrollToTop from "./components/molecules/ScrollToTop";
 import Category from "./pages/Category";
-import { useAppSelector } from "./store/hooks";
+import { useAppDispatch, useAppSelector } from "./store/hooks";
 import Modals from "./modals/Modals";
+import { useEffect } from "react";
+import { setIsUserLoggedIn } from "./store/auth/authSlice";
+import Account from "./pages/Account";
+import PrivateRoutes from "./hoc/PrivateRoutes";
+import Checkout from "./pages/Checkout";
 
 const App = () => {
+  const dispatch = useAppDispatch();
   const isCartOpen = useAppSelector((state) => state.cart.isCartOpen);
+
+  /** ---> adding accessToken to redux state from localStorage */
+  useEffect(() => {
+    const token = localStorage.getItem("@accessToken");
+    if (token) dispatch(setIsUserLoggedIn(true));
+  }, []);
 
   return (
     <div
@@ -28,6 +40,14 @@ const App = () => {
           <Route path="/s" element={<Search />} />
           <Route path="/prn/:name/prid/:id" element={<Product />} />
           <Route path="/cn/:subcname/cid/:cid/:subcid" element={<Category />} />
+          <Route element={<PrivateRoutes />}>
+            <Route path="/account" element={<Account />}>
+              <Route path="/account/orders" />
+              <Route path="/account/addresses" />
+              <Route path="/account/wallet" />
+            </Route>
+            <Route path="/checkout" element={<Checkout />} />
+          </Route>
           <Route path="*" element={<PageNotFound />} />
         </Routes>
         <Footer />
