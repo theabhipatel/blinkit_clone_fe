@@ -13,6 +13,7 @@ import { useEffect } from "react";
 import { setIsUserLoggedIn } from "./store/auth/authSlice";
 import Account from "./pages/Account";
 import PrivateRoutes from "./hoc/PrivateRoutes";
+import Checkout from "./pages/Checkout";
 
 const App = () => {
   const dispatch = useAppDispatch();
@@ -45,6 +46,7 @@ const App = () => {
               <Route path="/account/addresses" />
               <Route path="/account/wallet" />
             </Route>
+            <Route path="/checkout" element={<Checkout />} />
           </Route>
           <Route path="*" element={<PageNotFound />} />
         </Routes>

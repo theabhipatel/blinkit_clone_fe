@@ -15,11 +15,13 @@ import { IProduct } from "../interfaces";
 import { toggleLoginModalOpenAndClose } from "../store/auth/authSlice";
 import { IoLocationOutline } from "react-icons/io5";
 import CartMyAdress from "./CartMyAdress";
+import { useNavigate } from "react-router-dom";
 
 interface IProps {}
 
 const Cart: FC<IProps> = () => {
   const dispatch = useAppDispatch();
+  const navigate = useNavigate();
   const cartItems = useAppSelector((state) => state.cart.cartItems);
   const totalItems = useAppSelector((state) => state.cart.totalItems);
   const totalAmount = useAppSelector((state) => state.cart.totalAmount);
@@ -60,6 +62,11 @@ const Cart: FC<IProps> = () => {
 
   const handleLoginModalOpen = () => {
     dispatch(toggleLoginModalOpenAndClose(true));
+  };
+
+  const handleNavigateToCheckout = () => {
+    navigate("checkout");
+    handleCartClose();
   };
 
   return (
@@ -218,7 +225,11 @@ const Cart: FC<IProps> = () => {
                   </div>
 
                   <button
-                    onClick={handleLoginModalOpen}
+                    onClick={
+                      isUserLoggedIn
+                        ? handleNavigateToCheckout
+                        : handleLoginModalOpen
+                    }
                     className="px-2 py-[0.4rem] text-xs text-white bg-primary rounded-md flex justify-between items-center m-3"
                   >
                     <div className="flex flex-col items-center">
