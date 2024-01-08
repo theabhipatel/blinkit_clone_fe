@@ -32,7 +32,7 @@ const ProductCard: FC<IProps> = ({ width, product }) => {
         <DeliveryTime size="M" />
         <NavLink to={`/prn/${prn}/prid/${_id}`}>
           <div className="mt-2 h-[3.2rem] flex flex-col justify-between">
-            <h3 className="text-[11px] font-semibold">{title}</h3>
+            <h3 className="text-[11px] font-semibold line-clamp-2">{title}</h3>
             <h6 className="text-xxs text-gray-400">{unit}</h6>
           </div>
         </NavLink>
