@@ -1,9 +1,15 @@
 import React, { useState } from "react";
 import { IoCloseCircle } from "react-icons/io5";
+import { useAppDispatch } from "../store/hooks";
+import { toggleSaveAddressModal } from "../store/user/userSlice";
 
 const SaveAdressModal = () => {
+  const dispatch = useAppDispatch();
   const [courtesyTitle, setCourtesyTitle] = useState("Mr");
-  const handleModalClose = () => {};
+
+  const handleModalClose = () => {
+    dispatch(toggleSaveAddressModal(false));
+  };
 
   const handlePreventClick = (e: React.MouseEvent) => {
     e.stopPropagation();
@@ -27,7 +33,9 @@ const SaveAdressModal = () => {
           <div className="adress w-[55%] h-full p-5 ">
             <div className="flex justify-between items-center">
               <h3 className=" font-bold">Enter complete address</h3>
-              <IoCloseCircle className="text-zinc-500 text-xl cursor-pointer" />
+              <button onClick={handleModalClose}>
+                <IoCloseCircle className="text-zinc-500 text-xl cursor-pointer" />
+              </button>
             </div>
             <p className="text-[11px] text-zinc-500 mt-1">
               This allow us to find you easily and give you timely delivery

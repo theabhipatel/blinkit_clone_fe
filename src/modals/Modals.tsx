@@ -20,6 +20,9 @@ const Modals = () => {
   const isAccountDropdownOpen = useAppSelector(
     (state) => state.auth.isAccountDropdownOpen
   );
+  const isSaveAddressModalOpen = useAppSelector(
+    (state) => state.user.isSaveAddressModalOpen
+  );
 
   return (
     <>
@@ -28,7 +31,7 @@ const Modals = () => {
       {isOtpVerificationModalOpen && <OtpVerificationModal />}
       {isSuccessVerificationModalOpen && <SuccessVerificationModal />}
       {isAccountDropdownOpen && <InsetBackgroundModal />}
-      {/* <SaveAdressModal /> */}
+      {isSaveAddressModalOpen && <SaveAdressModal />}
     </>
   );
 };

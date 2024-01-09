@@ -3,12 +3,20 @@ import { IoMdArrowBack } from "react-icons/io";
 import { FiPlusCircle } from "react-icons/fi";
 import { MdOutlineCircle, MdCheckCircle } from "react-icons/md";
 import { BsThreeDots } from "react-icons/bs";
+import { useAppDispatch } from "../store/hooks";
+import { toggleSaveAddressModal } from "../store/user/userSlice";
 
 interface IProps {
   setIsMyAdressPage: React.Dispatch<React.SetStateAction<boolean>>;
 }
 
 const CartMyAdress: FC<IProps> = ({ setIsMyAdressPage }) => {
+  const dispatch = useAppDispatch();
+
+  const handleOpenSaveAddressModal = () => {
+    dispatch(toggleSaveAddressModal(true));
+  };
+
   const handleClosePage = () => {
     setIsMyAdressPage(false);
   };
@@ -24,7 +32,10 @@ const CartMyAdress: FC<IProps> = ({ setIsMyAdressPage }) => {
       {/* ---> body */}
       <div className="w-full my-10">
         {/* ---> Add a new address */}
-        <div className="flex gap-3 py-2 px-5 items-center ">
+        <div
+          onClick={handleOpenSaveAddressModal}
+          className="flex gap-3 py-2 px-5 items-center cursor-pointer"
+        >
           <div className="w-[10%] ">
             <FiPlusCircle className="text-2xl text-primary" />
           </div>
