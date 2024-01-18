@@ -26,3 +26,15 @@ export interface ICategory {
   thumbnail: string;
   subCategories: ISubCategory[];
 }
+
+export interface IAddress {
+  _id: string;
+  courtesyTitle: string;
+  name: string;
+  addressLine1: string;
+  addressLine2: string;
+  addressType: string;
+  latitude: number;
+  longitude: number;
+  landmark: string;
+}
