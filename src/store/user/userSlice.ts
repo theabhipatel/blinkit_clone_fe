@@ -2,13 +2,25 @@ import { createSlice, PayloadAction, createAsyncThunk } from "@reduxjs/toolkit";
 import { deleteAddress, getAddresses, saveAddress } from "./userApis";
 import { IAddress } from "../../interfaces";
 
+export type TSelectAddress = Pick<
+  IAddress,
+  "_id" | "addressType" | "addressLine1" | "addressLine2"
+>;
+
 interface IInitialState {
   addresses: IAddress[];
+  selectedAddress: TSelectAddress;
   isSaveAddressModalOpen: boolean;
 }
 
 const initialState: IInitialState = {
   addresses: [],
+  selectedAddress: {
+    _id: "",
+    addressType: "",
+    addressLine1: "",
+    addressLine2: "",
+  },
   isSaveAddressModalOpen: false,
 };
 
@@ -18,6 +30,9 @@ const userSlice = createSlice({
   reducers: {
     toggleSaveAddressModal: (state, action: PayloadAction<boolean>) => {
       state.isSaveAddressModalOpen = action.payload;
+    },
+    selectAddress: (state, action: PayloadAction<TSelectAddress>) => {
+      state.selectedAddress = action.payload;
     },
   },
   extraReducers(builder) {
@@ -31,7 +46,7 @@ const userSlice = createSlice({
   },
 });
 
-export const { toggleSaveAddressModal } = userSlice.actions;
+export const { toggleSaveAddressModal, selectAddress } = userSlice.actions;
 
 export default userSlice.reducer;
 
