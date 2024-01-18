@@ -1,11 +1,38 @@
-import React, { useState } from "react";
+import React, { useState, useRef } from "react";
 import { IoCloseCircle } from "react-icons/io5";
 import { useAppDispatch } from "../store/hooks";
-import { toggleSaveAddressModal } from "../store/user/userSlice";
+import {
+  getAddressesAsync,
+  saveAddressAsync,
+  toggleSaveAddressModal,
+} from "../store/user/userSlice";
+import { useFormik } from "formik";
+
+const initialValues = {
+  courtesyTitle: "Mr",
+  name: "",
+  addressLine1: "",
+  addressLine2: "",
+  addressType: "",
+  latitude: 0,
+  longitude: 0,
+  landmark: "",
+};
 
 const SaveAdressModal = () => {
   const dispatch = useAppDispatch();
-  const [courtesyTitle, setCourtesyTitle] = useState("Mr");
+  const otherAddressTypeRef = useRef<HTMLInputElement>(null);
+  const [addressType, setAddressType] = useState("Home");
+
+  const { values, errors, handleBlur, handleChange, handleSubmit } = useFormik({
+    initialValues,
+    onSubmit: (values) => {
+      dispatch(saveAddressAsync({ ...values, addressType })).then(() =>
+        dispatch(getAddressesAsync())
+      );
+      handleModalClose();
+    },
+  });
 
   const handleModalClose = () => {
     dispatch(toggleSaveAddressModal(false));
@@ -15,8 +42,9 @@ const SaveAdressModal = () => {
     e.stopPropagation();
   };
 
-  const handleSubmit = (e: React.FormEvent) => {
-    e.preventDefault();
+  const handleOtherClick = () => {
+    setAddressType("");
+    otherAddressTypeRef.current?.focus();
   };
 
   return (
@@ -47,9 +75,9 @@ const SaveAdressModal = () => {
             >
               <div className="flex gap-3">
                 <select
-                  defaultValue={courtesyTitle}
-                  value={courtesyTitle}
-                  onChange={(e) => setCourtesyTitle(e.target.value)}
+                  name="courtesyTitle"
+                  value={values.courtesyTitle}
+                  onChange={handleChange}
                   className="border-[1.5px] border-zinc-300 rounded-md p-1 outline-none"
                 >
                   <option value="Miss">Miss</option>
@@ -58,6 +86,10 @@ const SaveAdressModal = () => {
                 </select>
                 <input
                   type="text"
+                  name="name"
+                  value={values.name}
+                  onChange={handleChange}
+                  onBlur={handleBlur}
                   placeholder="Receiver's name"
                   className="border-[1.5px] border-zinc-300 rounded-md p-2 w-full outline-none"
                 />
@@ -65,11 +97,19 @@ const SaveAdressModal = () => {
 
               <input
                 type="text"
+                name="addressLine1"
+                value={values.addressLine1}
+                onChange={handleChange}
+                onBlur={handleBlur}
                 placeholder="Flat / House / Office No."
                 className="border-[1.5px] border-zinc-300 rounded-md p-2 w-full outline-none"
               />
               <input
                 type="text"
+                name="addressLine2"
+                value={values.addressLine2}
+                onChange={handleChange}
+                onBlur={handleBlur}
                 placeholder="Street / Society / Office Name "
                 className="border-[1.5px] border-zinc-300 rounded-md p-2 w-full outline-none"
               />
@@ -77,23 +117,53 @@ const SaveAdressModal = () => {
               <div className="w-full h-32">
                 <p>Save address as</p>
                 <div className="mt-2 flex gap-3">
-                  <span className="border-[1.5px] border-zinc-300  p-1 px-2 rounded-md cursor-pointer">
+                  <div
+                    onClick={() => setAddressType("Home")}
+                    className={`border-[1.5px] ${
+                      addressType === "Home"
+                        ? "border-primary"
+                        : "border-zinc-300"
+                    }   p-1 px-2 rounded-md cursor-pointer`}
+                  >
                     Home
-                  </span>
-                  <span className="border-[1.5px] border-zinc-300  p-1 px-2 rounded-md cursor-pointer">
+                  </div>
+                  <div
+                    onClick={() => setAddressType("Work")}
+                    className={`border-[1.5px] ${
+                      addressType === "Work"
+                        ? "border-primary"
+                        : "border-zinc-300"
+                    }   p-1 px-2 rounded-md cursor-pointer`}
+                  >
                     Work
-                  </span>
-                  <span className="border border-primary bg-green-50/40 p-1 px-2 rounded-md cursor-pointer">
+                  </div>
+                  <div
+                    onClick={handleOtherClick}
+                    className={`border-[1.5px] ${
+                      addressType !== "Home" && addressType !== "Work"
+                        ? "border-primary"
+                        : "border-zinc-300"
+                    }   p-1 px-2 rounded-md cursor-pointer`}
+                  >
                     Other
-                  </span>
+                  </div>
                 </div>
-                <input
-                  type="text"
-                  placeholder="Nickname of your adress"
-                  className="border-[1.5px] border-zinc-300 rounded-md p-2 w-full outline-none mt-2"
-                />
+                {addressType !== "Home" && addressType !== "Work" && (
+                  <input
+                    type="text"
+                    value={addressType}
+                    ref={otherAddressTypeRef}
+                    onChange={(e) => setAddressType(e.target.value)}
+                    placeholder="Nickname of your adress"
+                    className="border-[1.5px] border-zinc-300 rounded-md p-2 w-full outline-none mt-2"
+                  />
+                )}
               </div>
-              <button className="w-full text-center text-xs py-3 bg-primary text-white rounded-md font-semibold">
+
+              <button
+                type="submit"
+                className="w-full text-center text-xs py-3 bg-primary text-white rounded-md font-semibold"
+              >
                 Save Address
               </button>
             </form>

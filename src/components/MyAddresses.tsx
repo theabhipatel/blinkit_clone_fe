@@ -1,16 +1,29 @@
-import { useState } from "react";
+import { useEffect } from "react";
 import { FaPlus } from "react-icons/fa6";
 
 import MyAdressListItem from "./molecules/MyAdressListItem";
-import { useAppDispatch } from "../store/hooks";
-import { toggleSaveAddressModal } from "../store/user/userSlice";
+import { useAppDispatch, useAppSelector } from "../store/hooks";
+import {
+  deleteAddressAsync,
+  getAddressesAsync,
+  toggleSaveAddressModal,
+} from "../store/user/userSlice";
 
 const MyAddresses = () => {
   const dispatch = useAppDispatch();
-  const [addresses, setAdresses] = useState([]);
+  const addresses = useAppSelector((state) => state.user.addresses);
 
   const handleOpenSaveAddressModal = () => {
     dispatch(toggleSaveAddressModal(true));
+  };
+
+  useEffect(() => {
+    dispatch(getAddressesAsync());
+  }, []);
+
+  const handleDeleteAddress = async (id: string) => {
+    await dispatch(deleteAddressAsync(id));
+    dispatch(getAddressesAsync());
   };
 
   if (addresses.length === 0) {
@@ -52,8 +65,14 @@ const MyAddresses = () => {
           </button>
         </div>
         {/* ---> address list */}
-        {addresses.map(() => {
-          return <MyAdressListItem />;
+        {addresses.map((address) => {
+          return (
+            <MyAdressListItem
+              key={address._id}
+              address={address}
+              handleDeleteAddress={handleDeleteAddress}
+            />
+          );
         })}
       </div>
     );
