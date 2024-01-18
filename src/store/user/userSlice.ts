@@ -4,7 +4,7 @@ import { IAddress } from "../../interfaces";
 
 export type TSelectAddress = Pick<
   IAddress,
-  "_id" | "addressType" | "addressLine1" | "addressLine2"
+  "_id" | "addressType" | "addressLine1" | "addressLine2" | "landmark"
 >;
 
 interface IInitialState {
@@ -20,6 +20,7 @@ const initialState: IInitialState = {
     addressType: "",
     addressLine1: "",
     addressLine2: "",
+    landmark: "",
   },
   isSaveAddressModalOpen: false,
 };
@@ -31,7 +32,7 @@ const userSlice = createSlice({
     toggleSaveAddressModal: (state, action: PayloadAction<boolean>) => {
       state.isSaveAddressModalOpen = action.payload;
     },
-    selectAddress: (state, action: PayloadAction<TSelectAddress>) => {
+    selectAddress: (state, action: PayloadAction<IAddress>) => {
       state.selectedAddress = action.payload;
     },
   },

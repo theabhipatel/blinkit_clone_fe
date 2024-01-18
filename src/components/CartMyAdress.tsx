@@ -10,6 +10,7 @@ import {
   selectAddress,
   toggleSaveAddressModal,
 } from "../store/user/userSlice";
+import { IAddress } from "../interfaces";
 
 interface IProps {
   setIsMyAdressPage: React.Dispatch<React.SetStateAction<boolean>>;
@@ -33,7 +34,7 @@ const CartMyAdress: FC<IProps> = ({ setIsMyAdressPage }) => {
     setIsMyAdressPage(false);
   };
 
-  const handleSelectAddress = (address: TSelectAddress) => {
+  const handleSelectAddress = (address: IAddress) => {
     dispatch(selectAddress(address));
   };
 
@@ -71,25 +72,12 @@ const CartMyAdress: FC<IProps> = ({ setIsMyAdressPage }) => {
         {/* ---> Adress list */}
         <div className="p-2 flex flex-col gap-5">
           {addresses.map((address) => {
-            const {
-              _id,
-              addressType,
-              courtesyTitle,
-              name,
-              addressLine1,
-              addressLine2,
-            } = address;
+            const { _id, addressType, courtesyTitle, name, addressLine1 } =
+              address;
             return (
               <div key={address._id} className="flex  gap-2 ">
                 <div
-                  onClick={() =>
-                    handleSelectAddress({
-                      _id,
-                      addressType,
-                      addressLine1,
-                      addressLine2,
-                    })
-                  }
+                  onClick={() => handleSelectAddress(address)}
                   className="w-[10%] mt-1 cursor-pointer"
                 >
                   {selectedAddress._id === _id ? (

@@ -18,6 +18,8 @@ const Checkout = () => {
   const dispatch = useAppDispatch();
   const cartItems = useAppSelector((state) => state.cart.cartItems);
   const totalItems = useAppSelector((state) => state.cart.totalItems);
+  const selectedAddress = useAppSelector((state) => state.user.selectedAddress);
+  const { addressType, addressLine1, addressLine2, landmark } = selectedAddress;
 
   useEffect(() => {
     if (cartItems.length === 0) {
@@ -64,8 +66,7 @@ const Checkout = () => {
                 Delivery Address
               </h2>
               <p className="text-xxs text-zinc-500">
-                home: bhawan, infront of balaji aata chhakki, chhoti khajrani,
-                LIG Square, Rss Nagar, Indore, Madhya Pradesh
+                {addressType}: {addressLine1}, {addressLine2}, {landmark}
               </p>
             </div>
 
