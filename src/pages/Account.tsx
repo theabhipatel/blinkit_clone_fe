@@ -17,7 +17,7 @@ const Account = () => {
 
   return (
     <div className=" flex justify-center ">
-      <div className="mt-[5.5rem] mb-10 w-[90%] lg:w-[70%] h-[30rem] shadow-normal flex">
+      <div className="mt-[5.5rem] mb-10 w-[90%] lg:w-[70%] min-h-[30rem] shadow-normal flex">
         <div className="side-bar w-[30%] sm:w-[25%] text-xxs sm:text-xs text-zinc-500  border-r border-zinc-200">
           <div className="w-full h-32 flex items-end justify-center border-b border-zinc-200 pb-3">
             +917089589563
