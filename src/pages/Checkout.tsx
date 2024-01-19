@@ -29,9 +29,9 @@ const Checkout = () => {
   }, [cartItems]);
 
   return (
-    <div className="w-full h-screen flex px-40 mt-24 ">
+    <div className="w-full min-h-screen flex flex-col md:flex-row px-5 lg:px-40 mt-24 mb-5 ">
       {/* ---> Select Payment Method */}
-      <div className="w-[65%] h-full ">
+      <div className="w-[100%] md:w-[65%] h-full ">
         <h1 className="text-xl font-bold">Select Payment Method</h1>
         <div className="border rounded-md mt-2">
           {paymentMethods.map((item) => {
@@ -58,7 +58,7 @@ const Checkout = () => {
         </div>
       </div>
       {/* ---> Cart items and pay now */}
-      <div className="w-[35%] px-5 ">
+      <div className="w-[100%] md:w-[35%] mt-5 md:mt-0 md:px-5 ">
         <div className="sticky top-24 ">
           <div className="border border-b-0  pt-2">
             <div className="px-5">
