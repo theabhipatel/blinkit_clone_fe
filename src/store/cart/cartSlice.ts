@@ -1,4 +1,4 @@
-import { PayloadAction, createSlice } from "@reduxjs/toolkit";
+import { PayloadAction, createSlice, current } from "@reduxjs/toolkit";
 import { IProduct } from "../../interfaces";
 
 export interface ICartItem extends IProduct {
@@ -13,12 +13,23 @@ interface IInitialState {
   discountedAmount: number;
 }
 
+/** ---> getting data from localstorage. */
+const localCart = localStorage.getItem("cart");
+const { cartItems, totalAmount, totalItems, discountedAmount } = localCart
+  ? (JSON.parse(localCart) as Omit<IInitialState, "isCartOpen">)
+  : {
+      cartItems: [],
+      totalItems: 0,
+      totalAmount: 0,
+      discountedAmount: 0,
+    };
+
 const initialState: IInitialState = {
   isCartOpen: false,
-  cartItems: [],
-  totalItems: 0,
-  totalAmount: 0,
-  discountedAmount: 0,
+  cartItems,
+  totalItems,
+  totalAmount,
+  discountedAmount,
 };
 
 export const cartSlice = createSlice({
@@ -51,6 +62,15 @@ export const cartSlice = createSlice({
             curItem.quantity
         ));
       }, 0);
+
+      /** ---> Saving data to localstorage. */
+      const dataForSave = JSON.stringify({
+        cartItems: current(state.cartItems),
+        totalItems: state.totalItems,
+        totalAmount: state.totalAmount,
+        discountedAmount: state.discountedAmount,
+      });
+      localStorage.setItem("cart", dataForSave);
     },
     removeOneCartItem: (state, action: PayloadAction<string>) => {
       const itemIndex = state.cartItems.findIndex(
@@ -75,6 +95,15 @@ export const cartSlice = createSlice({
               curItem.quantity
           ));
         }, 0);
+
+        /** ---> Saving data to localstorage. */
+        const dataForSave = JSON.stringify({
+          cartItems: current(state.cartItems),
+          totalItems: state.totalItems,
+          totalAmount: state.totalAmount,
+          discountedAmount: state.discountedAmount,
+        });
+        localStorage.setItem("cart", dataForSave);
       }
     },
   },
