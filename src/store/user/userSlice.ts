@@ -13,15 +13,22 @@ interface IInitialState {
   isSaveAddressModalOpen: boolean;
 }
 
+/** ---> Getting local selected address */
+const localSelectedAddress = localStorage.getItem("selectedAddress");
+
+const selectedAddress = localSelectedAddress
+  ? (JSON.parse(localSelectedAddress) as TSelectAddress)
+  : {
+      _id: "",
+      addressType: "",
+      addressLine1: "",
+      addressLine2: "",
+      landmark: "",
+    };
+
 const initialState: IInitialState = {
   addresses: [],
-  selectedAddress: {
-    _id: "",
-    addressType: "",
-    addressLine1: "",
-    addressLine2: "",
-    landmark: "",
-  },
+  selectedAddress,
   isSaveAddressModalOpen: false,
 };
 
@@ -34,6 +41,10 @@ const userSlice = createSlice({
     },
     selectAddress: (state, action: PayloadAction<IAddress>) => {
       state.selectedAddress = action.payload;
+      localStorage.setItem(
+        "selectedAddress",
+        JSON.stringify(state.selectedAddress)
+      );
     },
   },
   extraReducers(builder) {
