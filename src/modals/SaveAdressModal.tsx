@@ -96,7 +96,7 @@ const SaveAdressModal = () => {
             </p>
             <form
               onSubmit={handleSubmit}
-              className="w-full mt-3 text-[11px] flex flex-col gap-2"
+              className="relative w-full h-full mt-3 text-[11px] flex flex-col gap-2"
             >
               <div className="flex gap-3">
                 <select
@@ -204,7 +204,7 @@ const SaveAdressModal = () => {
 
               <button
                 type="submit"
-                className="w-full text-center text-xs py-3 bg-primary text-white rounded-md font-semibold"
+                className="w-full text-center text-xs py-3 bg-primary text-white rounded-md font-semibold absolute bottom-16"
               >
                 Save Address
               </button>
