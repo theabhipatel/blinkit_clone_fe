@@ -7,6 +7,20 @@ import {
   toggleSaveAddressModal,
 } from "../store/user/userSlice";
 import { useFormik } from "formik";
+import * as Yup from "yup";
+
+const addressSchema = Yup.object({
+  courtesyTitle: Yup.string().required(),
+  name: Yup.string().min(3).required("Please enter name"),
+  addressLine1: Yup.string().required("Please enter Flat / House / Office No."),
+  addressLine2: Yup.string().required(
+    "Please enter Street / Society / Office Name"
+  ),
+  addressType: Yup.string(),
+  latitude: Yup.number().required(),
+  longitude: Yup.number().required(),
+  landmark: Yup.string(),
+});
 
 const initialValues = {
   courtesyTitle: "Mr",
@@ -24,15 +38,17 @@ const SaveAdressModal = () => {
   const otherAddressTypeRef = useRef<HTMLInputElement>(null);
   const [addressType, setAddressType] = useState("Home");
 
-  const { values, errors, handleBlur, handleChange, handleSubmit } = useFormik({
-    initialValues,
-    onSubmit: (values) => {
-      dispatch(saveAddressAsync({ ...values, addressType })).then(() =>
-        dispatch(getAddressesAsync())
-      );
-      handleModalClose();
-    },
-  });
+  const { values, errors, touched, handleBlur, handleChange, handleSubmit } =
+    useFormik({
+      initialValues,
+      validationSchema: addressSchema,
+      onSubmit: (values) => {
+        dispatch(saveAddressAsync({ ...values, addressType })).then(() =>
+          dispatch(getAddressesAsync())
+        );
+        handleModalClose();
+      },
+    });
 
   const handleModalClose = () => {
     dispatch(toggleSaveAddressModal(false));
@@ -103,6 +119,9 @@ const SaveAdressModal = () => {
                   className="border-[1.5px] border-zinc-300 rounded-md p-2 w-full outline-none"
                 />
               </div>
+              {touched.name && errors.name && (
+                <p className="text-xxs text-red-400">*{errors.name}</p>
+              )}
 
               <input
                 type="text"
@@ -113,6 +132,9 @@ const SaveAdressModal = () => {
                 placeholder="Flat / House / Office No."
                 className="border-[1.5px] border-zinc-300 rounded-md p-2 w-full outline-none"
               />
+              {touched.addressLine1 && errors.addressLine1 && (
+                <p className="text-xxs text-red-400">*{errors.addressLine1}</p>
+              )}
               <input
                 type="text"
                 name="addressLine2"
@@ -122,6 +144,9 @@ const SaveAdressModal = () => {
                 placeholder="Street / Society / Office Name "
                 className="border-[1.5px] border-zinc-300 rounded-md p-2 w-full outline-none"
               />
+              {touched.addressLine2 && errors.addressLine2 && (
+                <p className="text-xxs text-red-400">*{errors.addressLine2}</p>
+              )}
 
               <div className="w-full h-32">
                 <p>Save address as</p>
@@ -158,14 +183,22 @@ const SaveAdressModal = () => {
                   </div>
                 </div>
                 {addressType !== "Home" && addressType !== "Work" && (
-                  <input
-                    type="text"
-                    value={addressType}
-                    ref={otherAddressTypeRef}
-                    onChange={(e) => setAddressType(e.target.value)}
-                    placeholder="Nickname of your adress"
-                    className="border-[1.5px] border-zinc-300 rounded-md p-2 w-full outline-none mt-2"
-                  />
+                  <>
+                    <input
+                      type="text"
+                      name="addressType"
+                      value={addressType}
+                      ref={otherAddressTypeRef}
+                      onChange={(e) => setAddressType(e.target.value)}
+                      placeholder="Nickname of your address"
+                      className="border-[1.5px] border-zinc-300 rounded-md p-2 w-full outline-none mt-2"
+                    />
+                    {!addressType && (
+                      <p className="text-xxs text-red-400">
+                        * Nickname of your address is required.
+                      </p>
+                    )}
+                  </>
                 )}
               </div>
 
