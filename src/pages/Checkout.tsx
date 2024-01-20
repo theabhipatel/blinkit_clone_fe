@@ -3,6 +3,7 @@ import { useNavigate } from "react-router-dom";
 import { useAppDispatch, useAppSelector } from "../store/hooks";
 import { FaAngleDown } from "react-icons/fa6";
 import { toggleCartOpenAndClose } from "../store/cart/cartSlice";
+import { axiosInstance } from "../utils/axiosInstance";
 
 const paymentMethods = [
   "Wallets",
@@ -27,6 +28,17 @@ const Checkout = () => {
       dispatch(toggleCartOpenAndClose(true));
     }
   }, [cartItems]);
+
+  const makePayment = async () => {
+    const res = await axiosInstance.post("payment/phonepe/pay", {
+      merchantTransactionId: "mtid32483239",
+      name: "Abhi patel",
+      muid: "muserid123",
+      amount: 100,
+      number: 7089589563,
+    });
+    console.log("res make payment ---->", res);
+  };
 
   return (
     <div className="w-full min-h-screen flex flex-col md:flex-row px-5 lg:px-40 mt-24 mb-5 ">
@@ -108,7 +120,10 @@ const Checkout = () => {
             </div>
           </div>
           <div className="mt-3">
-            <button className="w-full h-10 bg-primary font-bold text-sm   text-white rounded-md">
+            <button
+              onClick={makePayment}
+              className="w-full h-10 bg-primary font-bold text-sm   text-white rounded-md"
+            >
               Pay Now
             </button>
           </div>
