@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import { useSearchParams } from "react-router-dom";
-import { Helmet } from "react-helmet";
+import { Helmet } from "react-helmet-async";
 import { axiosInstance } from "../utils/axiosInstance";
 import useDebounce from "../hooks/useDebounce";
 import { IProduct } from "../interfaces";

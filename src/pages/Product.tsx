@@ -4,7 +4,7 @@ import AddButton from "../components/molecules/AddItemToCartButton";
 import { whyShopFromBlinkit } from "../constant";
 import DeliveryTime from "../components/molecules/DeliveryTime";
 import ImageShowcase from "../components/ImageShowcase";
-import { Helmet } from "react-helmet";
+import { Helmet } from "react-helmet-async";
 import { axiosInstance } from "../utils/axiosInstance";
 import { IProduct as GenericIProduct } from "../interfaces";
 import { NavLink, useParams } from "react-router-dom";

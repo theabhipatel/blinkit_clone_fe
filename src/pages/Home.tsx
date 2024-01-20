@@ -1,7 +1,7 @@
 import CategorySlider from "../components/CategorySlider";
 import HomeScreenCategoriesPoster from "../components/HomeScreenCategoriesPoster";
 import HomeScreenPoster from "../components/HomeScreenPoster";
-import { Helmet } from "react-helmet";
+import { Helmet } from "react-helmet-async";
 import { axiosInstance } from "../utils/axiosInstance";
 import { useEffect, useState } from "react";
 import { ICategory, IProduct } from "../interfaces";
