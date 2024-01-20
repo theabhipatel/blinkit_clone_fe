@@ -1,7 +1,8 @@
 import { PayloadAction, createSlice, current } from "@reduxjs/toolkit";
 import { IProduct } from "../../interfaces";
 
-export interface ICartItem extends IProduct {
+type TCartProduct = Omit<IProduct, "images" | "details">;
+export interface ICartItem extends TCartProduct {
   quantity: number;
 }
 
@@ -44,8 +45,9 @@ export const cartSlice = createSlice({
       const itemIndex = state.cartItems.findIndex(
         (item) => item._id === product._id
       );
+      const { details, images, ...restProduct } = product;
       if (itemIndex === -1) {
-        state.cartItems.push({ ...product, quantity: 1 });
+        state.cartItems.push({ ...restProduct, quantity: 1 });
       } else {
         state.cartItems[itemIndex].quantity += 1;
       }
