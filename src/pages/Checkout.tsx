@@ -79,7 +79,10 @@ const Checkout = () => {
             <div className="flex flex-col gap-2">
               {cartItems.map((item) => {
                 return (
-                  <div className="flex items-center gap-2 px-3 border-b">
+                  <div
+                    key={item._id}
+                    className="flex items-center gap-2 px-3 border-b"
+                  >
                     <div className="w-[30%] flex items-center gap-2">
                       <span className="text-sm text-zinc-600">
                         {item.quantity}
