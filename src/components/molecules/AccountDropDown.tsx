@@ -12,6 +12,7 @@ const AccountDropDown = () => {
 
   const handleLogout = () => {
     localStorage.removeItem("@accessToken");
+    localStorage.removeItem("@mobile");
     dispatch(setIsUserLoggedIn(false));
     dispatch(toggleAccountDropdown(false));
   };

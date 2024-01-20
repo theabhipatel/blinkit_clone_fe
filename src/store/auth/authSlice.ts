@@ -10,6 +10,8 @@ interface IInitialState {
   isUserLoggedIn: boolean;
   mobile: string;
 }
+const mobile = localStorage.getItem("@mobile");
+
 const initialState: IInitialState = {
   isLoginModalOpen: false,
   isOtpVerificationModalOpen: false,
@@ -17,7 +19,7 @@ const initialState: IInitialState = {
   isAccountDropdownOpen: false,
   status: "idle",
   isUserLoggedIn: false,
-  mobile: "",
+  mobile: mobile ? mobile : "",
 };
 
 const authSlice = createSlice({
@@ -38,6 +40,7 @@ const authSlice = createSlice({
     },
     addMobileNumber: (state, action: PayloadAction<string>) => {
       state.mobile = action.payload;
+      localStorage.setItem("@mobile", action.payload);
     },
     setIsUserLoggedIn: (state, action: PayloadAction<boolean>) => {
       state.isUserLoggedIn = action.payload;
