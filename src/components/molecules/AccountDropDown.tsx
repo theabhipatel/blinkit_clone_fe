@@ -25,7 +25,7 @@ const AccountDropDown = () => {
     <div className="absolute top-11 -right-12 bg-white rounded-b-xl w-[14rem] h-72 z-50 flex flex-col text-start">
       <h4 className="text-sm px-3 mt-3 font-bold text-zinc-600">My Account</h4>
       <span className="text-xxs px-3 tracking-wider text-zinc-500 leading-3">
-        {mobileNum} 7089589563
+        {mobileNum}
       </span>
       <ul className="w-full mt-3 flex flex-col gap-1  text-[11px] text-zinc-500 cursor-pointer ">
         <li
