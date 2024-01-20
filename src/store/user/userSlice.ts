@@ -4,7 +4,7 @@ import { IAddress } from "../../interfaces";
 
 export type TSelectAddress = Pick<
   IAddress,
-  "_id" | "addressType" | "addressLine1" | "addressLine2" | "landmark"
+  "_id" | "addressType" | "addressLine1" | "addressLine2" | "landmark" | "name"
 >;
 
 interface IInitialState {
@@ -24,6 +24,7 @@ const selectedAddress = localSelectedAddress
       addressLine1: "",
       addressLine2: "",
       landmark: "",
+      name: "",
     };
 
 const initialState: IInitialState = {
