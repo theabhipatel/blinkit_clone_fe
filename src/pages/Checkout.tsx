@@ -46,10 +46,13 @@ const Checkout = () => {
       <div className="w-[100%] md:w-[65%] h-full ">
         <h1 className="text-xl font-bold">Select Payment Method</h1>
         <div className="border rounded-md mt-2">
-          {paymentMethods.map((item) => {
+          {paymentMethods.map((item, index) => {
             if (item === "Cash") {
               return (
-                <div className="flex justify-between items-center px-5 border-b py-3 cursor-pointer">
+                <div
+                  key={index}
+                  className="flex justify-between items-center px-5 border-b py-3 cursor-pointer"
+                >
                   <div>
                     <h4 className="text-zinc-300">{item}</h4>
                     <p className="text-xs text-[#A8B5C1]">
@@ -61,7 +64,10 @@ const Checkout = () => {
               );
             }
             return (
-              <div className="flex justify-between items-center px-5 border-b py-3 cursor-pointer">
+              <div
+                key={index}
+                className="flex justify-between items-center px-5 border-b py-3 cursor-pointer"
+              >
                 <h4>{item}</h4>
                 <FaAngleDown />
               </div>
