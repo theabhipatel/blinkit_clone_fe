@@ -7,7 +7,7 @@ import {
 } from "../store/auth/authSlice";
 import { useAppDispatch, useAppSelector } from "../store/hooks";
 import { GrCircleAlert } from "react-icons/gr";
-import OtpInput from "../components/molecules/OTPInput";
+import OtpInput from "../components/molecules/OtpInput";
 
 interface IProps {}
 
