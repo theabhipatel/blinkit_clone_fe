@@ -5,7 +5,6 @@ import { MdOutlineCircle, MdCheckCircle } from "react-icons/md";
 import { BsThreeDots } from "react-icons/bs";
 import { useAppDispatch, useAppSelector } from "../store/hooks";
 import {
-  TSelectAddress,
   getAddressesAsync,
   selectAddress,
   toggleSaveAddressModal,

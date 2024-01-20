@@ -1,5 +1,3 @@
-import React from "react";
-
 const MyOrders = () => {
   return (
     <div className="w-full h-full p-5 text-center">
