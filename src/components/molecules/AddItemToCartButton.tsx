@@ -14,7 +14,17 @@ const AddItemToCartButton: FC<IProps> = ({ product }) => {
   const cartProduct = cartItems.find((item) => item._id === product._id);
 
   const handleIncQty = () => {
-    dispatch(addCartItem(product));
+    if (cartProduct) {
+      if (cartProduct.quantity < 10) {
+        if (product.stock > cartProduct.quantity) {
+          dispatch(addCartItem(product));
+        }
+      }
+    } else {
+      if (product.stock > 0) {
+        dispatch(addCartItem(product));
+      }
+    }
   };
 
   const handleDecQty = () => {
