@@ -2,7 +2,7 @@ import { useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import { useAppDispatch, useAppSelector } from "../store/hooks";
 import { FaAngleDown } from "react-icons/fa6";
-import { toggleCartOpenAndClose } from "../store/cart/cartSlice";
+import { makeCartEmpty, toggleCartOpenAndClose } from "../store/cart/cartSlice";
 import { axiosInstance } from "../utils/axiosInstance";
 
 const paymentMethods = [
@@ -19,6 +19,12 @@ const Checkout = () => {
   const dispatch = useAppDispatch();
   const cartItems = useAppSelector((state) => state.cart.cartItems);
   const totalItems = useAppSelector((state) => state.cart.totalItems);
+  const mobileNumber = useAppSelector((state) => state.auth.mobile);
+  const discountedAmount = useAppSelector(
+    (state) => state.cart.discountedAmount
+  );
+  const payableAmount =
+    discountedAmount > 99 ? discountedAmount : discountedAmount + 9;
   const selectedAddress = useAppSelector((state) => state.user.selectedAddress);
   const { addressType, addressLine1, addressLine2, landmark } = selectedAddress;
 
@@ -30,14 +36,26 @@ const Checkout = () => {
   }, [cartItems]);
 
   const makePayment = async () => {
-    const res = await axiosInstance.post("payment/phonepe/pay", {
-      merchantTransactionId: "mtid32483239",
-      name: "Abhi patel",
-      muid: "muserid123",
-      amount: 100,
-      number: 7089589563,
-    });
-    console.log("res make payment ---->", res);
+    try {
+      const res = await axiosInstance.post("payment/phonepe/pay", {
+        name: selectedAddress.name,
+        selectedAddress,
+        totalAmount: payableAmount,
+        totalItems,
+        items: cartItems,
+        number: mobileNumber,
+      });
+      if (res.data) {
+        window.location.href = res.data.url;
+        handleCartEmpty();
+      }
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
+  const handleCartEmpty = () => {
+    dispatch(makeCartEmpty());
   };
 
   return (
@@ -130,7 +148,7 @@ const Checkout = () => {
               onClick={makePayment}
               className="w-full h-10 bg-primary font-bold text-sm   text-white rounded-md"
             >
-              Pay Now
+              Pay Now ₹{payableAmount}
             </button>
           </div>
         </div>
