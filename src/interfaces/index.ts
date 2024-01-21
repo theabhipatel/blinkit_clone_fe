@@ -38,3 +38,14 @@ export interface IAddress {
   longitude: number;
   landmark: string;
 }
+
+export interface IOrder {
+  _id: string;
+  userId: string;
+  transactionId: string;
+  selectedAddress: IAddress;
+  paymentStatus: string;
+  totalAmount: number;
+  totalItems: number;
+  items: Omit<IProduct, "images" | "details">[];
+}
