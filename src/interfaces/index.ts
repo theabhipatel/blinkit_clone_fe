@@ -45,6 +45,7 @@ export interface IOrder {
   transactionId: string;
   selectedAddress: IAddress;
   paymentStatus: string;
+  orderStatus: string;
   totalAmount: number;
   totalItems: number;
   items: Omit<IProduct, "images" | "details">[];
