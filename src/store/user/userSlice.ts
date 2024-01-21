@@ -1,15 +1,16 @@
 import { createSlice, PayloadAction, createAsyncThunk } from "@reduxjs/toolkit";
-import { deleteAddress, getAddresses, saveAddress } from "./userApis";
-import { IAddress } from "../../interfaces";
-
-export type TSelectAddress = Pick<
-  IAddress,
-  "_id" | "addressType" | "addressLine1" | "addressLine2" | "landmark" | "name"
->;
+import {
+  deleteAddress,
+  getAddresses,
+  getMyOrders,
+  saveAddress,
+} from "./userApis";
+import { IAddress, IOrder } from "../../interfaces";
 
 interface IInitialState {
   addresses: IAddress[];
-  selectedAddress: TSelectAddress;
+  orders: IOrder[];
+  selectedAddress: IAddress;
   isSaveAddressModalOpen: boolean;
 }
 
@@ -17,7 +18,7 @@ interface IInitialState {
 const localSelectedAddress = localStorage.getItem("selectedAddress");
 
 const selectedAddress = localSelectedAddress
-  ? (JSON.parse(localSelectedAddress) as TSelectAddress)
+  ? (JSON.parse(localSelectedAddress) as IAddress)
   : {
       _id: "",
       addressType: "",
@@ -25,10 +26,14 @@ const selectedAddress = localSelectedAddress
       addressLine2: "",
       landmark: "",
       name: "",
+      courtesyTitle: "",
+      latitude: 0,
+      longitude: 0,
     };
 
 const initialState: IInitialState = {
   addresses: [],
+  orders: [],
   selectedAddress,
   isSaveAddressModalOpen: false,
 };
@@ -55,7 +60,10 @@ const userSlice = createSlice({
         state.addresses = action.payload;
       })
       .addCase(saveAddressAsync.fulfilled, () => {})
-      .addCase(deleteAddressAsync.fulfilled, () => {});
+      .addCase(deleteAddressAsync.fulfilled, () => {})
+      .addCase(getMyOrdersAsync.fulfilled, (state, action) => {
+        state.orders = action.payload;
+      });
   },
 });
 
@@ -85,6 +93,15 @@ export const deleteAddressAsync = createAsyncThunk(
   "user/delete-address",
   async (id: string) => {
     const res = await deleteAddress(id);
+    return res;
+  }
+);
+
+/** ---> orders api's */
+export const getMyOrdersAsync = createAsyncThunk(
+  "user/get-orders",
+  async () => {
+    const res = await getMyOrders();
     return res;
   }
 );

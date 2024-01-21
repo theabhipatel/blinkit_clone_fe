@@ -15,3 +15,8 @@ export const deleteAddress = async (id: string) => {
   const res = await axiosInstance.delete(`user/addresses/${id}`);
   return res.data;
 };
+
+export const getMyOrders = async () => {
+  const res = await axiosInstance.get(`user/orders`);
+  return res.data.orders;
+};
