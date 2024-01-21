@@ -48,5 +48,6 @@ export interface IOrder {
   orderStatus: string;
   totalAmount: number;
   totalItems: number;
+  createdAt: string;
   items: Omit<IProduct, "images" | "details">[];
 }
