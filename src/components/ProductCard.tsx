@@ -10,22 +10,35 @@ interface IProps {
 }
 
 const ProductCard: FC<IProps> = ({ width, product }) => {
-  const { _id, title, price, discountPercentage, unit, thumbnail } = product;
+  const { _id, title, price, discountPercentage, unit, thumbnail, stock } =
+    product;
   const prn = title.toLowerCase().split(" ").join("-");
   return (
     <>
       <div
         className={` ${
           width ? `min-w-[8rem]` : "min-w-[9rem]"
-        } max-w-[9rem]  h-[14.2rem] border border-gray-300 rounded-md p-3 text-zinc-700 bg-white shadow-md`}
+        } max-w-[9rem]  h-[14.2rem] border border-gray-300 rounded-md p-3 text-zinc-700 bg-white shadow-md  ${
+          stock === 0 && "opacity-60"
+        }`}
       >
         <div className="h-[48%] flex justify-center items-center ">
-          <NavLink to={`/prn/${prn}/prid/${_id}`} className={"h-full"}>
+          <NavLink
+            to={`/prn/${prn}/prid/${_id}`}
+            className={"h-full relative bg-red-400"}
+          >
             <img
               src={thumbnail}
               alt={title}
               className="h-full w-full object-cover"
             />
+            {stock === 0 && (
+              <div className="absolute bottom-5  w-full ">
+                <div className="text-[10px] text-white  bg-black/70 rounded-md flex items-center justify-center py-1">
+                  Out of Stock
+                </div>
+              </div>
+            )}
           </NavLink>
         </div>
         <div className="mt-1" />
@@ -51,7 +64,7 @@ const ProductCard: FC<IProps> = ({ width, product }) => {
               <h6 className="text-xxs font-semibold">₹{price}</h6>
             )}
           </div>
-          <AddButton product={product} />
+          {stock > 0 && <AddButton product={product} />}
         </div>
       </div>
     </>

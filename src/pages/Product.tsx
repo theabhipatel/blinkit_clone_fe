@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { MdArrowRight } from "react-icons/md";
-import AddButton from "../components/molecules/AddItemToCartButton";
+import AddItemToCartButton from "../components/molecules/AddItemToCartButton";
 import { whyShopFromBlinkit } from "../constant";
 import DeliveryTime from "../components/molecules/DeliveryTime";
 import ImageShowcase from "../components/ImageShowcase";
@@ -98,7 +98,9 @@ const Product = () => {
                 </h5>
               </div>
               <div>
-                {fetchedProduct && <AddButton product={fetchedProduct} />}
+                {fetchedProduct && fetchedProduct.stock > 0 && (
+                  <AddItemToCartButton product={fetchedProduct} />
+                )}
               </div>
             </div>
             {/* ---> Why shop from blinkit? <--- */}
