@@ -1,9 +1,10 @@
 import { FC } from "react";
-import AddButton from "./AddItemToCartButton";
+import AddItemToCartButton from "./AddItemToCartButton";
 import { ICartItem } from "../../store/cart/cartSlice";
+import { IProduct } from "../../interfaces";
 
 interface IProps {
-  item: ICartItem;
+  item: IProduct;
 }
 
 const CartItem: FC<IProps> = ({ item }) => {
@@ -36,7 +37,7 @@ const CartItem: FC<IProps> = ({ item }) => {
       </div>
 
       <div>
-        <AddButton product={item} />
+        <AddItemToCartButton product={item} />
       </div>
     </div>
   );
