@@ -15,6 +15,7 @@ import Account from "./pages/Account";
 import PrivateRoutes from "./hoc/PrivateRoutes";
 import Checkout from "./pages/Checkout";
 import { HelmetProvider } from "react-helmet-async";
+import PaymentSuccess from "./pages/PaymentSuccess";
 
 const App = () => {
   const dispatch = useAppDispatch();
@@ -52,6 +53,7 @@ const App = () => {
                 <Route path="/account/wallet" />
               </Route>
               <Route path="/checkout" element={<Checkout />} />
+              <Route path="/payment-success" element={<PaymentSuccess />} />
             </Route>
             <Route path="*" element={<PageNotFound />} />
           </Routes>
