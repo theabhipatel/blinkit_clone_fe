@@ -1,4 +1,4 @@
-import { FC, useState, useEffect, useRef } from "react";
+import { FC, useState, useEffect } from "react";
 import { BsArrowLeft } from "react-icons/bs";
 import {
   toggleLoginModalOpenAndClose,
@@ -7,24 +7,15 @@ import {
 } from "../store/auth/authSlice";
 import { useAppDispatch, useAppSelector } from "../store/hooks";
 import { GrCircleAlert } from "react-icons/gr";
+import OtpInput from "../components/molecules/OtpInput";
 
 interface IProps {}
-let currentIndex = 0;
 
 const OtpVerificationModal: FC<IProps> = () => {
   const dispatch = useAppDispatch();
   const mobileNumber = useAppSelector((state) => state.auth.mobile);
   const authStatus = useAppSelector((state) => state.auth.status);
-  const inputRef = useRef<HTMLInputElement>(null);
-  const [otp, setOtp] = useState(new Array(4).fill(""));
-  const [activeIndex, setActiveIndex] = useState(0);
   const [resendOtpTime, setResendOtpTime] = useState(0);
-
-  useEffect(() => {
-    if (otp.join("").length === 4) {
-      dispatch(verifyOtpAsync({ mobile: mobileNumber, otp: +otp.join("") }));
-    }
-  }, [otp]);
 
   useEffect(() => {
     setResendOtpTime(30);
@@ -37,37 +28,13 @@ const OtpVerificationModal: FC<IProps> = () => {
     };
   }, []);
 
-  const handleChange = (
-    e: React.ChangeEvent<HTMLInputElement>,
-    index: number
-  ) => {
-    // @ts-ignore
-    if (isNaN(e.target.value)) return false;
-    setOtp([
-      ...otp.map((item, idx) => (idx === index ? e.target.value : item)),
-    ]);
-    // if (!e.target.value) setActiveIndex((prevIndex) => prevIndex - 1);
-    // else
-    setActiveIndex((prevIndex) => prevIndex + 1);
-  };
-
-  const handleKeyDown = (
-    e: React.KeyboardEvent<HTMLInputElement>,
-    index: number
-  ) => {
-    if (e.key === "Backspace") {
-      currentIndex = index;
-      setActiveIndex((prevIndex) => prevIndex - 1);
-    }
-  };
-
-  useEffect(() => {
-    inputRef.current?.focus();
-  }, [activeIndex]);
-
   const handleBackAction = () => {
     dispatch(toggleOtpVerificationModal(false));
     dispatch(toggleLoginModalOpenAndClose(true));
+  };
+
+  const handleOtpSubmit = (otp: string) => {
+    dispatch(verifyOtpAsync({ mobile: mobileNumber, otp: +otp }));
   };
 
   return (
@@ -93,28 +60,12 @@ const OtpVerificationModal: FC<IProps> = () => {
               +91-{mobileNumber}
             </h4>
             {/* ---> OTP input fields  */}
-            <div className="flex gap-2 mt-3">
-              {otp.map((data, index) => {
-                return (
-                  <input
-                    type="text"
-                    name="otp"
-                    ref={activeIndex === index ? inputRef : null}
-                    value={data}
-                    maxLength={1}
-                    key={index}
-                    onFocus={(e) => e.target.select()}
-                    onChange={(e) => handleChange(e, index)}
-                    onKeyDown={(e) => handleKeyDown(e, index)}
-                    className={`border  ${
-                      authStatus === "error"
-                        ? "border-red-400 focus:border-red-500"
-                        : "border-gray-300 focus:border-gray-500"
-                    } rounded-md w-10 h-10 text-center outline-none `}
-                  />
-                );
-              })}
-            </div>
+
+            <OtpInput
+              length={4}
+              onOtpSubmit={handleOtpSubmit}
+              error={authStatus === "error"}
+            />
             <div className="h-5 mt-3">
               {authStatus === "loading" ? (
                 <div className="flex space-x-2 justify-center items-center">

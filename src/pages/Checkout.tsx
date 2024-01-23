@@ -2,7 +2,8 @@ import { useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import { useAppDispatch, useAppSelector } from "../store/hooks";
 import { FaAngleDown } from "react-icons/fa6";
-import { toggleCartOpenAndClose } from "../store/cart/cartSlice";
+import { makeCartEmpty, toggleCartOpenAndClose } from "../store/cart/cartSlice";
+import { axiosInstance } from "../utils/axiosInstance";
 
 const paymentMethods = [
   "Wallets",
@@ -18,6 +19,14 @@ const Checkout = () => {
   const dispatch = useAppDispatch();
   const cartItems = useAppSelector((state) => state.cart.cartItems);
   const totalItems = useAppSelector((state) => state.cart.totalItems);
+  const mobileNumber = useAppSelector((state) => state.auth.mobile);
+  const discountedAmount = useAppSelector(
+    (state) => state.cart.discountedAmount
+  );
+  const payableAmount =
+    discountedAmount > 99 ? discountedAmount : discountedAmount + 9;
+  const selectedAddress = useAppSelector((state) => state.user.selectedAddress);
+  const { addressType, addressLine1, addressLine2, landmark } = selectedAddress;
 
   useEffect(() => {
     if (cartItems.length === 0) {
@@ -26,16 +35,42 @@ const Checkout = () => {
     }
   }, [cartItems]);
 
+  const makePayment = async () => {
+    try {
+      const res = await axiosInstance.post("payment/phonepe/pay", {
+        name: selectedAddress.name,
+        selectedAddress,
+        totalAmount: payableAmount,
+        totalItems,
+        items: cartItems,
+        number: mobileNumber,
+      });
+      if (res.data) {
+        window.location.href = res.data.url;
+        handleCartEmpty();
+      }
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
+  const handleCartEmpty = () => {
+    dispatch(makeCartEmpty());
+  };
+
   return (
-    <div className="w-full h-screen flex px-40 mt-24 ">
+    <div className="w-full min-h-screen flex flex-col md:flex-row px-5 lg:px-40 mt-24 mb-5 ">
       {/* ---> Select Payment Method */}
-      <div className="w-[65%] h-full ">
+      <div className="w-[100%] md:w-[65%] h-full ">
         <h1 className="text-xl font-bold">Select Payment Method</h1>
         <div className="border rounded-md mt-2">
-          {paymentMethods.map((item) => {
+          {paymentMethods.map((item, index) => {
             if (item === "Cash") {
               return (
-                <div className="flex justify-between items-center px-5 border-b py-3 cursor-pointer">
+                <div
+                  key={index}
+                  className="flex justify-between items-center px-5 border-b py-3 cursor-pointer"
+                >
                   <div>
                     <h4 className="text-zinc-300">{item}</h4>
                     <p className="text-xs text-[#A8B5C1]">
@@ -47,7 +82,10 @@ const Checkout = () => {
               );
             }
             return (
-              <div className="flex justify-between items-center px-5 border-b py-3 cursor-pointer">
+              <div
+                key={index}
+                className="flex justify-between items-center px-5 border-b py-3 cursor-pointer"
+              >
                 <h4>{item}</h4>
                 <FaAngleDown />
               </div>
@@ -56,7 +94,7 @@ const Checkout = () => {
         </div>
       </div>
       {/* ---> Cart items and pay now */}
-      <div className="w-[35%] px-5 ">
+      <div className="w-[100%] md:w-[35%] mt-5 md:mt-0 md:px-5 ">
         <div className="sticky top-24 ">
           <div className="border border-b-0  pt-2">
             <div className="px-5">
@@ -64,8 +102,7 @@ const Checkout = () => {
                 Delivery Address
               </h2>
               <p className="text-xxs text-zinc-500">
-                home: bhawan, infront of balaji aata chhakki, chhoti khajrani,
-                LIG Square, Rss Nagar, Indore, Madhya Pradesh
+                {addressType}: {addressLine1}, {addressLine2}, {landmark}
               </p>
             </div>
 
@@ -78,7 +115,10 @@ const Checkout = () => {
             <div className="flex flex-col gap-2">
               {cartItems.map((item) => {
                 return (
-                  <div className="flex items-center gap-2 px-3 border-b">
+                  <div
+                    key={item._id}
+                    className="flex items-center gap-2 px-3 border-b"
+                  >
                     <div className="w-[30%] flex items-center gap-2">
                       <span className="text-sm text-zinc-600">
                         {item.quantity}
@@ -104,8 +144,11 @@ const Checkout = () => {
             </div>
           </div>
           <div className="mt-3">
-            <button className="w-full h-10 bg-primary font-bold text-sm   text-white rounded-md">
-              Pay Now
+            <button
+              onClick={makePayment}
+              className="w-full h-10 bg-primary font-bold text-sm   text-white rounded-md"
+            >
+              Pay Now ₹{payableAmount}
             </button>
           </div>
         </div>

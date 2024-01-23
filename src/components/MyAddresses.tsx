@@ -1,10 +1,30 @@
-import { useState } from "react";
+import { useEffect } from "react";
 import { FaPlus } from "react-icons/fa6";
 
 import MyAdressListItem from "./molecules/MyAdressListItem";
+import { useAppDispatch, useAppSelector } from "../store/hooks";
+import {
+  deleteAddressAsync,
+  getAddressesAsync,
+  toggleSaveAddressModal,
+} from "../store/user/userSlice";
 
 const MyAddresses = () => {
-  const [addresses, setAdresses] = useState([]);
+  const dispatch = useAppDispatch();
+  const addresses = useAppSelector((state) => state.user.addresses);
+
+  const handleOpenSaveAddressModal = () => {
+    dispatch(toggleSaveAddressModal(true));
+  };
+
+  useEffect(() => {
+    dispatch(getAddressesAsync());
+  }, []);
+
+  const handleDeleteAddress = async (id: string) => {
+    await dispatch(deleteAddressAsync(id));
+    dispatch(getAddressesAsync());
+  };
 
   if (addresses.length === 0) {
     return (
@@ -24,7 +44,10 @@ const MyAddresses = () => {
           </h3>
         </div>
 
-        <button className="text-xs text-white bg-primary hover:bg-primary/90 px-2 py-2 rounded-sm mt-4 duration-300">
+        <button
+          onClick={handleOpenSaveAddressModal}
+          className="text-xs text-white bg-primary hover:bg-primary/90 px-2 py-2 rounded-sm mt-4 duration-300"
+        >
           Add New Address
         </button>
       </div>
@@ -34,13 +57,22 @@ const MyAddresses = () => {
       <div className="w-full h-full flex  flex-col gap-2 p-4">
         <div>
           <h2 className="text-lg font-semibold">My addresses</h2>
-          <button className="text-xxs text-primary flex gap-2 items-center font-semibold mt-1">
+          <button
+            onClick={handleOpenSaveAddressModal}
+            className="text-xxs text-primary flex gap-2 items-center font-semibold mt-1"
+          >
             <FaPlus /> Add New Address
           </button>
         </div>
         {/* ---> address list */}
-        {addresses.map(() => {
-          return <MyAdressListItem />;
+        {addresses.map((address) => {
+          return (
+            <MyAdressListItem
+              key={address._id}
+              address={address}
+              handleDeleteAddress={handleDeleteAddress}
+            />
+          );
         })}
       </div>
     );

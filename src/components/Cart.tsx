@@ -34,6 +34,7 @@ const Cart: FC<IProps> = () => {
     IProduct[]
   >([]);
   const isUserLoggedIn = useAppSelector((state) => state.auth.isUserLoggedIn);
+  const selectedAddress = useAppSelector((state) => state.user.selectedAddress);
   const [isMyAdressPage, setIsMyAdressPage] = useState(false);
 
   const handleCartClose = () => {
@@ -65,8 +66,12 @@ const Cart: FC<IProps> = () => {
   };
 
   const handleNavigateToCheckout = () => {
-    navigate("checkout");
-    handleCartClose();
+    if (selectedAddress._id) {
+      navigate("checkout");
+      handleCartClose();
+    } else {
+      setIsMyAdressPage(true);
+    }
   };
 
   return (
@@ -202,27 +207,30 @@ const Cart: FC<IProps> = () => {
                 {/* ---> Login to Proceed <--- */}
                 <div className="fixed right-4 -bottom-3 w-[18.5rem]  my-3 pb-2 rounded-md bg-white flex flex-col shadow-[-5px_-1px_10px_rgba(0,0,0,0.25)]">
                   {/* ---> address */}
-                  <div className="border-b  p-2 flex gap-2">
-                    <div className="flex justify-center items-center w-[8%]">
-                      <IoLocationOutline className="text-xl text-zinc-500" />
+                  {selectedAddress._id && (
+                    <div className="border-b  p-2 flex gap-2">
+                      <div className="flex justify-center items-center w-[8%]">
+                        <IoLocationOutline className="text-xl text-zinc-500" />
+                      </div>
+                      <div className="w-[75%] ">
+                        <h3 className="text-[11px] font-bold">
+                          Delivering to {selectedAddress.addressType}
+                        </h3>
+                        <p className="text-[9px] text-zinc-500 line-clamp-1">
+                          {selectedAddress.addressLine1}
+                          {selectedAddress.addressLine2}
+                        </p>
+                      </div>
+                      <div className="w-[15%] flex items-start">
+                        <button
+                          onClick={() => setIsMyAdressPage(true)}
+                          className="text-primary text-[9px] font-bold"
+                        >
+                          Change
+                        </button>
+                      </div>
                     </div>
-                    <div className="w-[75%] ">
-                      <h3 className="text-[11px] font-bold">
-                        Delivering to Home
-                      </h3>
-                      <p className="text-[9px] text-zinc-500 line-clamp-1">
-                        bhawan infront of balaji aata chhakki, chhoti
-                      </p>
-                    </div>
-                    <div className="w-[15%] flex items-start">
-                      <button
-                        onClick={() => setIsMyAdressPage(true)}
-                        className="text-primary text-[9px] font-bold"
-                      >
-                        Change
-                      </button>
-                    </div>
-                  </div>
+                  )}
 
                   <button
                     onClick={

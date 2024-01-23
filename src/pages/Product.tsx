@@ -1,10 +1,10 @@
 import React, { useState, useEffect } from "react";
 import { MdArrowRight } from "react-icons/md";
-import AddButton from "../components/molecules/AddItemToCartButton";
+import AddItemToCartButton from "../components/molecules/AddItemToCartButton";
 import { whyShopFromBlinkit } from "../constant";
 import DeliveryTime from "../components/molecules/DeliveryTime";
 import ImageShowcase from "../components/ImageShowcase";
-import { Helmet } from "react-helmet";
+import { Helmet } from "react-helmet-async";
 import { axiosInstance } from "../utils/axiosInstance";
 import { IProduct as GenericIProduct } from "../interfaces";
 import { NavLink, useParams } from "react-router-dom";
@@ -98,7 +98,9 @@ const Product = () => {
                 </h5>
               </div>
               <div>
-                {fetchedProduct && <AddButton product={fetchedProduct} />}
+                {fetchedProduct && fetchedProduct.stock > 0 && (
+                  <AddItemToCartButton product={fetchedProduct} />
+                )}
               </div>
             </div>
             {/* ---> Why shop from blinkit? <--- */}
