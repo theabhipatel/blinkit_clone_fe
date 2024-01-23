@@ -1,10 +1,9 @@
 import { FC } from "react";
 import AddItemToCartButton from "./AddItemToCartButton";
 import { ICartItem } from "../../store/cart/cartSlice";
-import { IProduct } from "../../interfaces";
 
 interface IProps {
-  item: IProduct;
+  item: ICartItem;
 }
 
 const CartItem: FC<IProps> = ({ item }) => {
@@ -37,7 +36,7 @@ const CartItem: FC<IProps> = ({ item }) => {
       </div>
 
       <div>
-        <AddItemToCartButton product={item} />
+        <AddItemToCartButton product={{ ...item, images: [], details: [] }} />
       </div>
     </div>
   );
