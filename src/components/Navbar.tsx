@@ -1,6 +1,6 @@
 import { IoMdArrowDropdown } from "react-icons/io";
 import { HiOutlineShoppingCart } from "react-icons/hi";
-import { useLocation } from "react-router-dom";
+import { useLocation, useNavigate } from "react-router-dom";
 import { useAppDispatch, useAppSelector } from "../store/hooks";
 import { toggleCartOpenAndClose } from "../store/cart/cartSlice";
 import {
@@ -10,11 +10,13 @@ import {
 import AccountDropDown from "./molecules/AccountDropDown";
 import SearchInput from "./molecules/SearchInput";
 import NavbarLocation from "./molecules/NavbarLocation";
+import { FaRegUserCircle } from "react-icons/fa";
+import { FiSearch } from "react-icons/fi";
 
 const Navbar = () => {
   const dispatch = useAppDispatch();
   const { pathname } = useLocation();
-
+  const navigate = useNavigate();
   const totalItems = useAppSelector((state) => state.cart.totalItems);
   const discountedAmount = useAppSelector(
     (state) => state.cart.discountedAmount
@@ -40,8 +42,16 @@ const Navbar = () => {
     // }
   };
 
+  const handleGotoAccount = () => {
+    navigate("account");
+  };
+  const handleGotoSearch = () => {
+    navigate("s");
+  };
+
   return (
     <nav className="w-full max-w-[1250px] fixed top-0  border-b border-slate-200 bg-white z-50">
+      {/* ---> for lapotp, and large size devices  */}
       <div className="w-full  hidden md:flex">
         {/* ---> logo <--- */}
         <div className={`flex w-[18%] `}>
@@ -115,6 +125,41 @@ const Navbar = () => {
               <h4 className="text-[11px] font-bold">My Cart</h4>
             )}
           </div>
+        </div>
+      </div>
+      {/* ---> for mobile and small size devices  */}
+      <div className="w-full md:hidden px-3">
+        {/* ---> Location and Account */}
+        <div
+          className={`${
+            pathname === "/s" && "hidden"
+          } w-full flex justify-between items-center gap-4`}
+        >
+          <NavbarLocation />
+
+          {pathname === "/" ? (
+            <div
+              onClick={handleGotoAccount}
+              className="w-8 flex justify-center items-center "
+            >
+              <FaRegUserCircle className="text-2xl cursor-pointer" />
+            </div>
+          ) : (
+            <div
+              onClick={handleGotoSearch}
+              className="w-8 flex justify-center items-center "
+            >
+              <FiSearch className="text-xl cursor-pointer" />
+            </div>
+          )}
+        </div>
+        {/* ---> Search input */}
+        <div
+          className={`w-full mb-2 ${
+            pathname === "/" ? "" : pathname === "/s" ? "mt-2" : "hidden"
+          } `}
+        >
+          <SearchInput />
         </div>
       </div>
     </nav>

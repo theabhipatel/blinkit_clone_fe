@@ -3,6 +3,7 @@ import { useLocation, useNavigate, useSearchParams } from "react-router-dom";
 import { FiSearch } from "react-icons/fi";
 import { MdClose } from "react-icons/md";
 import TextTransition, { presets } from "react-text-transition";
+import { BsArrowLeft } from "react-icons/bs";
 
 const TEXTS = [
   'Search "milk"',
@@ -51,12 +52,16 @@ const SearchInput = () => {
     setSearchText("");
   };
 
+  const handleGoBack = () => {
+    navigate(-1);
+  };
+
   return (
     <div className="w-full flex justify-center items-center">
       {pathname !== "/s" ? (
         <div
           onClick={() => navigate("/s")}
-          className={`w-[90%] bg-zinc-50 border border-slate-100 flex items-center gap-3 py-[0.6rem] px-2 rounded-md cursor-text`}
+          className={`w-full md:w-[90%] bg-zinc-50 border border-slate-100 flex items-center gap-3 py-[0.6rem] px-2 rounded-md cursor-text`}
         >
           <FiSearch className="text-sm" />
           <span className="text-[11px] font- text-zinc-400 ">
@@ -67,9 +72,18 @@ const SearchInput = () => {
         </div>
       ) : (
         <div
-          className={`w-[90%] bg-white border border-zinc-300 flex items-center gap-3 p-1 px-2 rounded-md cursor-text shadow-mini `}
+          className={`w-[100%] md:w-[90%] bg-white border border-zinc-300 flex items-center gap-3 p-1 px-2 rounded-md cursor-text shadow-mini `}
         >
-          <FiSearch className="text-sm" />
+          <div className="hidden md:block ">
+            <FiSearch className="text-sm" />
+          </div>
+          <div
+            onClick={handleGoBack}
+            className=" md:hidden cursor-pointer h-6 w-4 flex items-center "
+          >
+            <BsArrowLeft className="text-sm" />
+          </div>
+
           <input
             type="text"
             autoFocus
