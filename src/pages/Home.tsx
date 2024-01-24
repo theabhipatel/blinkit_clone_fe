@@ -82,7 +82,7 @@ const Home = () => {
       </Helmet>
       <HomeScreenPoster />
       <HomeScreenCategoriesPoster categories={categories} />
-      <div className="w-full px-20">
+      <div className="w-full md:px-10 lg:px-20">
         <CategorySlider
           categoryTitle="Dairy & Breads"
           products={dairyProducts}
