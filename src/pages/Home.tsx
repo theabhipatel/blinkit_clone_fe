@@ -81,8 +81,8 @@ const Home = () => {
         />
       </Helmet>
       <HomeScreenPoster />
+      <HomeScreenCategoriesPoster categories={categories} />
       <div className="w-full px-20">
-        <HomeScreenCategoriesPoster categories={categories} />
         <CategorySlider
           categoryTitle="Dairy & Breads"
           products={dairyProducts}
