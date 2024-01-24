@@ -56,7 +56,7 @@ const Home = () => {
   };
 
   return (
-    <main className="w-full px-20 my-16 ">
+    <main className="w-full my-16 ">
       <Helmet>
         <title>Everything delivered in minutes | Blinkit</title>
         <meta
@@ -81,12 +81,17 @@ const Home = () => {
         />
       </Helmet>
       <HomeScreenPoster />
-      <HomeScreenCategoriesPoster categories={categories} />
-      <CategorySlider categoryTitle="Dairy & Breads" products={dairyProducts} />
-      <CategorySlider
-        categoryTitle="Fruits & Vegetables"
-        products={vegetablesAndFruitsProducts}
-      />
+      <div className="w-full px-20">
+        <HomeScreenCategoriesPoster categories={categories} />
+        <CategorySlider
+          categoryTitle="Dairy & Breads"
+          products={dairyProducts}
+        />
+        <CategorySlider
+          categoryTitle="Fruits & Vegetables"
+          products={vegetablesAndFruitsProducts}
+        />
+      </div>
       {/* <CategorySlider />
       <CategorySlider /> */}
     </main>
