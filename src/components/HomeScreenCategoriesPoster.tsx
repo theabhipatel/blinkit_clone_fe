@@ -8,7 +8,7 @@ interface IProps {
 
 const HomeScreenCategoriesPoster: FC<IProps> = ({ categories }) => {
   return (
-    <div className="   flex flex-wrap justify-center  ">
+    <div className="flex flex-wrap justify-center md:px-10 lg:px-20 md:justify-start  ">
       <div className="grid grid-cols-3 sm:grid-cols-6 md:grid-cols-8 lg:grid-cols-10">
         {categories.map(({ _id, thumbnail, subCategories }) => (
           <NavLink
