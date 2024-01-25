@@ -47,7 +47,7 @@ const LoginModal: FC<IProps> = () => {
       >
         <div
           onClick={handlePreventClick}
-          className="relative w-[28rem] h-[17rem] bg-white rounded-xl p-3 flex flex-col items-center gap-2"
+          className="relative w-[95%] sm:w-[80% sm:w-[28rem] h-[17rem] bg-white rounded-xl p-3 flex flex-col items-center gap-2"
         >
           <div
             onClick={handleLoginModalCloseOnBackButton}
