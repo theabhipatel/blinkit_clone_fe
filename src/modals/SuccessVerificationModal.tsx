@@ -10,7 +10,7 @@ const SuccessVerificationModal: FC<IProps> = () => {
   useEffect(() => {
     setTimeout(() => {
       dispatch(toggleSuccessVerificationModal(false));
-    }, 2000);
+    }, 1000);
 
     return () => {};
   }, []);
@@ -19,10 +19,9 @@ const SuccessVerificationModal: FC<IProps> = () => {
     <div className="fixed inset-0 z-50">
       <div
         id="container"
-        // onClick={handleLoginModalClose}
         className="w-full h-full bg-black/70 flex justify-center items-center"
       >
-        <div className="relative w-[28rem] h-[12rem] bg-white rounded-xl  flex flex-col items-center justify-center gap-2 text-primary">
+        <div className="relative w-[95%] sm:w-[28rem] h-[12rem] bg-white rounded-xl  flex flex-col items-center justify-center gap-2 text-primary">
           <IoCheckmarkCircle className="text-4xl" />
           <p className="text-xs tracking-wide font-[500]">
             Successfully logged in!

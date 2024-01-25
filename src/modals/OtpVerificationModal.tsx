@@ -21,7 +21,7 @@ const OtpVerificationModal: FC<IProps> = () => {
     setResendOtpTime(30);
     let id = setInterval(() => {
       setResendOtpTime((prev) => (prev !== 0 ? prev - 1 : 0));
-    }, 1000);
+    }, 1500);
 
     return () => {
       clearInterval(id);
@@ -43,7 +43,7 @@ const OtpVerificationModal: FC<IProps> = () => {
         id="container"
         className="w-full h-full bg-black/70 flex justify-center items-center"
       >
-        <div className="relative w-[28rem] h-[15rem] bg-white rounded-xl  flex flex-col items-center justify-between gap-2 overflow-hidden">
+        <div className="relative w-[95%] sm:w-[28rem] h-[15rem] bg-white rounded-xl  flex flex-col items-center justify-between gap-2 overflow-hidden">
           <div className="w-full flex justify-center items-center shadow-sm p-3">
             <div
               onClick={handleBackAction}
