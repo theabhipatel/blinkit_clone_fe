@@ -12,7 +12,7 @@ const CategorySlider: FC<IProps> = ({ categoryTitle, products }) => {
   return (
     <div className="">
       <div className="flex justify-between px-3">
-        <h2 className="text-xl font-bold text-zinc-800">{categoryTitle}</h2>
+        <h2 className="text-lg font-bold text-zinc-800">{categoryTitle}</h2>
         <span className="text-md font-semibold text-primary cursor-pointer">
           see all
         </span>

@@ -81,6 +81,10 @@ const Home = () => {
         />
       </Helmet>
       <HomeScreenPoster />
+      {/* ---> Shop by category */}
+      <h2 className="mt-2 text-base font-bold pl-2 md:hidden">
+        Shop by category
+      </h2>
       <HomeScreenCategoriesPoster categories={categories} />
       <div className="w-full md:px-10 lg:px-20">
         <CategorySlider
