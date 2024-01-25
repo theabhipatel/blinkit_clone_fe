@@ -9,7 +9,7 @@ import { categories, usefullLinks } from "../constant";
 
 const Footer = () => {
   return (
-    <footer className="px-6 md:px-16">
+    <footer className="px-4 md:px-16">
       {/* ---> links <--- */}
       <div className="flex justify-between gap-3 flex-col lg:flex-row">
         {/* ---> Useful Links <--- */}
@@ -57,7 +57,9 @@ const Footer = () => {
           </div>
 
           <div className="flex gap-3">
-            <h5 className="text-sm text-zinc-500 font-[500]">Download App</h5>
+            <h5 className="text-xs md:text-sm text-zinc-500 font-[500]">
+              Download App
+            </h5>
             <img
               src="https://blinkit.com/d61019073b700ca49d22.png"
               alt="download on app store"
