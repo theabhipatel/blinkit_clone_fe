@@ -43,7 +43,8 @@ const Navbar = () => {
   };
 
   const handleGotoAccount = () => {
-    navigate("account");
+    if (isUserLoggedIn) navigate("account");
+    else handleLoginModalOpen();
   };
   const handleGotoSearch = () => {
     navigate("s");
