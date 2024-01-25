@@ -26,10 +26,10 @@ const categories = [
     title: "Tea, Coffee & Health Drinks",
     link: "",
   },
-  {
-    title: "Bakery & Biscuits",
-    link: "",
-  },
+  // {
+  //   title: "Bakery & Biscuits",
+  //   link: "",
+  // },
 ];
 
 const CategoryTopBar = () => {
@@ -37,7 +37,7 @@ const CategoryTopBar = () => {
 
   return (
     <div className="max-w-[1250px] z-40 fixed top-16  w-full h-10 shadow-md bg-white ">
-      <div className="h-full px-24  flex  ">
+      <div className="h-full md:px-5 lg:px-24  flex  ">
         {categories.map(({ title }, index) => {
           return (
             <div

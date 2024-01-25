@@ -50,7 +50,7 @@ const FilterDropdown = () => {
         </span>
       </button>
       {toggleDropdown && (
-        <div className="absolute top-[1.65rem] right-0 left-0 bg-white shadow-normal">
+        <div className="absolute top-[1.65rem] right-0 left-0 bg-white shadow-normal z-40">
           {filterList.map(({ title, id }) => {
             return (
               <div
