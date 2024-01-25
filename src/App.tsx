@@ -30,6 +30,10 @@ const App = () => {
 
   /** ---> checking is mobile or small size devices. */
   useEffect(() => {
+    dispatch(setIsMobileDevice(window.innerWidth < 768));
+  }, []);
+
+  useEffect(() => {
     const handleResize = () => {
       dispatch(setIsMobileDevice(window.innerWidth < 768));
     };
