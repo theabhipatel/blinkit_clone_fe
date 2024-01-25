@@ -54,7 +54,7 @@ const AccountDropDown = () => {
         </li>
       </ul>
       <div className="flex gap-2 px-3 items-center mt-2  cursor-default">
-        <div className="w-16 h-16 bg-red-400">
+        <div className="w-16 h-16">
           <img src="/qr-code.png" alt="theabhipatel qr code " />
         </div>
         <div className="w-[60%] text-zinc-600">
