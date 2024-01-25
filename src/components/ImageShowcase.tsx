@@ -8,7 +8,7 @@ const ImageShowcase: FC<IProps> = ({ images }) => {
   const [activeImage, setActiveImage] = useState(0);
   return (
     <div>
-      <div className="w-[60%] mx-auto  h-[20rem]">
+      <div className="md:w-[90%] lg:w-[60%] mx-auto h-[20rem] ">
         <img
           src={images[activeImage]}
           alt="balaji sev"

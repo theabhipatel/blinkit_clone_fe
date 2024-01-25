@@ -38,7 +38,7 @@ const Product = () => {
       </Helmet>
       <div className="w-full flex   mt-16  mb-10 border-b border-zinc-300 ">
         {/* ---> Left Section <--- */}
-        <div className="w-[55%]  p-16 pt-0 border-r border-zinc-300">
+        <div className="w-[55%] md:p-8 lg:p-16 pt-0 border-r border-zinc-300">
           {/* ---> Showing Images <--- */}
           {fetchedProduct?.images && (
             <ImageShowcase images={fetchedProduct?.images} />
@@ -89,10 +89,38 @@ const Product = () => {
                 <h4 className="text-[11px] font-[500] text-zinc-500">
                   {fetchedProduct?.unit}
                 </h4>
-                <h4 className="text-xs">
-                  MRP{" "}
-                  <span className="font-semibold">{fetchedProduct?.price}</span>
-                </h4>
+                {fetchedProduct && fetchedProduct?.discountPercentage === 0 ? (
+                  <h4 className="text-xs">
+                    MRP{" "}
+                    <span className="font-bold">₹{fetchedProduct?.price}</span>
+                  </h4>
+                ) : (
+                  <>
+                    {fetchedProduct && (
+                      <>
+                        <h4 className="text-xs font-bold">
+                          <span className="">
+                            ₹
+                            {Math.floor(
+                              fetchedProduct.price -
+                                (fetchedProduct?.price *
+                                  fetchedProduct?.discountPercentage) /
+                                  100
+                            )}
+                          </span>{" "}
+                          <span className="text-[9px] text-zinc-500">
+                            {" "}
+                            MRP{" "}
+                            <span className="line-through">
+                              {fetchedProduct?.price}
+                            </span>
+                          </span>
+                        </h4>
+                      </>
+                    )}
+                  </>
+                )}
+
                 <h5 className="text-xxs text-zinc-400">
                   (Inclusive of all taxes)
                 </h5>
