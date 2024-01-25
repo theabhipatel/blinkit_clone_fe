@@ -16,6 +16,7 @@ import PrivateRoutes from "./hoc/PrivateRoutes";
 import Checkout from "./pages/Checkout";
 import { HelmetProvider } from "react-helmet-async";
 import PaymentSuccess from "./pages/PaymentSuccess";
+import { setIsMobileDevice } from "./store/cart/cartSlice";
 
 const App = () => {
   const dispatch = useAppDispatch();
@@ -25,6 +26,18 @@ const App = () => {
   useEffect(() => {
     const token = localStorage.getItem("@accessToken");
     if (token) dispatch(setIsUserLoggedIn(true));
+  }, []);
+
+  /** ---> checking is mobile or small size devices. */
+  useEffect(() => {
+    const handleResize = () => {
+      dispatch(setIsMobileDevice(window.innerWidth < 768));
+    };
+    window.addEventListener("resize", handleResize);
+
+    return () => {
+      window.removeEventListener("resize", handleResize);
+    };
   }, []);
 
   return (
