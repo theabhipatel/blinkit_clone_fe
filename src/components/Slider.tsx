@@ -38,7 +38,7 @@ const Slider = ({
     <div className="relative ">
       {isLeftButton && (
         <button
-          className={`absolute top-32 -left-2 p-2 bg-white hover:bg-zinc-100 rounded-full shadow-normal duration-300 `}
+          className={`absolute top-32 -left-2 z-30 p-2 bg-white hover:bg-zinc-100 rounded-full shadow-normal duration-300 `}
           onClick={handlePrev}
         >
           <FaChevronLeft className="text-xs" />
@@ -46,7 +46,7 @@ const Slider = ({
       )}
 
       <button
-        className="absolute top-32 -right-2 p-2 bg-white hover:bg-zinc-100  rounded-full  shadow-normal duration-300"
+        className="absolute top-32 -right-2 z-30 p-2 bg-white hover:bg-zinc-100  rounded-full  shadow-normal duration-300"
         onClick={handleNext}
       >
         <FaChevronRight className="text-xs" />
