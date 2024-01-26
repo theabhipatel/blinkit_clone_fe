@@ -25,10 +25,6 @@ const HomeScreenPoster = () => {
       <div className="md:hidden mt-28 bg-[#072E25]">
         <picture>
           <source
-            srcSet="https://cdn.grofers.com/cdn-cgi/image/f=auto,fit=scale-down,q=70,metadata=none,w=540/layout-engine/2023-09/01_1.png"
-            media="(max-width: 450px)"
-          />
-          <source
             srcSet="https://cdn.grofers.com/cdn-cgi/image/f=auto,fit=scale-down,q=70,metadata=none,w=720/layout-engine/2023-09/01_1.png"
             media="(max-width: 520px)"
           />
@@ -48,20 +44,14 @@ const HomeScreenPoster = () => {
           loop
           muted
           autoPlay
-          data-pf="reset"
         >
           <source
             src="https://cdn.grofers.com/layout-engine/2023-09/pann-animation_0.mp4"
             type="video/mp4"
-            data-pf="reset"
           />
-          <track kind="captions" data-pf="reset" />
+          <track kind="captions" />
         </video>
         <picture>
-          <source
-            srcSet="https://cdn.grofers.com/cdn-cgi/image/f=auto,fit=scale-down,q=70,metadata=none,w=540/layout-engine/2023-09/03_0.png"
-            media="(max-width: 450px)"
-          />
           <source
             srcSet="https://cdn.grofers.com/cdn-cgi/image/f=auto,fit=scale-down,q=70,metadata=none,w=720/layout-engine/2023-09/03_0.png"
             media="(max-width: 520px)"
@@ -75,10 +65,6 @@ const HomeScreenPoster = () => {
           />
         </picture>
         <picture>
-          <source
-            srcSet="https://cdn.grofers.com/cdn-cgi/image/f=auto,fit=scale-down,q=70,metadata=none,w=540/layout-engine/2023-09/04.png"
-            media="(max-width: 450px)"
-          />
           <source
             srcSet="https://cdn.grofers.com/cdn-cgi/image/f=auto,fit=scale-down,q=70,metadata=none,w=720/layout-engine/2023-09/04.png"
             media="(max-width: 520px)"
