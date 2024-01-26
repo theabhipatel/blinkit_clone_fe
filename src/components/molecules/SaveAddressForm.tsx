@@ -59,14 +59,14 @@ const SaveAddressForm = () => {
     otherAddressTypeRef.current?.focus();
   };
   return (
-    <div className="adress w-[55%] h-full p-5 ">
+    <div className="adress w-full md:w-[55%] h-full p-2 md:p-5 ">
       <div className="flex justify-between items-center">
         <h3 className=" font-bold">Enter complete address</h3>
-        <button onClick={handleModalClose}>
+        <button className="hidden md:block" onClick={handleModalClose}>
           <IoCloseCircle className="text-zinc-500 text-xl cursor-pointer" />
         </button>
       </div>
-      <p className="text-[11px] text-zinc-500 mt-1">
+      <p className="text-xxs md:text-[11px] text-zinc-500 mt-1">
         This allow us to find you easily and give you timely delivery experience
       </p>
       <form
@@ -123,7 +123,7 @@ const SaveAddressForm = () => {
           <p className="text-xxs text-red-400">*{errors.addressLine2}</p>
         )}
 
-        <div className="w-full h-32">
+        <div className="w-full md:h-32">
           <p>Save address as</p>
           <div className="mt-2 flex gap-3">
             <div
@@ -175,7 +175,7 @@ const SaveAddressForm = () => {
 
         <button
           type="submit"
-          className="w-full text-center text-xs py-3 bg-primary text-white rounded-md font-semibold absolute bottom-16"
+          className="w-full text-center text-xs py-3 bg-primary text-white rounded-md font-semibold md:absolute bottom-16"
         >
           Save Address
         </button>
