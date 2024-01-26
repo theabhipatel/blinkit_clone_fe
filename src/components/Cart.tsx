@@ -36,6 +36,7 @@ const Cart: FC<IProps> = () => {
   const isUserLoggedIn = useAppSelector((state) => state.auth.isUserLoggedIn);
   const selectedAddress = useAppSelector((state) => state.user.selectedAddress);
   const [isMyAdressPage, setIsMyAdressPage] = useState(false);
+  const isMobile = useAppSelector((state) => state.cart.isMobile);
 
   const handleCartClose = () => {
     dispatch(toggleCartOpenAndClose(false));
@@ -88,10 +89,10 @@ const Cart: FC<IProps> = () => {
         {!isMyAdressPage && (
           <div
             onClick={handlePreventClick}
-            className="w-[20rem] h-full self-end bg-blue-50 text-zinc-800 overflow-x-auto flex flex-col "
+            className="w-full md:w-[20rem] h-full self-end bg-blue-50 text-zinc-800 overflow-x-auto flex flex-col "
           >
             {/* ---> Cart Header <--- */}
-            <div className="w-[19rem] h-12 fixed top-0 z-40 px-4 bg-white flex justify-between items-center ">
+            <div className="w-full md:w-[20rem] h-12 fixed top-0 right-0 z-40 px-4 bg-white flex justify-between items-center ">
               <h4 className="text-xs font-bold">My Cart</h4>
               <button onClick={handleCartClose}>
                 <MdClose />
@@ -99,7 +100,7 @@ const Cart: FC<IProps> = () => {
             </div>
 
             {/* ---> Cart Body <--- */}
-            <div className="mt-4 mb-32">
+            <div className="mt-16 mb-32">
               {cartItems.length === 0 && <EmptyCart />}
               {cartItems.length !== 0 && (
                 <>
@@ -135,16 +136,29 @@ const Cart: FC<IProps> = () => {
                   {/* ---> Before you checkout <--- */}
                   <div className="w-[94%] my-3 p-3 pb-5 mx-auto rounded-md bg-white flex flex-col ">
                     <h4 className="text-xs font-bold "> Before you checkout</h4>
+                    {!isMobile && (
+                      <Slider isCart>
+                        {beforeYouCheckoutProducts.map((item) => (
+                          <ProductCard
+                            key={item._id}
+                            width="8rem"
+                            product={item}
+                          />
+                        ))}
+                      </Slider>
+                    )}
 
-                    <Slider isCart>
-                      {beforeYouCheckoutProducts.map((item) => (
-                        <ProductCard
-                          key={item._id}
-                          width="8rem"
-                          product={item}
-                        />
-                      ))}
-                    </Slider>
+                    {isMobile && (
+                      <div className="md:hidden mt-5 mb-3 flex gap-1 overflow-auto hide-scrollbar pl-3 pr-3">
+                        {beforeYouCheckoutProducts.map((item) => (
+                          <ProductCard
+                            key={item._id}
+                            product={item}
+                            width="7"
+                          />
+                        ))}
+                      </div>
+                    )}
                   </div>
                   {/* ---> Bill details <--- */}
                   <div className="w-[94%] my-3 p-3  mx-auto rounded-md bg-white flex flex-col ">
@@ -216,59 +230,63 @@ const Cart: FC<IProps> = () => {
             </div>
 
             {/* ---> Login to Proceed <--- */}
-            <div className=" w-[19rem] fixed -bottom-3  right-4  my-3 pb-2 rounded-md bg-white flex flex-col shadow-[-5px_-1px_10px_rgba(0,0,0,0.25)]">
-              {/* ---> address */}
-              {selectedAddress._id && (
-                <div className="border-b  p-2 flex gap-2">
-                  <div className="flex justify-center items-center w-[8%]">
-                    <IoLocationOutline className="text-xl text-zinc-500" />
+            {cartItems.length !== 0 && (
+              <div className="w-full md:w-[19rem] fixed -bottom-3  md:right-4 z-40 my-3 pb-2 rounded-md bg-white flex flex-col shadow-[-5px_-1px_10px_rgba(0,0,0,0.25)]">
+                {/* ---> address */}
+                {isUserLoggedIn && selectedAddress._id && (
+                  <div className="border-b  p-2 flex gap-2">
+                    <div className="flex justify-center items-center w-[8%]">
+                      <IoLocationOutline className="text-xl text-zinc-500" />
+                    </div>
+                    <div className="w-[75%] ">
+                      <h3 className="text-[11px] font-bold">
+                        Delivering to {selectedAddress.addressType}
+                      </h3>
+                      <p className="text-[9px] text-zinc-500 line-clamp-1">
+                        {selectedAddress.addressLine1}
+                        {selectedAddress.addressLine2}
+                      </p>
+                    </div>
+                    <div className="w-[15%] flex items-start">
+                      <button
+                        onClick={() => setIsMyAdressPage(true)}
+                        className="text-primary text-[9px] font-bold"
+                      >
+                        Change
+                      </button>
+                    </div>
                   </div>
-                  <div className="w-[75%] ">
-                    <h3 className="text-[11px] font-bold">
-                      Delivering to {selectedAddress.addressType}
-                    </h3>
-                    <p className="text-[9px] text-zinc-500 line-clamp-1">
-                      {selectedAddress.addressLine1}
-                      {selectedAddress.addressLine2}
-                    </p>
-                  </div>
-                  <div className="w-[15%] flex items-start">
-                    <button
-                      onClick={() => setIsMyAdressPage(true)}
-                      className="text-primary text-[9px] font-bold"
-                    >
-                      Change
-                    </button>
-                  </div>
-                </div>
-              )}
+                )}
 
-              <button
-                onClick={
-                  isUserLoggedIn
-                    ? handleNavigateToCheckout
-                    : handleLoginModalOpen
-                }
-                className="px-2 py-[0.4rem] text-xs text-white bg-primary rounded-md flex justify-between items-center m-3"
-              >
-                <div className="flex flex-col items-center">
-                  <span className="font-semibold">₹{grandTotal}</span>
-                  <span className="text-[9px] tracking-wide text-gray-300">
-                    TOTAL
-                  </span>
-                </div>
-                <div className="flex items-center gap-1">
-                  <span className="font-semibold">
-                    {isUserLoggedIn ? "Proceed To Pay" : "Login to Proceed"}
-                  </span>
-                  <FaChevronRight className="mt-[.15rem]" />
-                </div>
-              </button>
-            </div>
+                <button
+                  onClick={
+                    isUserLoggedIn
+                      ? handleNavigateToCheckout
+                      : handleLoginModalOpen
+                  }
+                  className="px-2 py-[0.4rem] text-xs text-white bg-primary rounded-md flex justify-between items-center m-3"
+                >
+                  <div className="flex flex-col items-center">
+                    <span className="font-semibold">₹{grandTotal}</span>
+                    <span className="text-[9px] tracking-wide text-gray-300">
+                      TOTAL
+                    </span>
+                  </div>
+                  <div className="flex items-center gap-1">
+                    <span className="font-semibold">
+                      {isUserLoggedIn ? "Proceed To Pay" : "Login to Proceed"}
+                    </span>
+                    <FaChevronRight className="mt-[.15rem]" />
+                  </div>
+                </button>
+              </div>
+            )}
           </div>
         )}
         {isMyAdressPage && (
-          <CartMyAdress setIsMyAdressPage={setIsMyAdressPage} />
+          <div onClick={handlePreventClick}>
+            <CartMyAdress setIsMyAdressPage={setIsMyAdressPage} />
+          </div>
         )}
       </div>
     </div>
