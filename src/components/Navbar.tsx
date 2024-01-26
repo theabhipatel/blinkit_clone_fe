@@ -12,6 +12,7 @@ import SearchInput from "./molecules/SearchInput";
 import NavbarLocation from "./molecules/NavbarLocation";
 import { FaRegUserCircle } from "react-icons/fa";
 import { FiSearch } from "react-icons/fi";
+import { IoMdArrowBack } from "react-icons/io";
 
 const Navbar = () => {
   const dispatch = useAppDispatch();
@@ -48,6 +49,10 @@ const Navbar = () => {
   };
   const handleGotoSearch = () => {
     navigate("s");
+  };
+
+  const handleGoBack = () => {
+    navigate(-1);
   };
 
   return (
@@ -129,14 +134,24 @@ const Navbar = () => {
         </div>
       </div>
       {/* ---> for mobile and small size devices  */}
-      <div className="w-full md:hidden px-3">
+      <div className="w-full md:hidden px-2">
         {/* ---> Location and Account */}
         <div
           className={`${
             pathname === "/s" && "hidden"
           } w-full flex justify-between items-center gap-4`}
         >
-          <NavbarLocation />
+          <div className="flex gap-2 items-center">
+            {/* ---> back arrow */}
+            {pathname !== "/" && (
+              <div onClick={handleGoBack} className="py-2 px-1">
+                <IoMdArrowBack className="text-lg cursor-pointer" />
+              </div>
+            )}
+
+            {/* ---> Location */}
+            <NavbarLocation />
+          </div>
 
           {pathname === "/" ? (
             <div
