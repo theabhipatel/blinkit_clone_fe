@@ -5,6 +5,7 @@ import SuccessVerificationModal from "./SuccessVerificationModal";
 import { useAppSelector } from "../store/hooks";
 import InsetBackgroundModal from "./InsetBackgroundModal";
 import SaveAdressModal from "./SaveAdressModal";
+import MobileCartButton from "../components/molecules/MobileCartButton";
 
 const Modals = () => {
   const isCartOpen = useAppSelector((state) => state.cart.isCartOpen);
@@ -23,6 +24,7 @@ const Modals = () => {
   const isSaveAddressModalOpen = useAppSelector(
     (state) => state.user.isSaveAddressModalOpen
   );
+  const isMobile = useAppSelector((state) => state.cart.isMobile);
 
   return (
     <>
@@ -32,6 +34,7 @@ const Modals = () => {
       {isSuccessVerificationModalOpen && <SuccessVerificationModal />}
       {isAccountDropdownOpen && <InsetBackgroundModal />}
       {isSaveAddressModalOpen && <SaveAdressModal />}
+      {!isCartOpen && isMobile && <MobileCartButton />}
     </>
   );
 };
