@@ -56,7 +56,7 @@ const Navbar = () => {
   };
 
   return (
-    <nav className="w-full max-w-[1250px] fixed top-0  border-b border-slate-200 bg-white z-50">
+    <nav className="w-full max-w-[1250px] fixed top-0  md:border-b border-slate-200 bg-white z-50">
       {/* ---> for lapotp, and large size devices  */}
       <div className="w-full  hidden md:flex">
         {/* ---> logo <--- */}
