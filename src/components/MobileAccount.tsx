@@ -1,10 +1,15 @@
+import { FC } from "react";
 import { useNavigate } from "react-router-dom";
 import { MdOutlinePendingActions } from "react-icons/md";
 import { LuMapPin } from "react-icons/lu";
 import { HiOutlineCurrencyRupee } from "react-icons/hi";
 import { BsPerson } from "react-icons/bs";
 
-const MobileAccount = () => {
+interface IProps {
+  handleLogout: () => void;
+}
+
+const MobileAccount: FC<IProps> = ({ handleLogout }) => {
   const navigate = useNavigate();
   const handleNavigate = (path: string) => {
     navigate(path);
@@ -41,7 +46,10 @@ const MobileAccount = () => {
         </div>
         <h4 className="text-xs">Wallet Details</h4>
       </div>
-      <div className="w-full h-10 flex items-center duration-200 cursor-pointer gap-2">
+      <div
+        onClick={handleLogout}
+        className="w-full h-10 flex items-center duration-200 cursor-pointer gap-2"
+      >
         <div className="p-2 bg-zinc-100 rounded-md">
           <BsPerson className="text-sm  text-zinc-600" />
         </div>
