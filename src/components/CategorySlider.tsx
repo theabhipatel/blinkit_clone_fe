@@ -2,6 +2,7 @@ import { FC } from "react";
 import { IProduct } from "../interfaces";
 import ProductCard from "./ProductCard";
 import Slider from "./Slider";
+import { useAppSelector } from "../store/hooks";
 
 interface IProps {
   categoryTitle: string;
@@ -9,6 +10,8 @@ interface IProps {
 }
 
 const CategorySlider: FC<IProps> = ({ categoryTitle, products }) => {
+  const isMobile = useAppSelector((state) => state.cart.isMobile);
+
   return (
     <div className="">
       <div className="flex justify-between px-3">
@@ -18,19 +21,21 @@ const CategorySlider: FC<IProps> = ({ categoryTitle, products }) => {
         </span>
       </div>
       {/* ---> slider in desktop <--- */}
-      <div className="hidden md:block">
+      {!isMobile && (
         <Slider>
           {products.map((item) => (
             <ProductCard key={item._id} product={item} />
           ))}
         </Slider>
-      </div>
+      )}
       {/* ---> slider in mobile <--- */}
-      <div className="md:hidden mt-5 mb-3 flex gap-2 overflow-auto hide-scrollbar pl-3 pr-3">
-        {products.map((item) => (
-          <ProductCard key={item._id} product={item} width="7" />
-        ))}
-      </div>
+      {isMobile && (
+        <div className="md:hidden mt-5 mb-3 flex gap-2 overflow-auto hide-scrollbar pl-3 pr-3">
+          {products.map((item) => (
+            <ProductCard key={item._id} product={item} width="7" />
+          ))}
+        </div>
+      )}
     </div>
   );
 };
