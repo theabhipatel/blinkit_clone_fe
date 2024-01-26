@@ -25,6 +25,7 @@ const Modals = () => {
     (state) => state.user.isSaveAddressModalOpen
   );
   const isMobile = useAppSelector((state) => state.cart.isMobile);
+  const totalItems = useAppSelector((state) => state.cart.totalItems);
 
   return (
     <>
@@ -34,7 +35,7 @@ const Modals = () => {
       {isSuccessVerificationModalOpen && <SuccessVerificationModal />}
       {isAccountDropdownOpen && <InsetBackgroundModal />}
       {isSaveAddressModalOpen && <SaveAdressModal />}
-      {!isCartOpen && isMobile && <MobileCartButton />}
+      {totalItems > 0 && !isCartOpen && isMobile && <MobileCartButton />}
     </>
   );
 };
