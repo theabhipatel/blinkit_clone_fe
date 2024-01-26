@@ -136,7 +136,7 @@ const Cart: FC<IProps> = () => {
                   <div className="w-[94%] my-3 p-3 pb-5 mx-auto rounded-md bg-white flex flex-col ">
                     <h4 className="text-xs font-bold "> Before you checkout</h4>
 
-                    <Slider>
+                    <Slider isCart>
                       {beforeYouCheckoutProducts.map((item) => (
                         <ProductCard
                           key={item._id}
