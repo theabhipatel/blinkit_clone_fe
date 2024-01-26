@@ -28,7 +28,7 @@ const MyAddresses = () => {
 
   if (addresses.length === 0) {
     return (
-      <div className="w-full h-full flex items-center flex-col gap-2 text-center ">
+      <div className="w-full h-[90vh] md:h-full flex items-center flex-col gap-2 text-center ">
         <div className="h-40 w-40 mt-14">
           <img
             src="https://blinkit.com/c55c5f6ddd0e42607e6c.png"
@@ -39,7 +39,7 @@ const MyAddresses = () => {
 
         <div>
           <h2 className="text-sm">You have no saved addresses</h2>
-          <h3 className="text-xs text-zinc-400 mt-1">
+          <h3 className="text-xxs sm:text-xs text-zinc-400 mt-1">
             Tell us where you want your orders delivered
           </h3>
         </div>
@@ -54,7 +54,7 @@ const MyAddresses = () => {
     );
   } else {
     return (
-      <div className="w-full h-full flex  flex-col gap-2 p-4">
+      <div className="w-full  min-h-[90vh] md:h-full flex  flex-col gap-2  p-2 md:p-4">
         <div>
           <h2 className="text-lg font-semibold">My addresses</h2>
           <button
