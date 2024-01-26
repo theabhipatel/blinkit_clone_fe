@@ -17,7 +17,7 @@ const MobileCartButton = () => {
   return (
     <div
       onClick={handleCartOpen}
-      className="fixed z-50 bottom-4 left-3 right-3 h-11 bg-primary rounded-md shadow-[0px_5px_25px_5px] shadow-black/40 text-white flex justify-between items-center px-2"
+      className="fixed z-50 bottom-4 left-3 right-3 h-12 bg-primary rounded-md shadow-[0px_5px_25px_5px] shadow-black/40 text-white flex justify-between items-center px-2"
     >
       <div className="flex gap-2">
         <div className="flex justify-center items-center rounded-md bg-[#379646] px-2">
