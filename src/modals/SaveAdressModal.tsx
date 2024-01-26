@@ -20,14 +20,14 @@ const SaveAdressModal = () => {
     <div className="fixed inset-0 z-50">
       <div
         onClick={handleModalClose}
-        className="w-full h-full bg-black/70 flex justify-center items-center"
+        className="w-full h-full bg-black/70 flex justify-center items-end md:items-center"
       >
         <div
           onClick={handlePreventClick}
           className="relative w-full md:w-[43rem] md:h-[26rem] bg-white rounded-t-xl md:rounded-l-none flex flex-col md:flex-row items-center overflow-hidden"
         >
           {isMobile && (
-            <div className="w-full h-10 flex items-center gap-10 px-2 ">
+            <div className="w-full h-12 flex items-center gap-10 px-2 ">
               <div onClick={handleModalClose} className="p-1">
                 <IoIosArrowBack className="text-xl" />
               </div>

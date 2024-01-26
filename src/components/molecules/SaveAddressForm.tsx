@@ -59,7 +59,7 @@ const SaveAddressForm = () => {
     otherAddressTypeRef.current?.focus();
   };
   return (
-    <div className="adress w-full md:w-[55%] h-full p-2 md:p-5 ">
+    <div className="adress w-full md:w-[55%] h-full p-2 pb-5 md:pb-5 md:p-5 ">
       <div className="flex justify-between items-center">
         <h3 className=" font-bold">Enter complete address</h3>
         <button className="hidden md:block" onClick={handleModalClose}>
