@@ -22,7 +22,7 @@ const HomeScreenPoster = () => {
         </div>
       </div>
       {/* ---> for Mobile and tables  */}
-      <div className="md:hidden mt-28 bg-[#072E25]">
+      <div className="md:hidden mt-[6.3rem] bg-[#072E25]">
         <picture>
           <source
             srcSet="https://cdn.grofers.com/cdn-cgi/image/f=auto,fit=scale-down,q=70,metadata=none,w=720/layout-engine/2023-09/01_1.png"
