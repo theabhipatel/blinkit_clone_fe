@@ -1,6 +1,6 @@
 import { IoMdArrowDropdown } from "react-icons/io";
 import { HiOutlineShoppingCart } from "react-icons/hi";
-import { useLocation, useNavigate } from "react-router-dom";
+import { NavLink, useLocation, useNavigate } from "react-router-dom";
 import { useAppDispatch, useAppSelector } from "../store/hooks";
 import { toggleCartOpenAndClose } from "../store/cart/cartSlice";
 import {
@@ -61,12 +61,12 @@ const Navbar = () => {
       <div className="w-full  hidden md:flex">
         {/* ---> logo <--- */}
         <div className={`flex w-[18%] `}>
-          <a
-            href="/"
+          <NavLink
+            to="/"
             className={`logo w-full h-[4.15rem] border-r border-slate-200 flex justify-center items-center cursor-pointer `}
           >
             <img src="/blinkit-logo.svg" className="h-6" alt="logo" />
-          </a>
+          </NavLink>
         </div>
         {/* ---> Location and Search Input and login button <--- */}
         <div className="w-full flex items-center justify-between ">
