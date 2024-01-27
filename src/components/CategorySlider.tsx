@@ -11,10 +11,12 @@ interface IProps {
 
 const CategorySlider: FC<IProps> = ({ categoryTitle, products }) => {
   const isMobile = useAppSelector((state) => state.cart.isMobile);
-
+  if (products.length === 0) {
+    return null;
+  }
   return (
     <div className="">
-      <div className="flex justify-between px-3">
+      <div className="flex justify-between px-3 md:px-1">
         <h2 className="text-lg font-bold text-zinc-800">{categoryTitle}</h2>
         <span className="text-md font-semibold text-primary cursor-pointer">
           see all
