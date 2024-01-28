@@ -91,15 +91,20 @@ const Product = () => {
                       </NavLink>
                       <span>/</span>
                       <NavLink
-                        to="/"
-                        className="hover:text-primary duration-300"
+                        to={`/cn/${fetchedProduct?.subCategoryTitle
+                          .toLowerCase()
+                          .split(" ")
+                          .join("-")}/cid/${fetchedProduct?.categoryId}/${
+                          fetchedProduct?.subCategoryId
+                        }`}
+                        className="hover:text-primary duration-300 "
                       >
                         {fetchedProduct?.subCategoryTitle}
                       </NavLink>
                       <span>/</span>
-                      <span className="text-zinc-400">
-                        {fetchedProduct?.title}
-                      </span>
+                      <p className="text-zinc-400 line-clamp-1">
+                        {fetchedProduct?.title.slice(0, 50)}
+                      </p>
                     </div>
                     <h1 className="text-xl font-bold mt-2">
                       {fetchedProduct?.title}
