@@ -6,19 +6,34 @@ import { axiosInstance } from "../utils/axiosInstance";
 import { useEffect, useState } from "react";
 import { ICategory, IProduct } from "../interfaces";
 import Loader from "../components/molecules/Loader";
+import { useAppSelector } from "../store/hooks";
 
 const Home = () => {
+  const [bestSellerProducts, setBestSellerProducts] = useState<IProduct[]>([]);
   const [dairyProducts, setDairyProducts] = useState<IProduct[]>([]);
   const [vegetablesAndFruitsProducts, setVegetablesAndFruitsProducts] =
     useState<IProduct[]>([]);
   const [categories, setCategories] = useState<ICategory[]>([]);
   const [isCategoriesLoading, setIsCategoriesLoading] = useState(true);
+  const isMobile = useAppSelector((state) => state.cart.isMobile);
 
   useEffect(() => {
     getCategories();
+    getBestSellerProducts();
     getDairyProducts();
     getVegetablesAndFruitsProducts();
   }, []);
+
+  const getBestSellerProducts = async () => {
+    try {
+      const res = await axiosInstance.get("/products/bestsellers");
+      if (res.status === 200) {
+        setBestSellerProducts(res.data.products);
+      }
+    } catch (error) {
+      console.log(error);
+    }
+  };
 
   const getDairyProducts = async () => {
     try {
@@ -85,6 +100,16 @@ const Home = () => {
       </Helmet>
       <HomeScreenPoster />
       {/* ---> Shop by category */}
+      {isMobile && (
+        <>
+          <div className="mt-3"></div>
+          <CategorySlider
+            categoryTitle="Bestsellers"
+            products={bestSellerProducts}
+          />
+        </>
+      )}
+
       {isCategoriesLoading ? (
         <div className="w-full h-[30vh] flex justify-center items-center ">
           <Loader />
@@ -99,7 +124,12 @@ const Home = () => {
       )}
 
       <div className="w-full md:px-10 lg:px-20">
-        <CategorySlider categoryTitle="Bestsellers" products={dairyProducts} />
+        {!isMobile && (
+          <CategorySlider
+            categoryTitle="Bestsellers"
+            products={bestSellerProducts}
+          />
+        )}
 
         <CategorySlider
           categoryTitle="Dairy & Breads"

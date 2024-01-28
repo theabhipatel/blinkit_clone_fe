@@ -16,8 +16,10 @@ const CategorySlider: FC<IProps> = ({ categoryTitle, products }) => {
   }
   return (
     <div className="">
-      <div className="flex justify-between px-3 md:px-1">
-        <h2 className="text-lg font-bold text-zinc-800">{categoryTitle}</h2>
+      <div className="flex justify-between px-3 md:px-1 ">
+        <h2 className="text-base md:text-lg font-bold text-zinc-800">
+          {categoryTitle}
+        </h2>
         <span className="text-md font-semibold text-primary cursor-pointer">
           see all
         </span>
@@ -32,7 +34,7 @@ const CategorySlider: FC<IProps> = ({ categoryTitle, products }) => {
       )}
       {/* ---> slider in mobile <--- */}
       {isMobile && (
-        <div className="md:hidden mt-5 mb-3 flex gap-2 overflow-auto hide-scrollbar pl-3 pr-3">
+        <div className="md:hidden mt-2 mb-3 flex gap-2 overflow-auto hide-scrollbar pl-3 pr-3">
           {products.map((item) => (
             <ProductCard key={item._id} product={item} width="7" />
           ))}
