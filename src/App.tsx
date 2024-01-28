@@ -59,7 +59,7 @@ const App = () => {
           <Navbar />
           <Suspense
             fallback={
-              <div className="w-full h-[80vh] flex justify-center items-center">
+              <div className="w-full h-screen flex justify-center items-center">
                 <Loader />
               </div>
             }
