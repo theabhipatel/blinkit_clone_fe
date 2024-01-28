@@ -53,7 +53,7 @@ const Slider = ({
       </button>
       <div
         ref={sliderRef}
-        className={`flex overflow-x-hidden py-5 scroll-smooth ${
+        className={`flex overflow-x-hidden py-3 scroll-smooth ${
           isCart ? "gap-1" : "gap-4"
         }`}
       >
