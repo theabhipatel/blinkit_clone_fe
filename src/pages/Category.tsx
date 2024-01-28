@@ -8,6 +8,7 @@ import { axiosInstance } from "../utils/axiosInstance";
 import { useEffect, useState } from "react";
 import { IProduct } from "../interfaces";
 import { useAppSelector } from "../store/hooks";
+import Loader from "../components/molecules/Loader";
 
 const Category = () => {
   const { cid, subcid, subcname } = useParams();
@@ -15,6 +16,7 @@ const Category = () => {
   const [subCategories, setSubCategories] = useState([]);
   const [selectedSubCategory, setSelectedSubCategory] = useState("");
   const isMobile = useAppSelector((state) => state.cart.isMobile);
+  const [isLoading, setIsLoading] = useState(true);
 
   useEffect(() => {
     if (subcid) {
@@ -33,6 +35,7 @@ const Category = () => {
       const res = await axiosInstance.get(`/products/sub-category/${subcid}`);
       if (res.status === 200) {
         setProducts(res.data.products);
+        setIsLoading(false);
       }
     } catch (error) {
       console.log(error);
@@ -63,45 +66,57 @@ const Category = () => {
         </div>
       )}
       {/* ---> Category page body <--- */}
-      <div className="w-full md:px-5 lg:px-20 ">
-        <div className="w-full h-full flex ">
-          {/* ---> Categories side bar <--- */}
-          <CategorySideBar
-            subCategories={subCategories}
-            selectedSubCategory={selectedSubCategory}
-            setSelectedSubCategory={setSelectedSubCategory}
-          />
-          {/* ---> Products cards <--- */}
-          <div className="w-full   bg-blue-50">
-            {/* ---> Heading and filters <--- */}
-            {!isMobile && (
-              <div className="w-full h-10 flex justify-between items-center px-3 bg-white border border-l-0 border-t-0 border-zinc-200">
-                <h3 className="text-sm font-semibold text-zinc-700">
-                  Buy {subcname?.split("-").join(" ")} Online
-                </h3>
-                <div className="flex gap-5 items-center">
-                  <h6 className="text-xs text-zinc-400">Sort By</h6>
-                  {/* ---> Filter Dropdown <--- */}
-                  <FilterDropdown />
-                </div>
-              </div>
-            )}
+      {isLoading ? (
+        <div className="w-full h-screen flex justify-center items-center">
+          <Loader />
+        </div>
+      ) : (
+        <>
+          <div className="w-full md:px-5 lg:px-20 ">
+            <div className="w-full h-full flex ">
+              {/* ---> Categories side bar <--- */}
+              <CategorySideBar
+                subCategories={subCategories}
+                selectedSubCategory={selectedSubCategory}
+                setSelectedSubCategory={setSelectedSubCategory}
+              />
+              {/* ---> Products cards <--- */}
+              <div className="w-full   bg-blue-50">
+                {/* ---> Heading and filters <--- */}
+                {!isMobile && (
+                  <div className="w-full h-10 flex justify-between items-center px-3 bg-white border border-l-0 border-t-0 border-zinc-200">
+                    <h3 className="text-sm font-semibold text-zinc-700">
+                      Buy {subcname?.split("-").join(" ")} Online
+                    </h3>
+                    <div className="flex gap-5 items-center">
+                      <h6 className="text-xs text-zinc-400">Sort By</h6>
+                      {/* ---> Filter Dropdown <--- */}
+                      <FilterDropdown />
+                    </div>
+                  </div>
+                )}
 
-            {/* ---> Mapping cards <--- */}
-            <div className="w-full flex justify-center items-center flex-wrap">
-              <div className=" grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 gap-2 gap-y-3 p-2 ">
-                {products.map((item) => {
-                  return (
-                    <ProductCard key={item._id} width="8rem" product={item} />
-                  );
-                })}
+                {/* ---> Mapping cards <--- */}
+                <div className="w-full flex justify-center items-center flex-wrap">
+                  <div className=" grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 gap-2 gap-y-3 p-2 ">
+                    {products.map((item) => {
+                      return (
+                        <ProductCard
+                          key={item._id}
+                          width="8rem"
+                          product={item}
+                        />
+                      );
+                    })}
+                  </div>
+                </div>
               </div>
             </div>
           </div>
-        </div>
-      </div>
-      {/* ---> Category Details <--- */}
-      <CategoryDetails />
+          {/* ---> Category Details <--- */}
+          <CategoryDetails />
+        </>
+      )}
     </div>
   );
 };
