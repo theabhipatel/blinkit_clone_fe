@@ -32,6 +32,7 @@ const Category = () => {
   }, [cid]);
 
   const getProductsBySubCategory = async () => {
+    setIsLoading(true);
     try {
       const res = await axiosInstance.get(`/products/sub-category/${subcid}`);
       if (res.status === 200) {
