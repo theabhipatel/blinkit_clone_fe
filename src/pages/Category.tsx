@@ -6,9 +6,10 @@ import ProductCard from "../components/ProductCard";
 import FilterDropdown from "../components/molecules/FilterDropdown";
 import { axiosInstance } from "../utils/axiosInstance";
 import { useEffect, useState } from "react";
-import { IProduct } from "../interfaces";
+import { ICategory, IProduct } from "../interfaces";
 import { useAppSelector } from "../store/hooks";
 import Loader from "../components/molecules/Loader";
+import { Helmet } from "react-helmet-async";
 
 const Category = () => {
   const { cid, subcid, subcname } = useParams();
@@ -17,6 +18,7 @@ const Category = () => {
   const [selectedSubCategory, setSelectedSubCategory] = useState("");
   const isMobile = useAppSelector((state) => state.cart.isMobile);
   const [isLoading, setIsLoading] = useState(true);
+  const [categories, setCategories] = useState<ICategory[]>([]);
 
   useEffect(() => {
     if (subcid) {
@@ -24,9 +26,8 @@ const Category = () => {
     }
   }, [subcid]);
 
-  useEffect(() => {}, []);
-
   useEffect(() => {
+    getCategories();
     getSubCategories();
   }, [cid]);
 
@@ -54,14 +55,28 @@ const Category = () => {
     }
   };
 
+  const getCategories = async () => {
+    try {
+      const res = await axiosInstance.get("/categories");
+      if (res.status === 200) {
+        setCategories(res.data.categories);
+      }
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
   return (
     <div className="mt-[5.5rem] md:mt-[6.5rem] mb-10">
+      <Helmet>
+        <title>Buy {subcname?.split("-").join(" ")} Online | Blinkit</title>
+      </Helmet>
       {/* ---> Category page header <--- */}
-      {!isMobile && <CategoryTopBar />}
+      {!isMobile && <CategoryTopBar categories={categories} />}
       {isMobile && (
         <div className="w-full z-40 fixed top-14 border-y border-zinc-200 px-2 py-2 bg-white">
-          <h1 className="text-xs text-zinc-700 font-semibold">
-            Vegetables & Fruits
+          <h1 className="text-xs text-zinc-700 font-semibold capitalize">
+            Buy {subcname?.split("-").join(" ")} Online
           </h1>
         </div>
       )}
@@ -85,7 +100,7 @@ const Category = () => {
                 {/* ---> Heading and filters <--- */}
                 {!isMobile && (
                   <div className="w-full h-10 flex justify-between items-center px-3 bg-white border border-l-0 border-t-0 border-zinc-200">
-                    <h3 className="text-sm font-semibold text-zinc-700">
+                    <h3 className="text-sm font-semibold text-zinc-700 capitalize">
                       Buy {subcname?.split("-").join(" ")} Online
                     </h3>
                     <div className="flex gap-5 items-center">
