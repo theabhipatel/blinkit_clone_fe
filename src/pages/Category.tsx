@@ -25,6 +25,7 @@ const Category = () => {
 
   useEffect(() => {
     if (subcid) {
+      setSelectedSubCategory(subcid);
       getProductsBySubCategory();
     }
   }, [subcid]);
@@ -86,7 +87,6 @@ const Category = () => {
       const res = await axiosInstance.get(`/categories/${cid}`);
       if (res.status === 200) {
         setSubCategories(res.data.category.subCategories);
-        setSelectedSubCategory(res.data.category.subCategories[0]._id);
       }
     } catch (error) {
       console.log(error);
