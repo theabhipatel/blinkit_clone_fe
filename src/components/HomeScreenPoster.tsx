@@ -1,20 +1,54 @@
+import { useNavigate } from "react-router-dom";
+
 const HomeScreenPoster = () => {
+  const navigate = useNavigate();
+
+  const handleNavigate = (path: string) => {
+    navigate(path);
+  };
+
   return (
     <div className="home-poster w-full">
       {/* ---> for Desktop  */}
       <div className="hidden md:block md:px-10 lg:px-20">
-        <div className="w-full ">
+        <div
+          onClick={() =>
+            handleNavigate(
+              `/cn/mouth-fresheners/cid/65867534c36d36ab96259635/6586e760d2a1fb3dc872f93a`
+            )
+          }
+          className="w-full "
+        >
           <img src="/home-screen-poster.webp" alt="home screen poster" />
         </div>
 
         <div className="flex gap-4 px-2 my-3 overflow-scroll hide-scrollbar">
           <img
+            onClick={() =>
+              handleNavigate(
+                `/cn/cough-&-cold/cid/65868def6b306717f9c4fe22/6586eb2cd2a1fb3dc87304b1`
+              )
+            }
             src="/pharmacy-cat.avif"
             alt="pharmacy-poster"
             className="h-40"
           />
-          <img src="/petcare.avif" alt="petcare-poster" className="h-40" />
           <img
+            onClick={() =>
+              handleNavigate(
+                `/cn/dog-food/cid/65868e596b306717f9c4ff62/6586ecbed2a1fb3dc873179e`
+              )
+            }
+            src="/petcare.avif"
+            alt="petcare-poster"
+            className="h-40"
+          />
+          <img
+            onClick={() =>
+              handleNavigate(
+                `/cn/diapering/cid/65868dc96b306717f9c4fe20/659bd13eae0abd048610d511`
+              )
+            }
             src="/babycare-cat.avif"
             alt="babycare-poster"
             className="h-40"
@@ -23,7 +57,13 @@ const HomeScreenPoster = () => {
       </div>
       {/* ---> for Mobile and tables  */}
       <div className="md:hidden mt-[6.3rem] bg-[#072E25]">
-        <picture>
+        <picture
+          onClick={() =>
+            handleNavigate(
+              `/cn/mouth-fresheners/cid/65867534c36d36ab96259635/6586e760d2a1fb3dc872f93a`
+            )
+          }
+        >
           <source
             srcSet="https://cdn.grofers.com/cdn-cgi/image/f=auto,fit=scale-down,q=70,metadata=none,w=720/layout-engine/2023-09/01_1.png"
             media="(max-width: 520px)"
