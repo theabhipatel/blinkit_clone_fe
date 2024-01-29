@@ -171,7 +171,9 @@ const Category = () => {
             </div>
           </div>
           {/* ---> Category Details <--- */}
-          <CategoryDetails />
+          <CategoryDetails
+            categoryName={subcname?.split("-").join(" ") ?? ""}
+          />
         </>
       )}
     </div>
