@@ -6,6 +6,8 @@ import { useAppSelector } from "../store/hooks";
 import InsetBackgroundModal from "./InsetBackgroundModal";
 import SaveAdressModal from "./SaveAdressModal";
 import MobileCartButton from "../components/molecules/MobileCartButton";
+import { useEffect, useState } from "react";
+import InfoModal from "./InfoModal";
 
 const Modals = () => {
   const isCartOpen = useAppSelector((state) => state.cart.isCartOpen);
@@ -26,6 +28,14 @@ const Modals = () => {
   );
   const isMobile = useAppSelector((state) => state.cart.isMobile);
   const totalItems = useAppSelector((state) => state.cart.totalItems);
+  const [isInfoModal, setIsInfoModal] = useState(true);
+
+  useEffect(() => {
+    const isInfoModal = sessionStorage.getItem("isInfoModal");
+    if (isInfoModal) {
+      setIsInfoModal(false);
+    }
+  }, []);
 
   return (
     <>
@@ -36,6 +46,7 @@ const Modals = () => {
       {isAccountDropdownOpen && <InsetBackgroundModal />}
       {isSaveAddressModalOpen && <SaveAdressModal />}
       {totalItems > 0 && !isCartOpen && isMobile && <MobileCartButton />}
+      {isInfoModal && <InfoModal setIsInfoModal={setIsInfoModal} />}
     </>
   );
 };

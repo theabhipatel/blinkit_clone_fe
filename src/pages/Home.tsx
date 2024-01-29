@@ -67,6 +67,8 @@ const Home = () => {
       if (res.status === 200) {
         setCategories(res.data.categories);
         setIsCategoriesLoading(false);
+        sessionStorage.setItem("isInfoModal", "isInfoModal");
+        window.scrollTo(0, 0);
       }
     } catch (error) {
       console.log(error);
