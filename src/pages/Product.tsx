@@ -208,7 +208,15 @@ const Product = () => {
                       Home
                     </NavLink>
                     <span>/</span>
-                    <NavLink to="/" className="hover:text-primary duration-300">
+                    <NavLink
+                      to={`/cn/${fetchedProduct?.subCategoryTitle
+                        .toLowerCase()
+                        .split(" ")
+                        .join("-")}/cid/${fetchedProduct?.categoryId}/${
+                        fetchedProduct?.subCategoryId
+                      }`}
+                      className="hover:text-primary duration-300"
+                    >
                       {fetchedProduct?.subCategoryTitle}
                     </NavLink>
                     <span>/</span>
