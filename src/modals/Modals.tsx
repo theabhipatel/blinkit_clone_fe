@@ -8,8 +8,10 @@ import SaveAdressModal from "./SaveAdressModal";
 import MobileCartButton from "../components/molecules/MobileCartButton";
 import { useEffect, useState } from "react";
 import InfoModal from "./InfoModal";
+import { useLocation } from "react-router-dom";
 
 const Modals = () => {
+  const { pathname } = useLocation();
   const isCartOpen = useAppSelector((state) => state.cart.isCartOpen);
   const isLoginModalOpen = useAppSelector(
     (state) => state.auth.isLoginModalOpen
@@ -45,7 +47,10 @@ const Modals = () => {
       {isSuccessVerificationModalOpen && <SuccessVerificationModal />}
       {isAccountDropdownOpen && <InsetBackgroundModal />}
       {isSaveAddressModalOpen && <SaveAdressModal />}
-      {totalItems > 0 && !isCartOpen && isMobile && <MobileCartButton />}
+      {pathname !== "/checkout" &&
+        totalItems > 0 &&
+        !isCartOpen &&
+        isMobile && <MobileCartButton />}
       {isInfoModal && <InfoModal setIsInfoModal={setIsInfoModal} />}
     </>
   );
