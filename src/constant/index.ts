@@ -209,3 +209,31 @@ export const categories: ICategories[] = [
     link: "",
   },
 ];
+
+export interface IFilterList {
+  id: string;
+  title: string;
+}
+
+export const filterList: IFilterList[] = [
+  {
+    id: "1",
+    title: "Relevance",
+  },
+  {
+    id: "2",
+    title: "Price (Low to high)",
+  },
+  {
+    id: "3",
+    title: "Price (High to low)",
+  },
+  {
+    id: "4",
+    title: "Discount (High to low)",
+  },
+  {
+    id: "5",
+    title: "Name (A to Z)",
+  },
+];

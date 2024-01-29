@@ -10,6 +10,7 @@ import { ICategory, IProduct } from "../interfaces";
 import { useAppSelector } from "../store/hooks";
 import Loader from "../components/molecules/Loader";
 import { Helmet } from "react-helmet-async";
+import { IFilterList, filterList } from "../constant";
 
 const Category = () => {
   const { cid, subcid, subcname } = useParams();
@@ -19,6 +20,8 @@ const Category = () => {
   const isMobile = useAppSelector((state) => state.cart.isMobile);
   const [isLoading, setIsLoading] = useState(true);
   const [categories, setCategories] = useState<ICategory[]>([]);
+  const [activeFilter, setActiveFilter] = useState<IFilterList>(filterList[0]);
+  const [filteredProducts, setFilteredProducts] = useState<IProduct[]>([]);
 
   useEffect(() => {
     if (subcid) {
@@ -30,6 +33,40 @@ const Category = () => {
     getCategories();
     getSubCategories();
   }, [cid]);
+
+  useEffect(() => {
+    filterProducts();
+  }, [products, activeFilter]);
+
+  const filterProducts = () => {
+    const tempProduct = [...products];
+
+    switch (activeFilter.id) {
+      case "2":
+        setFilteredProducts(tempProduct.sort((a, b) => a.price - b.price));
+        break;
+      case "3":
+        setFilteredProducts(tempProduct.sort((a, b) => b.price - a.price));
+        break;
+      case "4":
+        setFilteredProducts(
+          tempProduct.sort(
+            (a, b) => b.discountPercentage - a.discountPercentage
+          )
+        );
+        break;
+      case "5":
+        setFilteredProducts(
+          tempProduct.sort((a, b) =>
+            a.title.toLowerCase().localeCompare(b.title.toLowerCase())
+          )
+        );
+        break;
+
+      default:
+        setFilteredProducts(products);
+    }
+  };
 
   const getProductsBySubCategory = async () => {
     setIsLoading(true);
@@ -107,7 +144,11 @@ const Category = () => {
                     <div className="flex gap-5 items-center">
                       <h6 className="text-xs text-zinc-400">Sort By</h6>
                       {/* ---> Filter Dropdown <--- */}
-                      <FilterDropdown />
+                      <FilterDropdown
+                        activeFilter={activeFilter}
+                        setActiveFilter={setActiveFilter}
+                        filterList={filterList}
+                      />
                     </div>
                   </div>
                 )}
@@ -115,7 +156,7 @@ const Category = () => {
                 {/* ---> Mapping cards <--- */}
                 <div className="w-full flex justify-center items-center flex-wrap">
                   <div className=" grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 gap-2 gap-y-3 p-2 ">
-                    {products.map((item) => {
+                    {filteredProducts.map((item) => {
                       return (
                         <ProductCard
                           key={item._id}
