@@ -3,13 +3,19 @@ import { IProduct } from "../interfaces";
 import ProductCard from "./ProductCard";
 import Slider from "./Slider";
 import { useAppSelector } from "../store/hooks";
+import { NavLink } from "react-router-dom";
 
 interface IProps {
   categoryTitle: string;
   products: IProduct[];
+  seeAllPath: string;
 }
 
-const CategorySlider: FC<IProps> = ({ categoryTitle, products }) => {
+const CategorySlider: FC<IProps> = ({
+  categoryTitle,
+  products,
+  seeAllPath,
+}) => {
   const isMobile = useAppSelector((state) => state.cart.isMobile);
   if (products.length === 0) {
     return null;
@@ -20,9 +26,12 @@ const CategorySlider: FC<IProps> = ({ categoryTitle, products }) => {
         <h2 className="text-base md:text-lg font-bold text-zinc-800">
           {categoryTitle}
         </h2>
-        <span className="text-md font-semibold text-primary cursor-pointer">
+        <NavLink
+          to={seeAllPath}
+          className="text-md font-semibold text-primary cursor-pointer"
+        >
           see all
-        </span>
+        </NavLink>
       </div>
       {/* ---> slider in desktop <--- */}
       {!isMobile && (

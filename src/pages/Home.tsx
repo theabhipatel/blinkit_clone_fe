@@ -108,6 +108,7 @@ const Home = () => {
           <CategorySlider
             categoryTitle="Bestsellers"
             products={bestSellerProducts}
+            seeAllPath="/cn/milk/cid/6582c1964460ca5037b2304e/6585611a0cc788a65bead89c"
           />
         </>
       )}
@@ -130,16 +131,19 @@ const Home = () => {
           <CategorySlider
             categoryTitle="Bestsellers"
             products={bestSellerProducts}
+            seeAllPath="/cn/milk/cid/6582c1964460ca5037b2304e/6585611a0cc788a65bead89c"
           />
         )}
 
         <CategorySlider
           categoryTitle="Dairy & Breads"
           products={dairyProducts}
+          seeAllPath="/cn/milk/cid/6582c1964460ca5037b2304e/6585611a0cc788a65bead89c"
         />
         <CategorySlider
           categoryTitle="Fruits & Vegetables"
           products={vegetablesAndFruitsProducts}
+          seeAllPath="/cn/fresh-vegetables/cid/6582c57beae03687384b458c/658563420cc788a65bead8c8"
         />
       </div>
       {/* <CategorySlider />
