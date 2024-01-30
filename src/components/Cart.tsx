@@ -47,7 +47,7 @@ const Cart: FC<IProps> = () => {
     if (cartItems.length) {
       getRelevantProducts();
     }
-  }, []);
+  }, [cartItems]);
 
   const getRelevantProducts = async () => {
     try {
@@ -55,7 +55,11 @@ const Cart: FC<IProps> = () => {
         `/products/category/${cartItems[cartItems.length - 1].categoryId}`
       );
       if (res.status === 200) {
-        setBeforeYouCheckoutProducts(res.data.products);
+        const cartItemsId = cartItems.map((item) => item._id);
+        const filteredProducts = res.data.products.filter(
+          (item: IProduct) => !cartItemsId.includes(item._id)
+        );
+        setBeforeYouCheckoutProducts(filteredProducts);
       }
     } catch (error) {
       console.log(error);
@@ -134,32 +138,38 @@ const Cart: FC<IProps> = () => {
                     })}
                   </div>
                   {/* ---> Before you checkout <--- */}
-                  <div className="w-[94%] my-3 p-3 pb-5 mx-auto rounded-md bg-white flex flex-col ">
-                    <h4 className="text-xs font-bold "> Before you checkout</h4>
-                    {!isMobile && (
-                      <Slider isCart>
-                        {beforeYouCheckoutProducts.map((item) => (
-                          <ProductCard
-                            key={item._id}
-                            width="8rem"
-                            product={item}
-                          />
-                        ))}
-                      </Slider>
-                    )}
+                  {beforeYouCheckoutProducts.length !== 0 && (
+                    <div className="w-[94%] my-3 p-3 pb-5 mx-auto rounded-md bg-white flex flex-col ">
+                      <h4 className="text-xs font-bold ">
+                        {" "}
+                        Before you checkout
+                      </h4>
+                      {!isMobile && (
+                        <Slider isCart>
+                          {beforeYouCheckoutProducts.map((item) => (
+                            <ProductCard
+                              key={item._id}
+                              width="8rem"
+                              product={item}
+                            />
+                          ))}
+                        </Slider>
+                      )}
 
-                    {isMobile && (
-                      <div className="md:hidden mt-5 mb-3 flex gap-1 overflow-auto hide-scrollbar pl-3 pr-3">
-                        {beforeYouCheckoutProducts.map((item) => (
-                          <ProductCard
-                            key={item._id}
-                            product={item}
-                            width="7"
-                          />
-                        ))}
-                      </div>
-                    )}
-                  </div>
+                      {isMobile && (
+                        <div className="md:hidden mt-5 mb-3 flex gap-1 overflow-auto hide-scrollbar pl-3 pr-3">
+                          {beforeYouCheckoutProducts.map((item) => (
+                            <ProductCard
+                              key={item._id}
+                              product={item}
+                              width="7"
+                            />
+                          ))}
+                        </div>
+                      )}
+                    </div>
+                  )}
+
                   {/* ---> Bill details <--- */}
                   <div className="w-[94%] my-3 p-3  mx-auto rounded-md bg-white flex flex-col ">
                     <h4 className="text-xs font-bold ">Bill details</h4>
