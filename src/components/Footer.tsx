@@ -5,46 +5,81 @@ import {
   FaTwitterSquare,
   FaFacebookSquare,
 } from "react-icons/fa";
-import { categories, usefullLinks } from "../constant";
+import { usefullLinks } from "../constant";
+import { NavLink } from "react-router-dom";
+import { useEffect, useState } from "react";
+import { ICategory } from "../interfaces";
+import { axiosInstance } from "../utils/axiosInstance";
 
 const Footer = () => {
+  const [categories, setCategories] = useState<ICategory[]>([]);
+
+  useEffect(() => {
+    getCategories();
+  }, []);
+
+  const getCategories = async () => {
+    try {
+      const res = await axiosInstance.get("/categories");
+      if (res.status === 200) {
+        setCategories(res.data.categories);
+      }
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
   return (
     <footer className="px-4 md:px-16">
       {/* ---> links <--- */}
       <div className="flex justify-between gap-3 flex-col lg:flex-row">
         {/* ---> Useful Links <--- */}
-        <div className="w-[100%] lg:w-[25%] ">
-          <h5 className="font-semibold">Useful Links</h5>
-          <div className=" mt-4 grid grid-cols-2 md:grid-cols-3 gap-y-2 gap-x-8">
-            {usefullLinks.map(({ title }, index) => (
-              <span
-                key={index}
-                className="text-xs text-zinc-500 cursor-pointer"
-              >
-                {title}
-              </span>
-            ))}
+        {categories.length !== 0 && (
+          <div className="w-[100%] lg:w-[25%] ">
+            <h5 className="font-semibold">Useful Links</h5>
+            <div className=" mt-4 grid grid-cols-2 md:grid-cols-3 gap-y-2 gap-x-8">
+              {usefullLinks.map(({ title }, index) => (
+                <span
+                  key={index}
+                  className="text-xs text-zinc-500 cursor-pointer"
+                >
+                  {title}
+                </span>
+              ))}
+            </div>
           </div>
-        </div>
+        )}
+
         {/* ---> Categories <--- */}
-        <div className="w-[100%] lg:w-[65%]">
-          <h5 className="font-semibold">
-            Categories{" "}
-            <span className="text-primary ml-2 font-[400] cursor-pointer">
-              see all
-            </span>
-          </h5>
-          <div className=" mt-4 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-y-2">
-            {categories.map(({ title }, index) => (
-              <span
-                key={index}
-                className="text-xs text-zinc-500 cursor-pointer"
+        {categories.length !== 0 && (
+          <div className="w-[100%] lg:w-[65%]">
+            <h5 className="font-semibold">
+              Categories{" "}
+              <NavLink
+                to={
+                  "/cn/fresh-vegetables/cid/6582c57beae03687384b458c/658563420cc788a65bead8c8"
+                }
+                className="text-primary ml-2 font-[400] cursor-pointer"
               >
-                {title}
-              </span>
-            ))}
+                see all
+              </NavLink>
+            </h5>
+            <div className=" mt-4 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-y-2">
+              {categories?.map((category, index) => {
+                const { _id, title, subCategories } = category;
+                return (
+                  <NavLink
+                    to={`/cn/${subCategories[0].title}/cid/${_id}/${subCategories[0]._id}`}
+                    key={index}
+                    className="text-xs text-zinc-500 cursor-pointer"
+                  >
+                    {title}
+                  </NavLink>
+                );
+              })}
+            </div>
           </div>
-        </div>
+        )}
       </div>
       {/* ---> Social links <--- */}
       <div className="mt-16 flex justify-between items-center gap-3 flex-wrap">
