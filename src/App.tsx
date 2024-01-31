@@ -1,21 +1,25 @@
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 import Home from "./pages/Home";
 import Navbar from "./components/Navbar";
-import Search from "./pages/Search";
-import Product from "./pages/Product";
 import PageNotFound from "./pages/PageNotFound";
 import Footer from "./components/Footer";
 import ScrollToTop from "./components/molecules/ScrollToTop";
-import Category from "./pages/Category";
 import { useAppDispatch, useAppSelector } from "./store/hooks";
-import Modals from "./modals/Modals";
-import { useEffect } from "react";
+import { Suspense, lazy, useEffect } from "react";
 import { setIsUserLoggedIn } from "./store/auth/authSlice";
-import Account from "./pages/Account";
 import PrivateRoutes from "./hoc/PrivateRoutes";
-import Checkout from "./pages/Checkout";
 import { HelmetProvider } from "react-helmet-async";
-import PaymentSuccess from "./pages/PaymentSuccess";
+import { setIsMobileDevice } from "./store/cart/cartSlice";
+import Loader from "./components/molecules/Loader";
+
+/** ---> Lazy loading  */
+const Account = lazy(() => import("./pages/Account"));
+const Product = lazy(() => import("./pages/Product"));
+const Search = lazy(() => import("./pages/Search"));
+const Category = lazy(() => import("./pages/Category"));
+const Checkout = lazy(() => import("./pages/Checkout"));
+const PaymentSuccess = lazy(() => import("./pages/PaymentSuccess"));
+const Modals = lazy(() => import("./modals/Modals"));
 
 const App = () => {
   const dispatch = useAppDispatch();
@@ -25,6 +29,22 @@ const App = () => {
   useEffect(() => {
     const token = localStorage.getItem("@accessToken");
     if (token) dispatch(setIsUserLoggedIn(true));
+  }, []);
+
+  /** ---> checking is mobile or small size devices. */
+  useEffect(() => {
+    dispatch(setIsMobileDevice(window.innerWidth < 768));
+  }, []);
+
+  useEffect(() => {
+    const handleResize = () => {
+      dispatch(setIsMobileDevice(window.innerWidth < 768));
+    };
+    window.addEventListener("resize", handleResize);
+
+    return () => {
+      window.removeEventListener("resize", handleResize);
+    };
   }, []);
 
   return (
@@ -37,26 +57,34 @@ const App = () => {
         <BrowserRouter>
           <ScrollToTop />
           <Navbar />
-          <Modals />
-          <Routes>
-            <Route path="/" element={<Home />} />
-            <Route path="/s" element={<Search />} />
-            <Route path="/prn/:name/prid/:id" element={<Product />} />
-            <Route
-              path="/cn/:subcname/cid/:cid/:subcid"
-              element={<Category />}
-            />
-            <Route element={<PrivateRoutes />}>
-              <Route path="/account" element={<Account />}>
-                <Route path="/account/orders" />
-                <Route path="/account/addresses" />
-                <Route path="/account/wallet" />
+          <Suspense
+            fallback={
+              <div className="w-full h-screen flex justify-center items-center">
+                <Loader />
+              </div>
+            }
+          >
+            <Modals />
+            <Routes>
+              <Route path="/" element={<Home />} />
+              <Route path="/s" element={<Search />} />
+              <Route path="/prn/:name/prid/:id" element={<Product />} />
+              <Route
+                path="/cn/:subcname/cid/:cid/:subcid"
+                element={<Category />}
+              />
+              <Route element={<PrivateRoutes />}>
+                <Route path="/account" element={<Account />}>
+                  <Route path="/account/orders" />
+                  <Route path="/account/addresses" />
+                  <Route path="/account/wallet" />
+                </Route>
+                <Route path="/checkout" element={<Checkout />} />
+                <Route path="/payment-success" element={<PaymentSuccess />} />
               </Route>
-              <Route path="/checkout" element={<Checkout />} />
-              <Route path="/payment-success" element={<PaymentSuccess />} />
-            </Route>
-            <Route path="*" element={<PageNotFound />} />
-          </Routes>
+              <Route path="*" element={<PageNotFound />} />
+            </Routes>
+          </Suspense>
           <Footer />
         </BrowserRouter>
       </HelmetProvider>

@@ -1,6 +1,8 @@
 import { FC, useState } from "react";
 import { AiOutlineHome } from "react-icons/ai";
 import { BsThreeDots } from "react-icons/bs";
+import { HiOutlineBuildingOffice2 } from "react-icons/hi2";
+import { LuMapPin } from "react-icons/lu";
 import { IAddress } from "../../interfaces";
 
 interface IProps {
@@ -15,13 +17,20 @@ const MyAdressListItem: FC<IProps> = ({ address, handleDeleteAddress }) => {
 
   return (
     <div className="flex justify-between border-t p-2">
-      <div className="flex gap-3 w-[70%]">
-        <span>
-          <AiOutlineHome className="text-sm mt-1" />
-        </span>
+      <div className="flex gap-3 w-[90%] md:w-[70%]">
+        <div className="min-w-[2rem] h-7 flex justify-center items-center  bg-zinc-100 rounded-md">
+          {addressType === "Home" ? (
+            <AiOutlineHome className="text-sm" />
+          ) : addressType === "Work" ? (
+            <HiOutlineBuildingOffice2 className="text-sm" />
+          ) : (
+            <LuMapPin className="text-sm" />
+          )}
+        </div>
+
         <div>
           <h3 className="text-sm font-semibold">{addressType}</h3>
-          <p className="text-xxs">
+          <p className="text-xxs font-semibold text-zinc-500">
             {name} - {addressLine1}, {addressLine2},{landmark} LIG Square, Rss
             Nagar, Indore, Madhya Pradesh,
           </p>

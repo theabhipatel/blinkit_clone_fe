@@ -1,38 +1,20 @@
-import { useState } from "react";
+import { FC, useState } from "react";
 import { IoIosArrowDown } from "react-icons/io";
 import { MdOutlineCircle, MdCheckCircle } from "react-icons/md";
+import { IFilterList } from "../../constant";
 
-interface IFilterList {
-  id: string;
-  title: string;
+interface IProps {
+  activeFilter: IFilterList;
+  setActiveFilter: React.Dispatch<React.SetStateAction<IFilterList>>;
+  filterList: IFilterList[];
 }
 
-const filterList: IFilterList[] = [
-  {
-    id: "1",
-    title: "Relevance",
-  },
-  {
-    id: "2",
-    title: "Price (Low to high)",
-  },
-  {
-    id: "3",
-    title: "Price (High to low)",
-  },
-  {
-    id: "4",
-    title: "Discount (High to low)",
-  },
-  {
-    id: "5",
-    title: "Name (A to Z)",
-  },
-];
-
-const FilterDropdown = () => {
+const FilterDropdown: FC<IProps> = ({
+  activeFilter,
+  setActiveFilter,
+  filterList,
+}) => {
   const [toggleDropdown, setToggleDropdown] = useState(false);
-  const [activeFilter, setActiveFilter] = useState<IFilterList>(filterList[0]);
 
   const handleSelectFilter = (title: string, id: string) => {
     setActiveFilter({ title, id });
@@ -50,7 +32,7 @@ const FilterDropdown = () => {
         </span>
       </button>
       {toggleDropdown && (
-        <div className="absolute top-[1.65rem] right-0 left-0 bg-white shadow-normal">
+        <div className="absolute top-[1.65rem] right-0 left-0 bg-white shadow-normal z-40">
           {filterList.map(({ title, id }) => {
             return (
               <div

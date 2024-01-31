@@ -12,6 +12,7 @@ interface IInitialState {
   totalItems: number;
   totalAmount: number;
   discountedAmount: number;
+  isMobile: boolean;
 }
 
 /** ---> getting data from localstorage. */
@@ -31,6 +32,7 @@ const initialState: IInitialState = {
   totalItems,
   totalAmount,
   discountedAmount,
+  isMobile: false,
 };
 
 export const cartSlice = createSlice({
@@ -115,6 +117,9 @@ export const cartSlice = createSlice({
       state.discountedAmount = 0;
       localStorage.removeItem("cart");
     },
+    setIsMobileDevice: (state, action: PayloadAction<boolean>) => {
+      state.isMobile = action.payload;
+    },
   },
 });
 
@@ -123,6 +128,7 @@ export const {
   addCartItem,
   removeOneCartItem,
   makeCartEmpty,
+  setIsMobileDevice,
 } = cartSlice.actions;
 
 export default cartSlice.reducer;

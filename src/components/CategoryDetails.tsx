@@ -1,7 +1,12 @@
-const CategoryDetails = () => {
+import { FC } from "react";
+
+interface IProps {
+  categoryName: string;
+}
+const CategoryDetails: FC<IProps> = ({ categoryName }) => {
   return (
-    <div className="mx-20 p-10 border border-t-0 border-zinc-200 shadow-md">
-      <h2 className="font-semibold">Fresh Vegetables</h2>
+    <div className="md:mx-10 lg:mx-20 p-5 md:p-10 border border-t-0 border-zinc-200 md:shadow-md">
+      <h2 className="font-semibold capitalize">{categoryName}</h2>
       <p className="text-sm text-zinc-500">
         Fresh vegetables are an essential part of a healthy diet. Packed with
         vitamins, minerals, and fiber, they provide numerous health benefits and

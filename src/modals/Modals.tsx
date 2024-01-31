@@ -5,8 +5,13 @@ import SuccessVerificationModal from "./SuccessVerificationModal";
 import { useAppSelector } from "../store/hooks";
 import InsetBackgroundModal from "./InsetBackgroundModal";
 import SaveAdressModal from "./SaveAdressModal";
+import MobileCartButton from "../components/molecules/MobileCartButton";
+import { useEffect, useState } from "react";
+import InfoModal from "./InfoModal";
+import { useLocation } from "react-router-dom";
 
 const Modals = () => {
+  const { pathname } = useLocation();
   const isCartOpen = useAppSelector((state) => state.cart.isCartOpen);
   const isLoginModalOpen = useAppSelector(
     (state) => state.auth.isLoginModalOpen
@@ -23,6 +28,16 @@ const Modals = () => {
   const isSaveAddressModalOpen = useAppSelector(
     (state) => state.user.isSaveAddressModalOpen
   );
+  const isMobile = useAppSelector((state) => state.cart.isMobile);
+  const totalItems = useAppSelector((state) => state.cart.totalItems);
+  const [isInfoModal, setIsInfoModal] = useState(true);
+
+  useEffect(() => {
+    const isInfoModal = sessionStorage.getItem("isInfoModal");
+    if (isInfoModal) {
+      setIsInfoModal(false);
+    }
+  }, []);
 
   return (
     <>
@@ -32,6 +47,11 @@ const Modals = () => {
       {isSuccessVerificationModalOpen && <SuccessVerificationModal />}
       {isAccountDropdownOpen && <InsetBackgroundModal />}
       {isSaveAddressModalOpen && <SaveAdressModal />}
+      {pathname !== "/checkout" &&
+        totalItems > 0 &&
+        !isCartOpen &&
+        isMobile && <MobileCartButton />}
+      {isInfoModal && <InfoModal setIsInfoModal={setIsInfoModal} />}
     </>
   );
 };

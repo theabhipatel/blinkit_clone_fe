@@ -102,110 +102,30 @@ export const usefullLinks: IUsefullLinks[] = [
   },
 ];
 
-interface ICategories {
+export interface IFilterList {
+  id: string;
   title: string;
-  link: string;
 }
 
-export const categories: ICategories[] = [
+export const filterList: IFilterList[] = [
   {
-    title: "Vegetables & Fruits",
-    link: "",
+    id: "1",
+    title: "Relevance",
   },
   {
-    title: "Dairy & Breakfast",
-    link: "",
+    id: "2",
+    title: "Price (Low to high)",
   },
   {
-    title: "Munchies",
-    link: "",
+    id: "3",
+    title: "Price (High to low)",
   },
   {
-    title: "Cold Drinks & Juices",
-    link: "",
+    id: "4",
+    title: "Discount (High to low)",
   },
   {
-    title: "Instant & Frozen Food",
-    link: "",
-  },
-  {
-    title: "Tea, Coffee & Health Drinks",
-    link: "",
-  },
-  {
-    title: "Bakery & Biscuits",
-    link: "",
-  },
-  {
-    title: "Sweet Tooth",
-    link: "",
-  },
-  {
-    title: "Atta, Rice & Dal",
-    link: "",
-  },
-  {
-    title: "Dry Fruits, Masala & Oil",
-    link: "",
-  },
-  {
-    title: "Sauces & Spreads",
-    link: "",
-  },
-  {
-    title: "Atta, Rice & Dal",
-    link: "",
-  },
-  {
-    title: "Paan Corner",
-    link: "",
-  },
-  {
-    title: "Organic & Premium",
-    link: "",
-  },
-  {
-    title: "Baby Care",
-    link: "",
-  },
-  {
-    title: "Pharma & Wellness",
-    link: "",
-  },
-  {
-    title: "Cleaning Essentials",
-    link: "",
-  },
-  {
-    title: "Home & Office",
-    link: "",
-  },
-  {
-    title: "Ice Creams & Frozen Desserts",
-    link: "",
-  },
-  {
-    title: "Personal Care",
-    link: "",
-  },
-  {
-    title: "Pet Care",
-    link: "",
-  },
-  {
-    title: "Beauty & Cosmetics",
-    link: "",
-  },
-  {
-    title: "Toys & Games",
-    link: "",
-  },
-  {
-    title: "Trial new tree",
-    link: "",
-  },
-  {
-    title: "Print Store",
-    link: "",
+    id: "5",
+    title: "Name (A to Z)",
   },
 ];

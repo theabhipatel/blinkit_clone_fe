@@ -38,7 +38,7 @@ const CartMyAdress: FC<IProps> = ({ setIsMyAdressPage }) => {
   };
 
   return (
-    <div className="w-[20rem] h-full  bg-white text-zinc-800 overflow-x-auto">
+    <div className="w-full md:w-[20rem] h-full  bg-white text-zinc-800 overflow-x-auto">
       {/* ---> header  */}
       <div className="fixed top-0 w-full h-12  px-4 bg-white flex gap-3 items-center ">
         <button onClick={handleClosePage}>
@@ -102,7 +102,7 @@ const CartMyAdress: FC<IProps> = ({ setIsMyAdressPage }) => {
         {/* ---> footer  */}
         <div
           onClick={handleClosePage}
-          className="fixed bottom-0  w-[20rem] h-10  px-4 bg-primary hover:bg-primary cursor-pointer flex  items-center justify-center  text-white text-xs"
+          className="fixed bottom-0 w-full md:w-[20rem] h-10  px-4 bg-primary hover:bg-primary cursor-pointer flex  items-center justify-center  text-white text-xs"
         >
           Done
         </div>
